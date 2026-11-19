@@ -12,7 +12,7 @@
 - `fix_notation.py` 추가: 단위·수치 표기만 자동 교정(값 불변, 기본 dry-run, `--write` 시 .bak 백업).
 - 실무 문서 대상 오탐 정리: `상수도관망`·`상하수도관`·`13개소`·`ℓ/인·일`·`mm/hr`·`적절한` 오탐 제거,
   `상기와 같이 ~ 제출합니다` 같은 맺음 문구는 종결 규칙 예외, 보고서 본문의 음슴체는 S3로 완화.
-- 회귀 테스트(`tests/`)와 GitHub Actions CI(Ubuntu·Windows, Python 3.9·3.12) 추가.
+- 회귀 테스트(`tests/`)와 GitHub Actions CI(Ubuntu·Windows, Python 3.10·3.13) 추가.
 
 ## 1.0.0
 
