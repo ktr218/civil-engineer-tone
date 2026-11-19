@@ -43,5 +43,13 @@
   "C_ve.md": {
     "type": "C",
     "max_grade": "A"
+  },
+  "C_agency.md": {
+    "type": "C",
+    "max_grade": "A"
+  },
+  "A_future.md": {
+    "type": "A",
+    "max_grade": "A"
   }
 }
