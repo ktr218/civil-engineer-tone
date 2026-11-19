@@ -100,6 +100,15 @@ class TestDetectAndGrade(unittest.TestCase):
         txt = "땅파기 지보계획서, 발주기관과 협의, 맨홀뚜껑 교체, 노후 수도관 교체, 철근 지름 16mm"
         self.assertEqual([f["id"] for f in tonelib.check(txt, "S")], [])
 
+    def test_other_division_terms_not_flagged(self):
+        # 건축·설비 시방의 옥상물탱크, 지장물 나열의 상·하수도관
+        txt = ("옥상물탱크 등 시설물이 노출되지 않는 구조로 한다\n"
+               "물탱크 기초 구조계산\n"
+               "통신, 전력, 상·하수도관, 가스관 등 지하매설물")
+        self.assertEqual([f["id"] for f in tonelib.check(txt, "S")], [])
+        ids = [f["id"] for f in tonelib.check("배수지 대신 물탱크를 설치한다", "R")]
+        self.assertIn("T-01", ids)
+
 
 class TestCLI(unittest.TestCase):
     def run_cli(self, *args):

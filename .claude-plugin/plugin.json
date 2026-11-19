@@ -1,6 +1,6 @@
 {
   "name": "civil-engineer-tone",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "국내 토목 엔지니어링 실무 문서의 어투·용어·표기법으로 보고서, 장표, 검토의견, 조치계획서를 작성·윤문·점검하는 스킬",
   "license": "MIT",
   "keywords": ["korean", "water", "wastewater", "engineering", "style", "상하수도", "보고서", "문체"],

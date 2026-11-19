@@ -1,6 +1,6 @@
 {
- "version": "1.1.0",
- "description": "상하수도 실무 문체 어휘집. auto=true 항목은 fix_notation.py가 자동 교정(값 불변 표기 정규화만). auto=false 항목은 문맥 판단이 필요해 제안만 한다. types가 비어 있으면 전 유형 적용.",
+ "version": "1.2.0",
+ "description": "토목 실무 문체 어휘집. auto=true 항목은 fix_notation.py가 자동 교정(값 불변 표기 정규화만). auto=false 항목은 문맥 판단이 필요해 제안만 한다. types가 비어 있으면 전 유형 적용.",
  "fields": {
   "id": "고유 ID (분류-번호)",
   "pattern": "Python 정규식",
@@ -208,7 +208,7 @@
    "severity": "S3",
    "taxonomy": "G-1",
    "auto": false,
-   "note": "수질 농도는 ㎎/L 통일. 기체 농도 등 ppm이 맞는 경우 유지"
+   "note": "수질 농도는 ㎎/L 통일. 대기질(CO·O3 등) 기체 농도의 ppm은 환경평가 실무 표기로 유지"
   },
   {
    "id": "U-18",
@@ -257,7 +257,7 @@
   },
   {
    "id": "T-01",
-   "pattern": "물\\s*탱크",
+   "pattern": "(?<!옥상)(?<!옥상\\s)물\\s*탱크(?!\\s*(?:받침|기초))",
    "replace": null,
    "suggest": [
     "배수지",
@@ -268,7 +268,7 @@
    "severity": "S3",
    "taxonomy": "K-9",
    "auto": false,
-   "note": "공급용이면 배수지, 정수장 내 저류면 정수지, 건축물 내면 저수조"
+   "note": "공급용이면 배수지, 정수장 내 저류면 정수지, 건축물 내면 저수조. 건축·설비 문서의 옥상물탱크·받침대는 유지"
   },
   {
    "id": "T-02",
@@ -308,7 +308,7 @@
   },
   {
    "id": "T-04",
-   "pattern": "(?<![상가-힣])하수도관(?![로망리련])",
+   "pattern": "(?<![상가-힣·ㆍ․･])하수도관(?![로망리련])",
    "replace": null,
    "suggest": [
     "하수관로"
@@ -317,7 +317,7 @@
    "severity": "S3",
    "taxonomy": "K-9",
    "auto": false,
-   "note": ""
+   "note": "'상·하수도관'처럼 지장물 나열은 유지"
   },
   {
    "id": "T-05",
