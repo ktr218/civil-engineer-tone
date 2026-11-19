@@ -140,6 +140,12 @@ class TestDetectAndGrade(unittest.TestCase):
         ids = [f["id"] for f in tonelib.check("배수지 대신 물탱크를 설치한다", "R")]
         self.assertIn("T-01", ids)
 
+    def test_ai_chat_addons_and_emoji_flagged(self):
+        self.assertIn("K-14", [f["id"] for f in tonelib.check("필요하시면 말씀해 주세요.", "R")])
+        self.assertIn("K-08", [f["id"] for f in tonelib.check("검토결과 🚀 유리한 것으로 판단된다.", "R")])
+        # 실무 기호(□ ○ ※ ► ∘ ☞)는 이모지로 보지 않는다
+        self.assertEqual([f["id"] for f in tonelib.check("□ 개요 ○ 현황 ※ 주) ► ∘ ☞", "B")], [])
+
 
 class TestCLI(unittest.TestCase):
     def run_cli(self, *args):
