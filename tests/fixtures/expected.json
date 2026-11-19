@@ -1,0 +1,47 @@
+{
+  "R_report.md": {
+    "type": "R",
+    "max_grade": "A"
+  },
+  "S_criteria.md": {
+    "type": "S",
+    "max_grade": "A"
+  },
+  "B_brief.md": {
+    "type": "B",
+    "max_grade": "A"
+  },
+  "C_review.md": {
+    "type": "C",
+    "max_grade": "A"
+  },
+  "A_action.md": {
+    "type": "A",
+    "max_grade": "A"
+  },
+  "V_ve.md": {
+    "type": "V",
+    "max_grade": "A"
+  },
+  "P_script.md": {
+    "type": "P",
+    "max_grade": "A"
+  },
+  "M_mail.md": {
+    "type": "M",
+    "max_grade": "B"
+  },
+  "BAD_ai.md": {
+    "type": null,
+    "min_grade": "D",
+    "check_as": "R"
+  },
+  "G_letter.md": {
+    "type": "G",
+    "max_grade": "A"
+  },
+  "C_ve.md": {
+    "type": "C",
+    "max_grade": "A"
+  }
+}
