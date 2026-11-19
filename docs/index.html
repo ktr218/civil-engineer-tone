@@ -66,6 +66,7 @@
   <div class="step"><div class="num">2</div><div><h2>지침 복사하기</h2><p>아래 버튼을 누르면 지침 전체가 복사됩니다.</p></div></div>
   <button class="copy" id="copy">📋 지침 복사하기</button>
   <div class="status" id="status" role="status"></div>
+  <textarea id="manual" hidden readonly aria-label="복사할 지침" style="width:100%;height:160px;font:inherit;font-size:15px;border:2px solid var(--teal);border-radius:12px;padding:10px;background:var(--card);color:var(--ink)"></textarea>
 
   <div class="step"><div class="num">3</div><div><h2>AI 채팅창에 붙여넣기</h2><p>아래에서 AI를 열고, 입력칸에 <b>Ctrl+V</b>(휴대폰은 길게 눌러 붙여넣기) 후 보내세요.</p></div></div>
   <div class="ai">
@@ -96,13 +97,21 @@
   var prompt = null, line = "";
   var status = document.getElementById("status");
   fetch(RAW, { cache: "no-cache" }).then(function (r) { return r.ok ? r.text() : null; }).then(function (t) { prompt = t; }).catch(function () {});
-  function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+  function legacyCopy(text) {
     return new Promise(function (ok, fail) {
       var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
       document.body.appendChild(ta); ta.select();
       try { document.execCommand("copy") ? ok() : fail(); } catch (e) { fail(e); } finally { document.body.removeChild(ta); }
     });
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    return legacyCopy(text);
+  }
+  function showManual(text) {
+    var box = document.getElementById("manual");
+    box.hidden = false; box.value = text; box.focus(); box.select();
+    status.textContent = "아래 상자의 글이 선택돼 있습니다. Ctrl+C(복사)를 누르세요.";
   }
   document.querySelectorAll(".div").forEach(function (b) {
     b.addEventListener("click", function () {
@@ -117,7 +126,7 @@
     function go(t) {
       var text = t + "\n\n" + (line ? line + " " : "") + "앞으로 이대로 써줘.";
       copyText(text).then(function () { status.textContent = "✅ 복사됐습니다! 3번에서 AI를 열고 붙여넣으세요."; },
-        function () { status.innerHTML = '복사가 안 되면 <a href="' + RAW + '" target="_blank" rel="noopener">여기</a>를 열어 전체 선택 → 복사하세요.'; });
+        function () { showManual(text); });
     }
     if (prompt) return go(prompt);
     status.textContent = "불러오는 중…";
