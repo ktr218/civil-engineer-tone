@@ -79,7 +79,7 @@ claude.ai에서 쓰려면 `skills/civil-engineer-tone` 폴더를 zip으로 묶�
 
 ### ChatGPT · Gemini (웹·앱)
 
-[`prompts/universal.md`](prompts/universal.md)는 규칙, 용어, 예시를 한 파일(약 4,800자)로 압축한 지침입니다.
+[`prompts/universal.md`](prompts/universal.md)는 규칙, 용어, 예시를 한 파일(약 5,000자)로 압축한 지침입니다.
 
 - **ChatGPT**: GPT 만들기 → 구성 → 지침 칸에 `universal.md` 내용을 그대로 붙여 넣습니다. 지침 한도 8,000자 안에 들어갑니다.
 - **Gemini**: Gem 만들기 → 안내 칸에 같은 내용을 붙여 넣습니다.
@@ -111,6 +111,9 @@ python skills/civil-engineer-tone/scripts/check_tone.py draft.md
 
 # 단위·수치 표기 자동 교정 (기본은 변경 목록만 출력, --write로 반영)
 python skills/civil-engineer-tone/scripts/fix_notation.py draft.md --write
+
+# 윤문 전후 수치·단위 변경 후보 대조 (원본/결과 모두 수정하지 않음)
+python skills/civil-engineer-tone/scripts/check_values.py original.md revised.md --json
 ```
 
 출력 예
@@ -123,6 +126,10 @@ python skills/civil-engineer-tone/scripts/fix_notation.py draft.md --write
 ```
 
 등급은 500자당 가중 점수(S1 5점, S2 2점, S3 0.5점)로 매깁니다: A < 0.5 ≤ B < 1.5 ≤ C < 3.0 ≤ D.
+
+`check_values.py`는 숫자·인식한 단위·부등호의 출현 개수를 비교합니다. `1,200 m3/day`→`1200㎥/일`은 허용하고, 값·부호·단위 변경이나 반복 값 누락은 대조 대상으로 표시합니다. 종료 코드는 0(차이 미검출), 1(대조 필요), 2(입력 오류)입니다. 단위 환산·표의 대상 연결·계획/완료·부정문의 의미는 자동 검증하지 않습니다. [원문 대조와 공유자료 근거 사용법](skills/civil-engineer-tone/references/source-preservation.md)을 참고하세요.
+
+검사·등급·자동 표기 교정은 Markdown fenced code(``` 또는 ~~~)를 제외합니다. 문체 A등급이나 수치 차이 미검출은 기술내용의 정확성을 보증하지 않습니다.
 
 ## 검증
 
@@ -152,7 +159,8 @@ skills/civil-engineer-tone/
 └── scripts/
     ├── tonelib.py                # 공통 엔진 (유형 판별·검사·등급·교정)
     ├── check_tone.py             # 검사기 CLI
-    └── fix_notation.py           # 표기 자동 교정 CLI
+    ├── fix_notation.py           # 표기 자동 교정 CLI
+    └── check_values.py           # 원문/윤문 수치·단위 대조 CLI
 tests/                            # 회귀 테스트와 유형별 샘플
 prompts/universal.md              # ChatGPT·Gemini용 통합 지침 (한 파일)
 GEMINI.md, gemini-extension.json  # Gemini CLI 확장

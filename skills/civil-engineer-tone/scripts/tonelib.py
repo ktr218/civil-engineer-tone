@@ -1,4 +1,4 @@
-"""상하수도 실무 문체 공통 라이브러리 (표준 라이브러리만 사용).
+"""토목 실무 문체 공통 라이브러리 (표준 라이브러리만 사용).
 
 - load_lexicon(): references/lexicon.json 로드
 - detect_type(text): 문서 유형 추정 (R S B C A V P M)
@@ -90,12 +90,28 @@ def classify_ending(line):
     return None
 
 
+def marked_lines(text):
+    """(행 번호, 원래 줄, fenced code 여부). 닫는 fence도 보호한다."""
+    fence = None
+    for no, line in enumerate(text.splitlines(keepends=True), 1):
+        match = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line.rstrip("\r\n"))
+        protected = fence is not None
+        if match:
+            run, info = match.groups()
+            if fence is None:
+                if run[0] != "`" or "`" not in info:
+                    fence = (run[0], len(run))
+                    protected = True
+            elif run[0] == fence[0] and len(run) >= fence[1] and not info.strip():
+                fence = None
+        yield no, line, protected
+
+
 def content_lines(text):
-    in_code = False
-    for no, line in enumerate(text.splitlines(), 1):
-        if line.strip().startswith("```"):
-            in_code = not in_code
+    for no, line, protected in marked_lines(text):
+        if protected:
             continue
+        line = line.rstrip("\r\n")
         if line.strip().startswith(">"):
             line = line.strip()[1:]
         yield no, line
@@ -106,6 +122,7 @@ def detect_type(text):
     sc = {t: 0.0 for t in TYPES}
     ends = {}
     lines = [l for _, l in content_lines(text) if l.strip()]
+    prose = "\n".join(lines)
     nl = max(1, len(lines))
     bullets = pauses = haja = plain_bul = 0
     for l in lines:
@@ -151,7 +168,7 @@ def detect_type(text):
         "R": r"판단된다|나타났다|검토하였다|산정하였다|실정이다|다음과\s*같다",
     }
     for t, p in kw.items():
-        hits = len(re.findall(p, text, re.M))
+        hits = len(re.findall(p, prose, re.M))
         sc[t] += 1.5 * min(3.0, hits / max(1.0, nl / 20.0))  # 20줄당 빈도, 상한 3
     best = max(sc, key=sc.get)
     return best, sc
@@ -161,6 +178,7 @@ def check(text, doc_type, lexicon=None):
     lex = lexicon or load_lexicon()
     findings = []
     lines = list(content_lines(text))
+    prose = "\n".join(line for _, line in lines)
     for no, line in lines:
         s = line.strip()
         if not s:
@@ -187,8 +205,8 @@ def check(text, doc_type, lexicon=None):
                 "suggest": [END_NAME[x] for x in sorted(ALLOWED[doc_type])], "auto": False,
                 "message": f"유형 {doc_type}에 맞지 않는 종결: {END_NAME[end]}", "text": s[:90]})
     # 문서 단위 규칙
-    judge = len(re.findall(r"것으로\s*(?:판단된다|판단됨|사료된다)", text))
-    kchars = max(1.0, len(re.sub(r"\s", "", text)) / 1000.0)
+    judge = len(re.findall(r"것으로\s*(?:판단된다|판단됨|사료된다)", prose))
+    kchars = max(1.0, len(re.sub(r"\s", "", prose)) / 1000.0)
     if doc_type == "R" and judge >= 3 and judge / kchars > 2.0:
         findings.append({"line": 0, "id": "DOC-1", "taxonomy": "A-2", "severity": "S2",
                          "match": f"'것으로 판단된다' 1,000자당 {judge / kchars:.1f}회",
@@ -215,7 +233,8 @@ def check(text, doc_type, lexicon=None):
 
 
 def score(findings, text):
-    chars = len(re.sub(r"\s", "", text))
+    prose = "\n".join(line for _, line in content_lines(text))
+    chars = len(re.sub(r"\s", "", prose))
     units = max(1.0, chars / 500.0)
     pts = sum(WEIGHT[f["severity"]] for f in findings)
     density = pts / units
@@ -236,11 +255,8 @@ def fix(text, doc_type=None, lexicon=None):
     lex = lexicon or load_lexicon()
     changes = []
     out_lines = []
-    in_code = False
-    for no, line in enumerate(text.splitlines(keepends=True), 1):
-        if line.strip().startswith("```"):
-            in_code = not in_code
-        if in_code:
+    for no, line, protected in marked_lines(text):
+        if protected:
             out_lines.append(line)
             continue
         new = line

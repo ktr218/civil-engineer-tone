@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""상하수도 실무 문체 검사기 (표준 라이브러리만 사용).
+"""토목 실무 문체 검사기 (표준 라이브러리만 사용).
 
 사용법:
     python check_tone.py 파일.md                 # 유형 자동 판별
@@ -21,7 +21,7 @@ import tonelib  # noqa: E402
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="상하수도 실무 문체 검사기")
+    ap = argparse.ArgumentParser(description="토목 실무 문체 검사기")
     ap.add_argument("path", help="검사할 파일 경로, 표준입력은 -")
     ap.add_argument("--type", choices=list(tonelib.TYPES), help="문서 유형 코드(생략 시 자동 판별)")
     ap.add_argument("--json", action="store_true", help="JSON 출력")
