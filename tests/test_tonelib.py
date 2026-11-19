@@ -69,6 +69,37 @@ class TestFix(unittest.TestCase):
 
 
 class TestDetectAndGrade(unittest.TestCase):
+    def test_fences_do_not_affect_findings_detection_or_grade(self):
+        prose = read("R_report.md")
+        code = ("650 m3/day\n혁신적인 프로젝트입니다.\n"
+                "수신\n제목\n붙임 1\n끝.\n것으로 판단된다\n") * 30
+        expected_findings = tonelib.check(prose, "R")
+        expected_type = tonelib.detect_type(prose)
+        expected_score = tonelib.score(expected_findings, prose)
+        for opening, closing in [("```python", "```"), ("~~~text", "~~~"),
+                                 ("````", "`````"), ("   ~~~~", "   ~~~~")]:
+            with self.subTest(opening=opening):
+                text = prose + "\n" + opening + "\n" + code + closing + "\n"
+                self.assertEqual(tonelib.check(text, "R"), expected_findings)
+                self.assertEqual(tonelib.detect_type(text), expected_type)
+                self.assertEqual(tonelib.score(expected_findings, text), expected_score)
+
+    def test_fence_requires_matching_character_length_and_empty_suffix(self):
+        text = "````text\n650 m3/day\n```\n~~~\n```` not-a-close\n650 m3/day\n````\n650 m3/day\n"
+        fixed, changes = tonelib.fix(text)
+        self.assertEqual(fixed, text.rsplit("650 m3/day", 1)[0] + "650㎥/일\n")
+        self.assertEqual([c["line"] for c in changes], [8])
+        self.assertEqual([f["line"] for f in tonelib.check(text, "B")], [8])
+
+    def test_unclosed_fence_preserves_remaining_text(self):
+        text = "~~~\n650 m3/day\n사업을 검토하였습니다.\n"
+        self.assertEqual(tonelib.fix(text), (text, []))
+        self.assertEqual(tonelib.check(text, "R"), [])
+
+    def test_fence_roundtrip_preserves_crlf(self):
+        code = "~~~\r\n650 m3/day\r\n~~~\r\n"
+        self.assertEqual(tonelib.fix(code + "650 m3/day\r\n")[0], code + "650㎥/일\r\n")
+
     def test_fixtures(self):
         with open(os.path.join(FIX, "expected.json"), encoding="utf-8") as f:
             exp = json.load(f)
