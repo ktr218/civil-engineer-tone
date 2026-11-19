@@ -7,7 +7,7 @@ import sys
 import unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPTS = os.path.join(ROOT, "skills", "water-engineer-tone", "scripts")
+SCRIPTS = os.path.join(ROOT, "skills", "civil-engineer-tone", "scripts")
 FIX = os.path.join(ROOT, "tests", "fixtures")
 sys.path.insert(0, SCRIPTS)
 import tonelib  # noqa: E402

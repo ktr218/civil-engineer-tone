@@ -1,10 +1,10 @@
-# water-engineer-tone — 상하수도 엔지니어 어투 스킬
+# civil-engineer-tone — 토목 엔지니어 어투 스킬
 
 > ## 🚀 가장 쉬운 사용법 (설치 없음, 1분)
 >
 > ChatGPT · Gemini · Claude 어디서나 됩니다.
 >
-> 1. **[👉 여기를 눌러 지침 열기](https://raw.githubusercontent.com/ktr218/water-engineer-tone/main/prompts/universal.md)**
+> 1. **[👉 여기를 눌러 지침 열기](https://raw.githubusercontent.com/ktr218/civil-engineer-tone/main/prompts/universal.md)**
 > 2. 열린 화면에서 전체 선택(**Ctrl+A**) → 복사(**Ctrl+C**)
 >    (휴대폰은 화면을 길게 눌러 전체 선택 → 복사)
 > 3. AI 채팅창에 붙여넣고 **"앞으로 이대로 써줘"** 입력
@@ -16,10 +16,10 @@
 
 ---
 
-AI가 쓴 글, 메모, 일반 문장을 **국내 상하수도 엔지니어링 실무 문서의 어투와 용어**로 바꿔 주는 Claude 스킬입니다.
-도화엔지니어링 상하수도 부문 실무 문서의 문체를 참고해 만들었습니다. 회사가 공식 배포하는 자료는 아닙니다.
+AI가 쓴 글, 메모, 일반 문장을 **국내 토목 엔지니어링 실무 문서의 어투와 용어**로 바꿔 주는 AI 지침·스킬입니다.
+도화엔지니어링 실무 문서의 문체를 참고해 만들었습니다. 문체·기호·단위는 전 부문 공통이고, 전문 용어는 부문별 팩(물산업·교통·인프라·도시·에너지·CM·건설·지원)으로 나눴습니다. 회사가 공식 배포하는 자료는 아닙니다.
 
-하수도정비기본계획, 수도정비계획, 기본 및 실시설계 보고서, 착수·중간·최종보고 장표, 협의자료, 검토의견서·VE 검토, 조치계획서, 설계VE 제안, 과업지시서, 회의록, 실정보고, 공문, 발표 시나리오, 내부 보고 메일을 지원합니다.
+기본계획·타당성조사·기본 및 실시설계 보고서, 착수·중간·최종보고 장표, 협의자료, 검토의견서·VE 검토, 조치계획서, 재원협의, 설계VE 제안, 과업지시서, 회의록, 실정보고, 검측·공사일보, 공문, 발표 시나리오, 내부 보고 메일을 지원합니다.
 
 ## 무엇을 하나
 
@@ -52,30 +52,30 @@ Before
 After
 > 금회 사업은 ○○읍 일원의 하수관로 신설 및 노후관로 개량을 위한 사업이다. 본 사업 시행 시 우·오수의 신속한 배제로 침수피해 예방 및 생활환경 개선에 기여할 것으로 판단된다.
 
-더 많은 예시는 [examples.md](skills/water-engineer-tone/references/examples.md)를 보세요.
+더 많은 예시는 [examples.md](skills/civil-engineer-tone/references/examples.md)를 보세요.
 
 ## 설치
 
 ### Claude Code 플러그인 마켓플레이스
 
 ```
-/plugin marketplace add ktr218/water-engineer-tone
-/plugin install water-engineer-tone@water-engineer-tone
+/plugin marketplace add ktr218/civil-engineer-tone
+/plugin install civil-engineer-tone@civil-engineer-tone
 ```
 
 ### 수동 설치
 
-`skills/water-engineer-tone` 폴더를 스킬 폴더에 복사합니다.
+`skills/civil-engineer-tone` 폴더를 스킬 폴더에 복사합니다.
 
-- macOS/Linux: `~/.claude/skills/water-engineer-tone`
-- Windows: `%USERPROFILE%\.claude\skills\water-engineer-tone`
+- macOS/Linux: `~/.claude/skills/civil-engineer-tone`
+- Windows: `%USERPROFILE%\.claude\skills\civil-engineer-tone`
 
 ```bash
-git clone https://github.com/ktr218/water-engineer-tone.git
-cp -r water-engineer-tone/skills/water-engineer-tone ~/.claude/skills/
+git clone https://github.com/ktr218/civil-engineer-tone.git
+cp -r civil-engineer-tone/skills/civil-engineer-tone ~/.claude/skills/
 ```
 
-claude.ai에서 쓰려면 `skills/water-engineer-tone` 폴더를 zip으로 묶어 설정 > 기능 > 스킬에서 업로드합니다.
+claude.ai에서 쓰려면 `skills/civil-engineer-tone` 폴더를 zip으로 묶어 설정 > 기능 > 스킬에서 업로드합니다.
 
 ### ChatGPT · Gemini (웹·앱)
 
@@ -89,7 +89,7 @@ claude.ai에서 쓰려면 `skills/water-engineer-tone` 폴더를 zip으로 묶�
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/ktr218/water-engineer-tone
+gemini extensions install https://github.com/ktr218/civil-engineer-tone
 ```
 
 `GEMINI.md`(= `prompts/universal.md` 사본)를 컨텍스트로 불러옵니다. 아직 실제 설치로 확인하지 않았습니다.
@@ -107,10 +107,10 @@ gemini extensions install https://github.com/ktr218/water-engineer-tone
 
 ```bash
 # 문서 유형 자동 판별 + 위반 목록 + 등급(A~D)
-python skills/water-engineer-tone/scripts/check_tone.py draft.md
+python skills/civil-engineer-tone/scripts/check_tone.py draft.md
 
 # 단위·수치 표기 자동 교정 (기본은 변경 목록만 출력, --write로 반영)
-python skills/water-engineer-tone/scripts/fix_notation.py draft.md --write
+python skills/civil-engineer-tone/scripts/fix_notation.py draft.md --write
 ```
 
 출력 예
@@ -137,11 +137,12 @@ python -m unittest discover -s tests -v
 ## 구성
 
 ```
-skills/water-engineer-tone/
+skills/civil-engineer-tone/
 ├── SKILL.md                      # 절차·규칙·체크리스트
 ├── references/
 │   ├── style-taxonomy.md         # 문체 패턴 카탈로그 (A~K, ID·심각도)
-│   ├── glossary.md               # 상수도·하수도·공통 용어, 일반어→실무어
+│   ├── glossary.md               # 전 부문 공통 용어, 일반어→실무어
+│   ├── divisions/                # 부문별 용어 팩 (water, transport, infra, urban, energy, cm, support)
 │   ├── units-and-notation.md     # 단위·금액·날짜·표·인용 표기
 │   ├── document-templates.md     # 유형별 문서 골격
 │   ├── phrasebank.md             # 상황별 상투구
@@ -161,6 +162,12 @@ GEMINI.md, gemini-extension.json  # Gemini CLI 확장
 - 수치·사업명·근거는 사용자가 준 것만 씁니다. 없으면 `○○`, `[확인 필요]`로 남깁니다.
 - 업계에서 굳은 표현(`~에 의거하여`, `Sheet Pile`, `OPEN CUT`)은 번역투로 보지 않고 유지합니다.
 - 예시의 지명·수치는 가상입니다.
+
+## 부문별 기여 방법
+
+- 부문 담당자는 `division/<부문>` 브랜치(예: `division/transport`)에서 `references/divisions/<부문>.md`를 실제 성과품과 대조해 고칩니다.
+- 고친 뒤 main으로 PR을 보내면 검토 후 합칩니다. 공통 규칙(끝맺음·기호·단위)은 main에서만 고칩니다.
+- 원문·사업명·실제 수치는 올리지 않습니다.
 
 ## 기여
 
