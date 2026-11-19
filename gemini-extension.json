@@ -1,0 +1,6 @@
+{
+  "name": "water-engineer-tone",
+  "version": "1.2.0",
+  "description": "상하수도 엔지니어 어투·용어로 보고서·장표·검토의견·조치계획서·공문을 작성·윤문·점검",
+  "contextFileName": "GEMINI.md"
+}

@@ -61,6 +61,23 @@ cp -r water-engineer-tone/skills/water-engineer-tone ~/.claude/skills/
 
 claude.ai에서 쓰려면 `skills/water-engineer-tone` 폴더를 zip으로 묶어 설정 > 기능 > 스킬에서 업로드합니다.
 
+### ChatGPT · Gemini (웹·앱)
+
+[`prompts/universal.md`](prompts/universal.md)는 규칙, 용어, 예시를 한 파일(약 3,500자)로 압축한 지침입니다.
+
+- **ChatGPT**: GPT 만들기 → 구성 → 지침 칸에 `universal.md` 내용을 그대로 붙여 넣습니다. 지침 한도 8,000자 안에 들어갑니다.
+- **Gemini**: Gem 만들기 → 안내 칸에 같은 내용을 붙여 넣습니다.
+- 맞춤 GPT·Gem을 만들기 어렵다면, 대화 첫 메시지로 붙여 넣고 "앞으로 이 지침대로 써줘"라고 해도 됩니다.
+- 검사·자동교정 스크립트는 Python을 실행할 수 있는 환경에서만 동작합니다. 이 방식으로는 문체 규칙만 적용됩니다.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/ktr218/water-engineer-tone
+```
+
+`GEMINI.md`(= `prompts/universal.md` 사본)를 컨텍스트로 불러옵니다. 아직 실제 설치로 확인하지 않았습니다.
+
 ## 사용
 
 자연어로 요청하면 됩니다.
@@ -119,6 +136,8 @@ skills/water-engineer-tone/
     ├── check_tone.py             # 검사기 CLI
     └── fix_notation.py           # 표기 자동 교정 CLI
 tests/                            # 회귀 테스트와 유형별 샘플
+prompts/universal.md              # ChatGPT·Gemini용 통합 지침 (한 파일)
+GEMINI.md, gemini-extension.json  # Gemini CLI 확장
 ```
 
 ## 원칙

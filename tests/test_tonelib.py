@@ -124,5 +124,24 @@ class TestCLI(unittest.TestCase):
         self.assertIn("변경 2건", r.stdout)
 
 
+
+class TestPortablePrompt(unittest.TestCase):
+    def test_gemini_md_matches_universal_prompt(self):
+        with open(os.path.join(ROOT, "prompts", "universal.md"), encoding="utf-8") as f:
+            universal = f.read()
+        with open(os.path.join(ROOT, "GEMINI.md"), encoding="utf-8") as f:
+            gemini = f.read()
+        self.assertEqual(universal, gemini, "GEMINI.md는 prompts/universal.md 사본이어야 함")
+
+    def test_universal_prompt_fits_gpt_limit(self):
+        with open(os.path.join(ROOT, "prompts", "universal.md"), encoding="utf-8") as f:
+            self.assertLessEqual(len(f.read()), 8000)
+
+    def test_gemini_extension_manifest(self):
+        with open(os.path.join(ROOT, "gemini-extension.json"), encoding="utf-8") as f:
+            m = json.load(f)
+        self.assertEqual(m["contextFileName"], "GEMINI.md")
+
+
 if __name__ == "__main__":
     unittest.main()
