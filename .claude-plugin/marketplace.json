@@ -1,0 +1,12 @@
+{
+  "name": "water-engineer-tone",
+  "owner": { "name": "water-engineer-tone contributors" },
+  "plugins": [
+    {
+      "name": "water-engineer-tone",
+      "source": "./",
+      "description": "상하수도 엔지니어 어투·용어 스킬 (보고서·장표·검토의견·조치계획서)",
+      "version": "1.0.0"
+    }
+  ]
+}
