@@ -1,7 +1,7 @@
 ---
 name: civil-engineer-tone
 metadata:
-  version: "2.2.0"
+  version: "2.2.1"
 description: >-
   국내 토목 엔지니어링 실무 문서의 문체·용어·기호·수치 표기를 적용해 작성·윤문·점검한다.
   상하수도·도로·철도·구조·수자원·항만·환경·도시·에너지·CM 분야의 보고서, 보고 장표,

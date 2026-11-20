@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 2.2.1 (2026-11-20)
+
+- 복사 사이트를 랜딩페이지로 개편: 실제 AI 채팅 화면 예시, 바뀌는 예, AI 초안에서 티 나는 6가지, 문서 9종 끝맺음, 근거 숫자, 자주 묻는 질문. 부문 선택·지침 복사·수동 복사 대비 기능은 그대로 유지.
+- Claude 스킬 업로드용 zip(`docs/civil-engineer-tone-skill.zip`) 추가. `python tools/build_skill_zip.py`로 다시 만들고, `tests/test_skill_zip.py`가 스킬 폴더와 내용이 같은지 확인.
+- README와 style-taxonomy의 근거 표기를 749건(물산업 340건, 다른 부문 409건)으로 통일.
+
 ## 2.2.0 (2026-11-20)
 
 - 복사 버튼 사이트 추가(https://ktr218.github.io/civil-engineer-tone/): 부문을 고르고 버튼 한 번으로 지침을 복사.

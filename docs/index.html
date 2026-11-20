@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>엔지니어 말투 AI</title>
-<meta name="description" content="AI가 쓴 글을 토목 실무 문서 말투로 바꿔 주는 지침. 버튼 한 번으로 복사해 ChatGPT·Gemini·Claude에 붙여넣으세요.">
+<title>엔지니어 말투 AI · 토목 실무 문서체</title>
+<meta name="description" content="AI가 쓴 초안을 토목 실무 문서 말투로 바꿔 주는 지침. 버튼 한 번으로 복사해 ChatGPT·Gemini·Claude에 붙여넣으세요.">
+<meta name="theme-color" content="#061716">
+<meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="엔지니어 말투 AI">
 <meta property="og:title" content="엔지니어 말투 AI · 토목 실무 문서체">
@@ -17,140 +19,827 @@
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://ktr218.github.io/civil-engineer-tone/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23005050'/%3E%3Ctext x='32' y='45' font-size='36' font-weight='800' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'%3E%EB%A7%90%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap">
+<script>document.documentElement.classList.add("js")</script>
 <style>
-  :root { --bg:#F7F5F0; --ink:#0B3B3C; --green:#004442; --teal:#00605C; --gold:#B08D57; --body:#41524E; --line:#DDD7CA; --soft:#EEF5F3; --red:#B54708; --card:#FFFFFF; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0F1A1A; --ink:#E6F0EE; --green:#2E8B84; --teal:#5CC2B8; --gold:#D9B77E; --body:#B9C7C4; --line:#2B3A39; --soft:#17302E; --red:#F0A070; --card:#152423; } }
-  * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Pretendard",-apple-system,"Malgun Gothic",sans-serif; font-size:20px; line-height:1.6; word-break:keep-all; }
-  main { max-width:860px; margin:0 auto; padding:32px 16px 64px; }
-  .eyebrow { color:var(--gold); font-weight:700; letter-spacing:.08em; font-size:15px; }
-  h1 { font-size:clamp(34px,7vw,52px); line-height:1.2; margin:8px 0 12px; }
-  .lead { font-size:22px; color:var(--body); margin:0 0 20px; }
-  .ex { display:grid; grid-template-columns:1fr auto 1fr; gap:8px 14px; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin-bottom:36px; }
-  .ex .a { color:var(--red); } .ex .b { color:var(--teal); font-weight:700; } .ex .arr { color:var(--gold); font-weight:700; }
-  .step { display:flex; gap:16px; align-items:flex-start; margin:34px 0 14px; }
-  .num { flex:none; width:48px; height:48px; border-radius:50%; background:var(--green); color:#fff; font-weight:800; font-size:24px; display:flex; align-items:center; justify-content:center; }
-  .step h2 { font-size:28px; margin:4px 0 2px; }
-  .step p { margin:0; color:var(--body); }
-  .divs { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; }
-  .div { text-align:left; background:var(--card); border:2px solid var(--line); border-radius:14px; padding:14px 16px; font:inherit; color:var(--ink); cursor:pointer; min-height:72px; }
-  .div b { display:block; font-size:22px; }
-  .div span { font-size:16px; color:var(--body); }
-  .div[aria-pressed="true"] { border-color:var(--teal); background:var(--soft); box-shadow:0 0 0 3px color-mix(in srgb, var(--teal) 25%, transparent); }
-  .copy { width:100%; margin-top:8px; padding:22px; font:inherit; font-size:26px; font-weight:800; color:#fff; background:var(--green); border:0; border-radius:16px; cursor:pointer; }
-  .copy:active { transform:translateY(1px); }
-  .status { min-height:32px; margin-top:10px; font-weight:700; color:var(--teal); text-align:center; }
-  .ai { display:flex; gap:14px; flex-wrap:wrap; }
-  .ai a { flex:1 1 200px; display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 16px; color:var(--ink); text-decoration:none; font-weight:700; font-size:22px; }
-  .ai img { width:48px; height:48px; border-radius:12px; }
-  .chips { display:flex; flex-wrap:wrap; gap:10px; }
-  .chip { font:inherit; font-size:19px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:10px 18px; color:var(--ink); cursor:pointer; }
-  .tip { background:var(--soft); border-radius:14px; padding:16px 20px; margin-top:28px; }
-  .tip p { display:flex; gap:10px; margin:0; }
-  .tip p + p { margin-top:10px; }
-  .tip p > span:first-child { flex:none; }
-  .warn { margin-top:36px; padding-top:20px; border-top:1px solid var(--line); color:var(--body); font-size:18px; }
-  .warn b { color:var(--red); }
-  footer { margin-top:28px; font-size:16px; color:var(--body); }
-  footer a { color:var(--teal); }
-  @media (max-width:560px) { body { font-size:19px; } .ex { grid-template-columns:1fr; } .ex .arr { display:none; } .step h2 { font-size:24px; } }
+  :root{
+    --night:#061716; --nline:rgba(255,255,255,.07);
+    --paper:#F6F4EE; --card:#FFFFFF;
+    --ink:#0B2422; --body:#41514D; --muted:#5F6E6A; --line:#E2DDD1;
+    --teal:#00605C; --teal-2:#0A7A72; --mint:#34D9B3; --mint-2:#A4F3DF; --gold:#C9A46A;
+    --bad:#C2410C; --bad-bg:#FFF1E8; --good-bg:#E8F6F1; --good-line:#C6EADD;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    --latin:Montserrat,"Pretendard Variable",Pretendard,sans-serif;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  svg.i{width:1em;height:1em;flex:none}
+  button{font:inherit;color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:900px}
+  section[id]{scroll-margin-top:72px}
+  .skip{position:absolute;left:-9999px;top:10px;z-index:200;padding:10px 16px;border-radius:10px;background:#fff;color:var(--ink);font-weight:700}
+  .skip:focus{left:10px}
+  :focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+  .pc{display:inline}
+  .rise{animation:rise .9s var(--ease) both;animation-delay:var(--d,0s)}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:60;background:rgba(6,23,22,.8);-webkit-backdrop-filter:saturate(1.5) blur(16px);backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid var(--nline)}
+  .nav .wrap{display:flex;align-items:center;gap:32px;height:72px}
+  .brand{display:inline-flex;align-items:center;gap:14px;color:#fff;text-decoration:none;font-weight:800;font-size:19px;letter-spacing:-.02em;white-space:nowrap}
+  .brand .ci{width:auto;height:19px}
+  .brand .sep{width:1px;height:22px;background:rgba(255,255,255,.3)}
+  .nav-links{display:flex;gap:28px;margin-left:auto}
+  .nav-links a{color:#BFD3CE;text-decoration:none;font-size:17px;font-weight:600;transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;background:var(--mint);color:#05231F;font-weight:800;font-size:17px;text-decoration:none;white-space:nowrap;transition:transform .15s var(--ease),box-shadow .2s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px rgba(52,217,179,.9)}
+
+  /* ---------- shared dark background ---------- */
+  .dark{position:relative;isolation:isolate;overflow:hidden;background:var(--night);color:#E9F3F0}
+  .grid-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--nline) 1px,transparent 1px),linear-gradient(90deg,var(--nline) 1px,transparent 1px);background-size:64px 64px;background-position:center top;-webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 25%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 75% 65% at 50% 25%,#000 25%,transparent 78%)}
+  .aura{position:absolute;z-index:-2;border-radius:50%;filter:blur(90px);pointer-events:none;animation:drift 22s ease-in-out infinite alternate}
+  .a1{width:640px;height:640px;background:#0F8F7D;opacity:.55;top:-260px;left:-180px}
+  .a2{width:560px;height:560px;background:#2FD6B0;opacity:.3;top:140px;right:-220px;animation-delay:-7s}
+  .a3{width:460px;height:460px;background:#B08D57;opacity:.22;top:520px;left:28%;animation-delay:-14s}
+  @keyframes drift{to{transform:translate3d(60px,40px,0) scale(1.1)}}
+  .hl{background:linear-gradient(100deg,var(--mint-2) 0%,var(--mint) 42%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ---------- hero ---------- */
+  .hero{padding:104px 0 0}
+  .hero-in{max-width:1000px;margin:0 auto;text-align:center}
+  .pill{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#CFE6E0;font-size:16px;font-weight:600}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:ping 2.2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,217,179,.65)}70%,100%{box-shadow:0 0 0 12px rgba(52,217,179,0)}}
+  .hero h1{margin:30px 0 26px;font-size:clamp(40px,7.6vw,108px);line-height:1.08;letter-spacing:-.05em;font-weight:800;color:#fff}
+  .hero .sub{max-width:780px;margin:0 auto 42px;font-size:clamp(19px,2vw,24px);line-height:1.6;color:#B4C8C3}
+  .hero .sub b{color:#fff;font-weight:700}
+  .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:64px;padding:0 30px;border:0;border-radius:16px;font-size:21px;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .18s var(--ease),box-shadow .25s,background .25s}
+  .btn svg{font-size:24px}
+  .btn-mint{background:var(--mint);color:#05231F;box-shadow:0 14px 36px -12px rgba(52,217,179,.75)}
+  .btn-mint:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px rgba(52,217,179,.9)}
+  .btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.2)}
+  .btn-ghost:hover{background:rgba(255,255,255,.12)}
+  .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:30px 0 0;padding:0;list-style:none;color:#9DB5AF;font-size:16.5px}
+  .trust li{display:inline-flex;align-items:center;gap:8px}
+  .trust svg{color:var(--mint);font-size:20px}
+
+  /* hero chat window */
+  .stage{position:relative;max-width:1000px;margin:76px auto 0}
+  .stage::before{content:"";position:absolute;inset:-6% 4% 0;z-index:0;background:radial-gradient(closest-side,rgba(52,217,179,.38),transparent 70%);filter:blur(30px)}
+  .win{position:relative;z-index:1;overflow:hidden;background:#fff;color:var(--ink);border-radius:26px 26px 0 0;box-shadow:0 0 0 1px rgba(255,255,255,.5),0 -30px 120px -30px rgba(52,217,179,.35),0 50px 120px -40px rgba(0,0,0,.8)}
+  .win-bar{display:flex;align-items:center;gap:14px;height:58px;padding:0 22px;border-bottom:1px solid #EEF0EF;background:#FAFBFA}
+  .dots{display:flex;gap:8px}
+  .dots i{width:12px;height:12px;border-radius:50%;background:#E3E1DB}
+  .win-title{font-size:16px;font-weight:700;color:var(--muted)}
+  .win-ais{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .win-ais img{width:32px;height:32px;padding:4px;border-radius:9px;background:#fff;border:1px solid #E8EBEA;opacity:.35;filter:grayscale(1);transition:opacity .3s,filter .3s,transform .3s}
+  .win-ais img.on{opacity:1;filter:none;transform:scale(1.12);border-color:var(--good-line)}
+  .win-body{display:flex;flex-direction:column;gap:20px;min-height:410px;padding:30px clamp(18px,4vw,40px) 26px}
+  .sys{align-self:center;display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;background:var(--good-bg);color:var(--teal);font-size:15.5px;font-weight:700}
+  .msg{display:flex;align-items:flex-end;gap:14px}
+  .msg.me{justify-content:flex-end}
+  .bub{max-width:80%;padding:18px 22px;border-radius:22px;font-size:19px;line-height:1.6}
+  .me .bub{background:#F1F3F2;border-bottom-right-radius:6px}
+  .me .ask{display:block;margin-bottom:6px;font-weight:800;color:var(--ink)}
+  .me .src{display:block;color:#5D6B67}
+  .ai-av{flex:none;width:44px;height:44px;padding:6px;border-radius:14px;background:#fff;border:1px solid #E5E9E8;box-shadow:0 4px 12px -6px rgba(0,0,0,.2)}
+  .ai .bub{background:var(--good-bg);border:1px solid var(--good-line);border-bottom-left-radius:6px;font-weight:600;color:#08302C}
+  .out{min-height:1.6em;white-space:pre-wrap}
+  .caret::after{content:"";display:inline-block;width:2px;height:1.05em;margin-left:3px;vertical-align:-.15em;background:var(--teal);animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}
+  .tags.show{opacity:1;transform:none}
+  .tags span{padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--good-line);color:var(--teal);font-size:14.5px;font-weight:700}
+  .win-tabs{display:flex;gap:6px;padding:12px 16px;border-top:1px solid #EEF0EF;background:#FAFBFA;overflow-x:auto;scrollbar-width:none}
+  .win-tabs::-webkit-scrollbar{display:none}
+  .win-tabs button{position:relative;flex:none;padding:9px 18px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-size:16.5px;font-weight:700;cursor:pointer}
+  .win-tabs button:hover{color:var(--ink)}
+  .win-tabs button[aria-pressed="true"]{background:#fff;color:var(--teal);box-shadow:0 1px 0 #E5E9E8,0 4px 12px -6px rgba(0,0,0,.15)}
+  .win-tabs .bar{position:absolute;left:14px;right:14px;bottom:4px;height:2px;border-radius:2px;background:var(--mint);transform:scaleX(0);transform-origin:left}
+  .win-tabs button[aria-pressed="true"] .bar{animation:fill var(--dur,6s) linear forwards}
+  @keyframes fill{to{transform:scaleX(1)}}
+
+  /* ---------- marquee ---------- */
+  .band{padding:54px 0 46px;overflow:hidden}
+  .band-label{margin:0 0 22px;text-align:center;font-family:var(--latin);font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--muted)}
+  .mq{display:flex;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .mq + .mq{margin-top:14px}
+  .track{display:flex;flex:none;gap:14px;padding-right:14px;animation:mq 110s linear infinite}
+  .mq.rev .track{animation-direction:reverse;animation-duration:125s}
+  .mq:hover .track{animation-play-state:paused}
+  @keyframes mq{to{transform:translateX(-100%)}}
+  .pair{flex:none;display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:19px;white-space:nowrap}
+  .pair .f{color:var(--bad)}
+  .pair .ar{color:var(--gold);font-weight:800}
+  .pair .t{color:var(--teal);font-weight:800}
+
+  /* ---------- section heads ---------- */
+  .sec{padding:clamp(88px,11vw,140px) 0}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--latin);font-size:13.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+  .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:currentColor}
+  .h2{margin:16px 0 18px;font-size:clamp(34px,4.8vw,62px);line-height:1.14;letter-spacing:-.04em;font-weight:800;color:var(--ink)}
+  .lede{margin:0;max-width:720px;font-size:clamp(19px,1.7vw,22px);color:var(--body)}
+  .head{margin-bottom:clamp(40px,5vw,64px)}
+  .head.center{text-align:center}
+  .head.center .lede{margin:0 auto}
+  .head.split{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:20px 64px}
+  .head.split .h2{margin-bottom:0}
+  .dark .eyebrow{color:var(--mint)}
+  .dark .h2{color:#fff}
+  .dark .lede{color:#A9BFB9}
+
+  /* ---------- copy station ---------- */
+  .station{position:relative;isolation:isolate;padding-top:clamp(56px,7vw,96px)}
+  .station::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(0,96,92,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,96,92,.06) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 30%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 70% 55% at 50% 30%,#000 20%,transparent 75%)}
+  .panel{position:relative;max-width:1040px;margin:0 auto;padding:clamp(26px,5vw,64px);border-radius:32px;background:var(--card);border:1px solid var(--line);box-shadow:0 40px 100px -50px rgba(0,60,55,.35),0 2px 6px rgba(0,0,0,.03)}
+  .steps{margin:0;padding:0;list-style:none}
+  .st{position:relative;display:grid;grid-template-columns:64px 1fr;gap:0 28px;padding-bottom:56px}
+  .st:last-child{padding-bottom:0}
+  .st::before{content:"";position:absolute;left:31px;top:76px;bottom:10px;width:2px;background:repeating-linear-gradient(to bottom,#D9D4C8 0 6px,transparent 6px 12px)}
+  .st:last-child::before{display:none}
+  .num{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-family:var(--latin);font-size:26px;font-weight:800;transition:background .3s}
+  .num svg{display:none;font-size:30px}
+  .st.done .num{background:var(--teal)}
+  .st.done .num span{display:none}
+  .st.done .num svg{display:block}
+  .st h3{margin:10px 0 4px;font-size:clamp(25px,2.6vw,32px);line-height:1.3;letter-spacing:-.03em}
+  .opt{display:inline-block;margin-left:10px;padding:3px 12px;border-radius:999px;background:var(--good-bg);color:var(--teal);font-size:15px;font-weight:700;letter-spacing:0;vertical-align:middle}
+  .st .d{margin:0 0 22px;color:var(--body)}
+  .divs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .div{position:relative;display:flex;align-items:center;gap:16px;min-height:96px;padding:16px 18px;border:2px solid transparent;border-radius:20px;background:var(--paper);text-align:left;cursor:pointer;transition:border-color .2s,background .2s,transform .18s var(--ease),box-shadow .2s}
+  .div:hover{border-color:#CFE4DD;transform:translateY(-2px);box-shadow:0 12px 26px -16px rgba(0,60,55,.35)}
+  .div .ic{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#fff;color:var(--teal);font-size:28px;box-shadow:0 1px 2px rgba(0,0,0,.06);transition:background .2s,color .2s}
+  .div b{display:block;font-size:22px;line-height:1.3;letter-spacing:-.02em}
+  .div small{display:block;margin-top:2px;font-size:15.5px;line-height:1.4;color:var(--muted)}
+  .div[aria-pressed="true"]{border-color:var(--teal);background:var(--good-bg)}
+  .div[aria-pressed="true"] .ic{background:var(--teal);color:#fff}
+  .div[aria-pressed="true"]::after{content:"선택됨";position:absolute;top:10px;right:12px;padding:1px 9px;border-radius:999px;background:var(--teal);color:#fff;font-size:13px;font-weight:700}
+  .copy{position:relative;overflow:hidden;width:100%;height:88px;display:flex;align-items:center;justify-content:center;gap:14px;border:0;border-radius:22px;background:linear-gradient(135deg,#0A7A72,#004442);color:#fff;font-size:clamp(23px,2.6vw,29px);font-weight:800;letter-spacing:-.02em;cursor:pointer;box-shadow:0 22px 44px -20px rgba(0,96,92,.8);transition:transform .18s var(--ease),box-shadow .25s,background .3s}
+  .copy svg{font-size:32px}
+  .copy:hover{transform:translateY(-2px);box-shadow:0 28px 54px -20px rgba(0,96,92,.9)}
+  .copy::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
+  @keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+  .copy .ok-i,.copy .ok-t{display:none}
+  .copy.ok{background:linear-gradient(135deg,#17B28C,#0A7A62)}
+  .copy.ok .ok-i,.copy.ok .ok-t{display:inline}
+  .copy.ok .go-i,.copy.ok .go-t{display:none}
+  .pv{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:16px;padding:14px 18px;border:1px dashed #D3CDBF;border-radius:16px;background:var(--paper);font-size:17px;color:var(--muted)}
+  .pv code{font-family:inherit;font-weight:700;color:var(--teal)}
+  .status{min-height:30px;margin-top:12px;text-align:center;font-weight:700;color:var(--teal)}
+  .status a{color:inherit}
+  #manual{width:100%;height:170px;margin-top:8px;padding:12px;border:2px solid var(--teal);border-radius:14px;background:#fff;color:var(--ink);font:inherit;font-size:15px}
+  .ais{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ais a{display:flex;align-items:center;gap:14px;padding:16px 18px;border:2px solid transparent;border-radius:20px;background:var(--paper);color:var(--ink);text-decoration:none;font-size:22px;font-weight:800;transition:background .2s,border-color .2s,transform .18s var(--ease),box-shadow .2s}
+  .ais img{width:52px;height:52px;padding:7px;border-radius:15px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .ais .x{margin-left:auto;color:var(--muted);font-size:22px}
+  .ais a:hover{background:#fff;border-color:var(--teal);transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(0,60,55,.45)}
+  .st.go .ais a{animation:nudge 1.4s ease-in-out 2}
+  @keyframes nudge{50%{border-color:var(--mint);box-shadow:0 0 0 6px rgba(52,217,179,.25)}}
+  .keys{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px;color:var(--muted);font-size:17px}
+  kbd{display:inline-grid;place-items:center;min-width:54px;height:46px;padding:0 14px;border:1px solid #D2CDC2;border-bottom-width:4px;border-radius:11px;background:#fff;color:var(--ink);font-family:var(--latin);font-size:17px;font-weight:700}
+  .keys .plus{font-weight:800;color:var(--ink)}
+  .keys > svg{font-size:22px;color:var(--gold)}
+  .keys .mob{margin-left:6px}
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1.5px solid var(--line);border-radius:999px;background:#fff;font-size:19px;font-weight:600;cursor:pointer;transition:border-color .2s,color .2s,transform .18s var(--ease)}
+  .chip svg{color:var(--muted);font-size:19px}
+  .chip:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-1px)}
+  .chip:hover svg{color:var(--teal)}
+  .tips{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px}
+  .tipc{display:flex;gap:14px;padding:20px 22px;border-radius:20px;background:var(--paper)}
+  .tipc .ic{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#FFF4DF;color:#A1752F;font-size:24px}
+  .tipc .t{display:block;margin-bottom:2px;font-size:19px}
+  .tipc p{margin:0;font-size:17px;line-height:1.55;color:var(--body)}
+
+  /* ---------- why (AI tells) ---------- */
+  .why{background:#fff}
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tell{display:flex;flex-direction:column;padding:28px;border:1px solid var(--line);border-radius:24px;background:var(--paper);transition:transform .25s var(--ease),box-shadow .25s}
+  .tell:hover{transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(0,60,55,.4)}
+  .tell-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .tell .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#fff;color:var(--teal);font-size:27px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .tell .no{font-family:var(--latin);font-size:15px;font-weight:800;letter-spacing:.08em;color:#B4AE9F}
+  .tell h3{margin:0 0 6px;font-size:25px;letter-spacing:-.03em}
+  .tell .d{margin:0 0 20px;font-size:17.5px;line-height:1.55;color:var(--body)}
+  .ba{display:grid;gap:8px;margin-top:auto}
+  .ba p{display:flex;align-items:baseline;gap:10px;margin:0;padding:12px 14px;border-radius:14px;font-size:17px;line-height:1.5}
+  .ba em{flex:none;padding:2px 8px;border-radius:6px;background:#fff;font-style:normal;font-size:12.5px;font-weight:800}
+  .ba .x{background:var(--bad-bg);color:#9A3412}
+  .ba .x em{color:var(--bad)}
+  .ba .o{background:var(--good-bg);color:#064E49;font-weight:700}
+  .ba .o em{color:var(--teal)}
+
+  /* ---------- document types ---------- */
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tcard{position:relative;overflow:hidden;padding:30px 28px 28px;border:1px solid var(--line);border-radius:24px;background:#fff;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+  .tcard:hover{transform:translateY(-3px);border-color:var(--good-line);box-shadow:0 24px 46px -30px rgba(0,60,55,.4)}
+  .tcard .code{position:absolute;top:8px;right:20px;font-family:var(--latin);font-size:84px;font-weight:900;line-height:1;color:var(--teal);opacity:.08;transition:opacity .25s}
+  .tcard:hover .code{opacity:.16}
+  .tcard h3{margin:0 0 10px;font-size:24px;letter-spacing:-.03em}
+  .tcard p{margin:0;font-size:18.5px;line-height:1.6;font-weight:700;color:var(--teal)}
+
+  /* ---------- proof ---------- */
+  .proof .grid-bg{-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000 20%,transparent 80%);mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000 20%,transparent 80%)}
+  .proof .a1{top:auto;bottom:-300px;left:-200px}
+  .proof .a2{top:-200px;opacity:.22}
+  .sgrid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14)}
+  .stat{padding:40px 28px 4px;border-right:1px solid rgba(255,255,255,.1)}
+  .stat:first-child{padding-left:0}
+  .stat:last-child{border-right:0}
+  .big{display:flex;align-items:baseline;gap:6px;font-family:var(--latin);font-size:clamp(60px,7.4vw,108px);font-weight:800;line-height:1;letter-spacing:-.04em;background:linear-gradient(180deg,#fff 30%,var(--mint-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .big small{font-family:var(--sans);font-size:.34em;font-weight:700;letter-spacing:0}
+  .stat p{margin:20px 0 0;font-size:18px;line-height:1.55;color:#C9DAD5}
+  .stat p span{display:block;margin-top:6px;font-size:15.5px;color:#86A19A}
+
+  /* ---------- fields ---------- */
+  .words{margin:0;text-align:center;font-size:clamp(38px,5.6vw,80px);font-weight:800;line-height:1.2;letter-spacing:-.05em;color:var(--ink)}
+  .words span{display:inline-block;margin:0 .14em;transition:color .3s,transform .3s var(--ease)}
+  .words .o{color:#A9D3C8}
+  .words span:hover{color:var(--teal);transform:translateY(-4px)}
+
+  /* ---------- faq ---------- */
+  .faq{background:#fff}
+  .qa{border-top:1px solid var(--line)}
+  .qa:last-child{border-bottom:1px solid var(--line)}
+  .qa summary{display:flex;align-items:center;gap:16px;padding:26px 4px;list-style:none;cursor:pointer;font-size:clamp(20px,2.2vw,24px);font-weight:800;letter-spacing:-.02em}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa .pm{flex:none;width:40px;height:40px;margin-left:auto;border-radius:50%;display:grid;place-items:center;background:var(--paper);color:var(--teal);font-size:22px;transition:transform .3s,background .3s}
+  .qa[open] .pm{transform:rotate(180deg);background:var(--good-bg)}
+  .qa .a{padding:0 4px 28px;font-size:19px;color:var(--body)}
+  .qa .a p{margin:0}
+  .qa .a p + p{margin-top:10px}
+  .qa code{padding:2px 8px;border-radius:6px;background:var(--paper);font-family:Consolas,ui-monospace,monospace;font-size:.86em;color:var(--ink);word-break:break-all}
+  .dl{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:12px 20px;border-radius:14px;background:var(--ink);color:#fff;font-weight:800;text-decoration:none;transition:transform .18s var(--ease),background .2s}
+  .dl:hover{background:var(--teal);transform:translateY(-1px)}
+
+  /* ---------- final ---------- */
+  .final{padding:clamp(100px,13vw,170px) 0;text-align:center}
+  .final .a1{top:-200px;left:auto;right:-160px}
+  .final .a2{top:auto;bottom:-260px;left:-160px;right:auto}
+  .final h2{margin:0 0 22px;font-size:clamp(40px,6.4vw,92px);line-height:1.08;letter-spacing:-.05em;font-weight:800;color:#fff}
+  .final p{max-width:640px;margin:0 auto 40px;font-size:clamp(19px,2vw,23px);color:#A9BFB9}
+  .btn-xl{height:76px;padding:0 40px;border-radius:20px;font-size:24px}
+  .btn-xl svg{font-size:28px}
+  .final-ais{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin-top:36px;color:#86A19A;font-size:16px}
+  .final-ais img{width:40px;height:40px;padding:5px;border-radius:12px;background:#fff}
+
+  /* ---------- footer ---------- */
+  .foot{padding:40px 0 48px;border-top:1px solid var(--nline);background:var(--night);color:#86A19A;font-size:16px}
+  .foot .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px}
+  .foot nav{display:flex;flex-wrap:wrap;gap:22px}
+  .foot nav a{color:#BFD3CE;text-decoration:none}
+  .foot nav a:hover{color:#fff}
+  .foot p{width:100%;margin:0}
+
+  /* ---------- toast ---------- */
+  .toast{position:fixed;left:50%;bottom:28px;z-index:90;display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);padding:16px 24px;border-radius:999px;background:#0B2422;color:#fff;font-size:19px;font-weight:700;box-shadow:0 20px 50px -14px rgba(0,0,0,.5);opacity:0;transform:translate(-50%,150%);transition:transform .4s var(--ease),opacity .3s;pointer-events:none}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast svg{font-size:24px;color:var(--mint)}
+  .toast.bad svg{color:#FFB38A}
+
+  /* ---------- reveal ---------- */
+  .js [data-r]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+  .js [data-r].in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1000px){
+    .nav-links{display:none}
+    .nav-cta{margin-left:auto}
+    .head.split{grid-template-columns:1fr}
+    .bento,.tgrid{grid-template-columns:repeat(2,1fr)}
+    .divs{grid-template-columns:repeat(2,1fr)}
+    .sgrid{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(2){border-right:0}
+    .stat:nth-child(3){padding-left:0}
+    .stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1)}
+  }
+  @media (max-width:760px){
+    body{font-size:18px}
+    .wrap{padding:0 18px}
+    .pc{display:none}
+    .brand{font-size:17px;gap:12px}
+    .hero{padding-top:64px}
+    .cta{flex-direction:column;align-items:stretch;max-width:420px;margin:0 auto}
+    .btn{height:60px;font-size:19px}
+    .stage{margin-top:52px}
+    .win-title{display:none}
+    .win-body{min-height:500px;padding:22px 14px}
+    .bub{max-width:90%;padding:14px 16px;font-size:17.5px}
+    .ai-av{width:36px;height:36px;border-radius:11px;padding:5px}
+    .st{grid-template-columns:1fr;gap:14px}
+    .st::before{display:none}
+    .num{width:52px;height:52px;font-size:22px}
+    .divs,.ais,.tips,.bento,.tgrid{grid-template-columns:1fr}
+    .copy{height:78px}
+    .panel{border-radius:24px}
+  }
+  @media (max-width:520px){
+    .sgrid{grid-template-columns:1fr}
+    .stat{padding-left:0;border-right:0;border-top:1px solid rgba(255,255,255,.1)}
+    .stat:first-child{border-top:0}
+    .keys .mob{width:100%;margin:4px 0 0}
+    .nav .brand .sep,.nav .brand-name{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .js [data-r]{opacity:1;transform:none}
+    .mq{-webkit-mask-image:none;mask-image:none}
+    .track{flex-wrap:wrap;justify-content:center;padding:0 16px}
+    .track[aria-hidden="true"]{display:none}
+    .tags{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
+<a class="skip" href="#start">지침 복사로 바로 가기</a>
+
+<header class="nav" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img class="ci" src="img/dohwa_white.svg" alt="DOHWA" width="117" height="19"><span class="sep" aria-hidden="true"></span><span class="brand-name">엔지니어 말투 AI</span></a>
+    <nav class="nav-links" aria-label="페이지 안내">
+      <a href="#start">사용법</a>
+      <a href="#why">달라지는 점</a>
+      <a href="#types">문서 9종</a>
+      <a href="#proof">근거</a>
+      <a href="#faq">자주 묻는 질문</a>
+    </nav>
+    <a class="nav-cta" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사</a>
+  </div>
+</header>
+
 <main>
-  <div class="eyebrow">토목 엔지니어 말투 AI</div>
-  <h1>AI가 쓴 글을<br>우리 회사 문서 말투로</h1>
-  <p class="lead">설치·로그인 없이 버튼 한 번. ChatGPT·Gemini·Claude 어디서나 됩니다.</p>
-  <div class="ex" aria-label="바뀌는 예">
-    <span class="a">반영할게요!</span><span class="arr">→</span><span class="b">반영하겠음</span>
-    <span class="a">이번 사업</span><span class="arr">→</span><span class="b">금회 사업</span>
-    <span class="a">650 m3/day</span><span class="arr">→</span><span class="b">Q=650㎥/일</span>
-  </div>
+  <!-- HERO -->
+  <section class="hero dark" aria-labelledby="hero-t">
+    <div class="aura a1"></div><div class="aura a2"></div><div class="aura a3"></div>
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <div class="hero-in">
+        <span class="pill rise"><span class="dot"></span>토목 전 부문 · 설치·로그인 없이</span>
+        <h1 id="hero-t" class="rise" style="--d:.08s">AI가 쓴 초안을<br><span class="hl">엔지니어 말투</span>로</h1>
+        <p class="sub rise" style="--d:.16s">지침을 ChatGPT·Gemini·Claude 채팅창에 <b>한 번만 붙여넣으면</b>,<br class="pc"> 그다음부터 보고서·검토의견·공문 말투로 바꿔 씁니다.</p>
+        <div class="cta rise" style="--d:.24s">
+          <a class="btn btn-mint" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14"></path><path d="M18 13l-6 6"></path><path d="M6 13l6 6"></path></svg>지금 바로 써 보기</a>
+          <a class="btn btn-ghost" href="#why">무엇이 달라지나요?</a>
+        </div>
+        <ul class="trust rise" style="--d:.32s">
+          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>사내 실무 문서 749건 근거</li>
+          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>문서 9종 끝맺음</li>
+          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>모르는 수치는 지어내지 않음</li>
+        </ul>
+      </div>
 
-  <div class="step"><div class="num">1</div><div><h2>내 부문 고르기</h2><p>고르면 그 부문에서 쓰는 용어로 바꿔 줍니다. 몰라도 괜찮아요(고르지 않아도 됩니다).</p></div></div>
-  <div class="divs" id="divs">
-    <button class="div" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><b>💧 물산업</b><span>상하수도 · 수자원</span></button>
-    <button class="div" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><b>🛣️ 교통</b><span>도로 · 공항 · 철도</span></button>
-    <button class="div" data-line="나는 인프라부문 하천 담당이야." aria-pressed="false"><b>🌉 인프라</b><span>하천 · 항만 · 구조 · 지반 · 환경평가</span></button>
-    <button class="div" data-line="나는 도시부문 담당이야." aria-pressed="false"><b>🏙️ 도시</b><span>도시계획 · 단지 · 조경</span></button>
-    <button class="div" data-line="나는 에너지부문 담당이야." aria-pressed="false"><b>⚡ 에너지</b><span>발전 · 집단에너지</span></button>
-    <button class="div" data-line="나는 CM부문 담당이야." aria-pressed="false"><b>🦺 CM · 건설</b><span>건설사업관리 · 감리</span></button>
-  </div>
+      <div class="stage rise" style="--d:.4s">
+        <div class="win" role="group" aria-label="사용 예시: AI 채팅창 화면">
+          <div class="win-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="win-title">AI 채팅창</span>
+            <span class="win-ais"><img src="img/chatgpt.png" alt="ChatGPT" class="on"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></span>
+          </div>
+          <div class="win-body">
+            <span class="sys"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"></path><path d="M15 19l2 2l4 -4"></path></svg>엔지니어 말투 지침 적용됨</span>
+            <div class="msg me"><div class="bub"><span class="ask" id="d-ask">이 문단 보고서체로 바꿔줘</span><span class="src" id="d-src">이번 도로 확장은 교통 체증을 획기적으로 해소하는 매우 중요한 프로젝트입니다 🚗</span></div></div>
+            <div class="msg ai"><img class="ai-av" id="d-av" src="img/chatgpt.png" alt=""><div class="bub"><div class="out" id="d-out">금회 과업구간은 교통량 증가로 교통소통이 불량하여 4차로 확장이 필요한 실정이다.</div><div class="tags show" id="d-tags"><span>~입니다 → ~실정이다</span><span>과장·이모지 삭제</span><span>이번 → 금회</span></div></div></div>
+          </div>
+          <div class="win-tabs" id="d-tabs" aria-label="문서 종류별 예시">
+            <button type="button" aria-pressed="true">보고서<i class="bar"></i></button>
+            <button type="button" aria-pressed="false">검토의견<i class="bar"></i></button>
+            <button type="button" aria-pressed="false">조치결과<i class="bar"></i></button>
+            <button type="button" aria-pressed="false">공문<i class="bar"></i></button>
+            <button type="button" aria-pressed="false">장표<i class="bar"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="step"><div class="num">2</div><div><h2>지침 복사하기</h2><p>아래 버튼을 누르면 지침 전체가 복사됩니다.</p></div></div>
-  <button class="copy" id="copy">📋 지침 복사하기</button>
-  <div class="status" id="status" role="status"></div>
-  <textarea id="manual" hidden readonly aria-label="복사할 지침" style="width:100%;height:160px;font:inherit;font-size:15px;border:2px solid var(--teal);border-radius:12px;padding:10px;background:var(--card);color:var(--ink)"></textarea>
+  <!-- MARQUEE -->
+  <section class="band" aria-label="바뀌는 예">
+    <p class="band-label">BEFORE → AFTER</p>
+    <div class="mq"><div class="track"><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span></div><div class="track" aria-hidden="true"><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span></div></div>
+    <div class="mq rev"><div class="track"><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span></div><div class="track" aria-hidden="true"><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span></div></div>
+  </section>
 
-  <div class="step"><div class="num">3</div><div><h2>AI 채팅창에 붙여넣기</h2><p>아래에서 AI를 열고, 입력칸에 <b>Ctrl+V</b>(휴대폰은 길게 눌러 붙여넣기) 후 보내세요.</p></div></div>
-  <div class="ai">
-    <a href="https://chatgpt.com/" target="_blank" rel="noopener"><img src="img/chatgpt.png" alt="">ChatGPT</a>
-    <a href="https://gemini.google.com/" target="_blank" rel="noopener"><img src="img/gemini.png" alt="">Gemini</a>
-    <a href="https://claude.ai/" target="_blank" rel="noopener"><img src="img/claude.png" alt="">Claude</a>
-  </div>
+  <!-- COPY STATION -->
+  <section class="sec station" id="start" aria-labelledby="start-t">
+    <div class="wrap">
+      <div class="head center" data-r>
+        <span class="eyebrow">How to use</span>
+        <h2 class="h2" id="start-t">버튼 한 번이면 준비 끝</h2>
+        <p class="lede">설치도 로그인도 없습니다. 위에서부터 차례로 따라 하세요.</p>
+      </div>
+      <div class="panel" data-r>
+        <ol class="steps">
+          <li class="st" id="st1">
+            <div class="num"><span>1</span><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l5 5l10 -10"></path></svg></div>
+            <div>
+              <h3>내 부문 고르기<span class="opt">선택</span></h3>
+              <p class="d">고르면 그 부문 용어를 먼저 씁니다. 몰라도 괜찮아요.</p>
+              <div class="divs" id="divs">
+                <button type="button" class="div" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span><span><b>물산업</b><small>상하수도 · 수자원</small></span></button>
+                <button type="button" class="div" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 19l4 -14"></path><path d="M16 5l4 14"></path><path d="M12 8v-2"></path><path d="M12 13v-2"></path><path d="M12 18v-2"></path></svg></span><span><b>교통</b><small>도로 · 공항 · 철도</small></span></button>
+                <button type="button" class="div" data-line="나는 인프라부문 하천 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 7h12a2 2 0 0 1 2 2v9a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-2a4 4 0 0 0 -8 0v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-9a2 2 0 0 1 2 -2"></path></svg></span><span><b>인프라</b><small>하천 · 항만 · 구조 · 지반 · 환경평가</small></span></button>
+                <button type="button" class="div" data-line="나는 도시부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 21l18 0"></path><path d="M5 21v-14l8 -4v18"></path><path d="M19 21v-10l-6 -4"></path><path d="M9 9l0 .01"></path><path d="M9 12l0 .01"></path><path d="M9 15l0 .01"></path><path d="M9 18l0 .01"></path></svg></span><span><b>도시</b><small>도시계획 · 단지 · 조경</small></span></button>
+                <button type="button" class="div" data-line="나는 에너지부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg></span><span><b>에너지</b><small>발전 · 집단에너지</small></span></button>
+                <button type="button" class="div" data-line="나는 CM부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 4a9 9 0 0 1 5.656 16h-11.312a9 9 0 0 1 5.656 -16"></path><path d="M20 9h-8.8a1 1 0 0 0 -.968 1.246c.507 2 1.596 3.418 3.268 4.254c2 1 4.333 1.5 7 1.5"></path></svg></span><span><b>CM · 건설</b><small>건설사업관리 · 감리</small></span></button>
+              </div>
+            </div>
+          </li>
+          <li class="st" id="st2">
+            <div class="num"><span>2</span><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l5 5l10 -10"></path></svg></div>
+            <div>
+              <h3>지침 복사하기</h3>
+              <p class="d">누르면 지침 전체가 복사됩니다.</p>
+              <button type="button" class="copy" id="copy"><span class="go-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg></span><span class="ok-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg></span><span class="go-t">지침 복사하기</span><span class="ok-t">복사됐습니다</span></button>
+              <div class="pv"><span>맨 끝에 함께 붙는 문장</span><code id="pv">앞으로 이대로 써줘.</code></div>
+              <div class="status" id="status" role="status"></div>
+              <textarea id="manual" hidden readonly aria-label="복사할 지침"></textarea>
+            </div>
+          </li>
+          <li class="st" id="st3">
+            <div class="num"><span>3</span><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l5 5l10 -10"></path></svg></div>
+            <div>
+              <h3>AI 열고 붙여넣기</h3>
+              <p class="d">AI를 열고 입력칸에 붙여넣은 뒤 보내세요.</p>
+              <div class="ais">
+                <a href="https://chatgpt.com/" target="_blank" rel="noopener"><img src="img/chatgpt.png" alt="">ChatGPT<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+                <a href="https://gemini.google.com/" target="_blank" rel="noopener"><img src="img/gemini.png" alt="">Gemini<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+                <a href="https://claude.ai/" target="_blank" rel="noopener"><img src="img/claude.png" alt="">Claude<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+              </div>
+              <div class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l14 0"></path><path d="M13 18l6 -6"></path><path d="M13 6l6 6"></path></svg><kbd>Enter</kbd><span class="mob">휴대폰은 입력칸을 길게 눌러 [붙여넣기]</span></div>
+            </div>
+          </li>
+          <li class="st" id="st4">
+            <div class="num"><span>4</span><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l5 5l10 -10"></path></svg></div>
+            <div>
+              <h3>바꿀 글 붙여넣고 한마디</h3>
+              <p class="d">바꿀 글을 붙여넣고 이렇게 말하세요. 누르면 복사됩니다.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-text="이 문단 보고서체로 바꿔줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 문단 보고서체로 바꿔줘</button>
+                <button type="button" class="chip" data-text="이 내용 검토의견으로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 내용 검토의견으로 써줘</button>
+                <button type="button" class="chip" data-text="조치결과로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>조치결과로 써줘</button>
+                <button type="button" class="chip" data-text="공문으로 만들어줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>공문으로 만들어줘</button>
+                <button type="button" class="chip" data-text="장표 문구로 줄여줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>장표 문구로 줄여줘</button>
+                <button type="button" class="chip" data-text="용어랑 단위만 점검해줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>용어랑 단위만 점검해줘</button>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <div class="tips">
+          <div class="tipc"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg></span><div><strong class="t">팀마다 말투가 다르면</strong><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요.</p></div></div>
+          <div class="tipc"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span><div><strong class="t">매번 붙여넣기 번거로우면</strong><p>ChatGPT <b>GPT 만들기</b>, Gemini <b>Gem 만들기</b>의 지침 칸에 한 번만 넣어 두세요.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="step"><div class="num">4</div><div><h2>바꿀 글 + 문서 종류 말하기</h2><p>바꾸고 싶은 글을 붙여넣고 이렇게 말하세요. 누르면 복사됩니다.</p></div></div>
-  <div class="chips">
-    <button class="chip">이 문단 보고서체로 바꿔줘</button>
-    <button class="chip">이 내용 검토의견으로 써줘</button>
-    <button class="chip">조치결과로 써줘</button>
-    <button class="chip">공문으로 만들어줘</button>
-    <button class="chip">장표 문구로 줄여줘</button>
-    <button class="chip">용어랑 단위만 점검해줘</button>
-  </div>
+  <!-- WHY -->
+  <section class="sec why" id="why" aria-labelledby="why-t">
+    <div class="wrap">
+      <div class="head split" data-r>
+        <div>
+          <span class="eyebrow">Why</span>
+          <h2 class="h2" id="why-t">AI 초안,<br>여기서 티가 납니다</h2>
+        </div>
+        <p class="lede">지침은 이 여섯 가지를 잡아 실무 문서체로 바꿉니다. 내용과 수치는 그대로 둡니다.</p>
+      </div>
+      <div class="bento">
+        <article class="tell" data-r>
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"></path></svg></span><span class="no">01</span></div>
+          <h3>경어체</h3>
+          <p class="d">보고서 본문에 ~입니다를 씁니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>검토한 결과 적정한 것 같습니다.</p><p class="o"><em>지침</em>검토결과 적정한 것으로 판단된다.</p></div>
+        </article>
+        <article class="tell" data-r style="--d:.08s">
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6"></path></svg></span><span class="no">02</span></div>
+          <h3>과장·상투어</h3>
+          <p class="d">획기적·혁신적 같은 말이 붙습니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>삶의 질이 획기적으로 향상될 것으로 기대됩니다.</p><p class="o"><em>지침</em>생활환경 개선에 기여할 것으로 판단된다.</p></div>
+        </article>
+        <article class="tell" data-r style="--d:.16s">
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 9l14 0"></path><path d="M5 15l14 0"></path><path d="M11 4l-4 16"></path><path d="M17 4l-4 16"></path></svg></span><span class="no">03</span></div>
+          <h3>마크다운 기호</h3>
+          <p class="d">HWP·PPT로 옮기면 ###, ** 가 그대로 남습니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>### 개선방안 **매우 중요**</p><p class="o"><em>지침</em>□ 개선방안</p></div>
+        </article>
+        <article class="tell" data-r>
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 10l.01 0"></path><path d="M15 10l.01 0"></path><path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path></svg></span><span class="no">04</span></div>
+          <h3>이모지·느낌표</h3>
+          <p class="d">공문서에 쓰지 않는 기호가 섞입니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>반영했습니다! 🚀</p><p class="o"><em>지침</em>반영하였음.</p></div>
+        </article>
+        <article class="tell" data-r style="--d:.08s">
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 9h8"></path><path d="M8 13h6"></path><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5"></path><path d="M16 19h6"></path><path d="M19 16v6"></path></svg></span><span class="no">05</span></div>
+          <h3>묻지 않은 덧붙임</h3>
+          <p class="d">한계점, “참고로”, 끝인사를 붙입니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>필요하시면 말씀해 주세요!</p><p class="o"><em>지침</em>(덧붙임 없이 본문만)</p></div>
+        </article>
+        <article class="tell" data-r style="--d:.16s">
+          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M17 3l4 4l-14 14l-4 -4l14 -14"></path><path d="M16 7l-1.5 -1.5"></path><path d="M13 10l-1.5 -1.5"></path><path d="M10 13l-1.5 -1.5"></path><path d="M7 16l-1.5 -1.5"></path></svg></span><span class="no">06</span></div>
+          <h3>일반어·단위</h3>
+          <p class="d">현장에서 쓰지 않는 말과 단위를 씁니다.</p>
+          <div class="ba"><p class="x"><em>AI</em>물탱크 · 오래된 관 · 650 m3/day</p><p class="o"><em>지침</em>배수지 · 노후관로 · Q=650㎥/일</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <div class="tip"><p><span>💡</span><span><b>팀마다 말투가 다르면</b> 우리 팀이 쓴 문서 2~3개를 붙여넣고 "앞으로 이 문서들 말투에 맞춰줘"라고 하세요.</span></p><p><span>💡</span><span><b>매번 붙여넣기 번거로우면</b> ChatGPT <b>GPT 만들기</b>, Gemini <b>Gem 만들기</b>의 지침 칸에 한 번만 넣어 두세요.</span></p></div>
+  <!-- DOCUMENT TYPES -->
+  <section class="sec types" id="types" aria-labelledby="types-t">
+    <div class="wrap">
+      <div class="head center" data-r>
+        <span class="eyebrow">9 Document types</span>
+        <h2 class="h2" id="types-t">문서마다<br>끝맺음이 다릅니다</h2>
+        <p class="lede">“보고서체로”, “검토의견으로”처럼 문서 종류를 말하면 그 문서의 끝맺음과 기호로 씁니다.</p>
+      </div>
+      <div class="tgrid">
+        <article class="tcard" data-r><span class="code" aria-hidden="true">R</span><h3>보고서 본문</h3><p>~하였다 · ~것으로 판단된다 · ~실정이다</p></article>
+        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">S</span><h3>설계기준·과업지시서</h3><p>~을 원칙으로 한다 · ~하여야 한다</p></article>
+        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">B</span><h3>장표·회의록</h3><p>□ ○ - · 개조식 · ~수립 · ~필요</p></article>
+        <article class="tcard" data-r><span class="code" aria-hidden="true">C</span><h3>검토의견</h3><p>~제시 필요 · ~검토 필요 · ~누락</p></article>
+        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">A</span><h3>조치계획·결과</h3><p>~반영하였음 · ~반영하겠음</p></article>
+        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">V</span><h3>설계VE 제안</h3><p>~변경하자 · ~최적화하자</p></article>
+        <article class="tcard" data-r><span class="code" aria-hidden="true">P</span><h3>발표 원고</h3><p>~보고 드리겠습니다 · ~되겠습니다</p></article>
+        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">M</span><h3>내부 메일</h3><p>~공유드립니다 · ~검토 부탁드립니다</p></article>
+        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">G</span><h3>공문</h3><p>~제출하오니 검토하여 주시기 바랍니다. 끝.</p></article>
+      </div>
+    </div>
+  </section>
 
-  <div class="warn">⚠️ 모르는 숫자는 지어내지 않고 ○○ / [확인 필요]로 남깁니다. <b>최종 확인은 작성자</b>가 합니다.<br>⚠️ 대외비·개인정보가 있는 문장은 <b>외부 AI에 넣지 마세요.</b></div>
+  <!-- PROOF -->
+  <section class="sec proof dark" id="proof" aria-labelledby="proof-t">
+    <div class="aura a1"></div><div class="aura a2"></div>
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <div class="head split" data-r>
+        <div>
+          <span class="eyebrow">Evidence</span>
+          <h2 class="h2" id="proof-t">감이 아니라<br>실무 문서에서 뽑았습니다</h2>
+        </div>
+        <p class="lede">사내 실무 문서의 끝맺음·기호·용어 빈도를 집계해 규칙을 만들고, 사람이 쓴 문서로 검사기를 검증했습니다.</p>
+      </div>
+      <div class="sgrid">
+        <div class="stat" data-r><div class="big"><span data-count="749">749</span><small>건</small></div><p>사내 실무 문서에서 끝맺음·기호·용어 집계<span>물산업 340 · 다른 부문 409</span></p></div>
+        <div class="stat" data-r style="--d:.08s"><div class="big"><span data-count="87">87</span><small>%</small></div><p>사람이 쓴 문서 715건 중 A등급<span>멀쩡한 문서는 괜히 고치지 않습니다</span></p></div>
+        <div class="stat" data-r style="--d:.16s"><div class="big"><span data-count="9">9</span><small>종</small></div><p>문서 종류별 끝맺음 규칙<span>보고서부터 공문까지</span></p></div>
+        <div class="stat" data-r style="--d:.24s"><div class="big"><span data-count="0">0</span><small>건</small></div><p>배포물에 넣은 원문·사업명·수치<span>규칙만 담았습니다</span></p></div>
+      </div>
+    </div>
+  </section>
 
-  <footer>지침 원문: <a href="https://raw.githubusercontent.com/ktr218/civil-engineer-tone/main/prompts/universal.md">universal.md</a> · 저장소: <a href="https://github.com/ktr218/civil-engineer-tone">github.com/ktr218/civil-engineer-tone</a> · 회사가 공식 배포하는 자료는 아닙니다.</footer>
+  <!-- FIELDS -->
+  <section class="sec fields" aria-labelledby="fields-t">
+    <div class="wrap">
+      <div class="head center" data-r>
+        <span class="eyebrow">All civil divisions</span>
+        <h2 class="h2" id="fields-t">토목 전 부문에서 씁니다</h2>
+        <p class="lede">끝맺음·기호·단위는 전 부문 공통이고, 용어는 고른 부문에 맞춰 씁니다.</p>
+      </div>
+      <p class="words" data-r><span>상하수도</span><span class="o">도로</span><span>철도</span><span class="o">하천</span><span>항만</span><br class="pc"><span class="o">구조</span><span>지반</span><span class="o">환경</span><span>도시</span><span class="o">에너지</span><span>CM</span></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec faq" id="faq" aria-labelledby="faq-t">
+    <div class="wrap narrow">
+      <div class="head center" data-r>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="h2" id="faq-t">알아 두세요</h2>
+      </div>
+      <div data-r>
+        <details class="qa" open><summary>팀마다 말투가 다르면요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요. 팀 예시가 지침보다 우선합니다.</p></div></details>
+        <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 5천여 자라 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
+        <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
+        <details class="qa"><summary>모르는 숫자를 지어내지 않나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>입력에 없는 수치·사업명·법 조항은 ○○ 또는 [확인 필요]로 남깁니다. 결과 뒤에 무엇을 바꿨는지 3~6줄로 알려 줍니다. 최종 확인은 작성자가 합니다.</p></div></details>
+        <details class="qa"><summary>회사 자료를 넣어도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>대외비·개인정보가 있는 문장은 외부 AI에 넣지 마세요. 말투만 바꿀 때는 사업명·수치를 ○○로 바꿔 넣어도 됩니다.</p></div></details>
+        <details class="qa"><summary>휴대폰에서도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>됩니다. [지침 복사하기]를 누른 뒤 AI 앱 입력칸을 길게 눌러 [붙여넣기] 하세요.</p></div></details>
+        <details class="qa"><summary>어떤 AI에서 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>ChatGPT·Gemini·Claude 등 채팅형 AI라면 어디서나 됩니다. 붙여넣은 대화 안에서는 계속 이 말투로 씁니다.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final dark" aria-labelledby="final-t">
+    <div class="aura a1"></div><div class="aura a2"></div>
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <h2 id="final-t" data-r>오늘 쓰는 보고서부터<br><span class="hl">엔지니어 말투</span>로</h2>
+      <p data-r style="--d:.08s">지침을 복사해 AI 채팅창에 붙여넣기만 하면 됩니다.</p>
+      <div data-r style="--d:.16s"><button type="button" class="btn btn-mint btn-xl" id="copy2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사하기</button></div>
+      <div class="final-ais" data-r style="--d:.24s"><span>어디서나</span><img src="img/chatgpt.png" alt="ChatGPT"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></div>
+    </div>
+  </section>
 </main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="brand" href="#top"><img class="ci" src="img/dohwa_white.svg" alt="DOHWA" width="117" height="19"><span class="sep" aria-hidden="true"></span><span class="brand-name">엔지니어 말투 AI</span></a>
+    <nav aria-label="자료">
+      <a href="https://raw.githubusercontent.com/ktr218/civil-engineer-tone/main/prompts/universal.md">지침 원문</a>
+      <a href="civil-engineer-tone-skill.zip" download>Claude 스킬 zip</a>
+      <a href="https://github.com/ktr218/civil-engineer-tone">GitHub 저장소</a>
+    </nav>
+    <p>회사가 공식 배포하는 자료는 아닙니다. 최종 확인은 작성자가 합니다.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" aria-hidden="true"></div>
+
 <script>
 (function () {
+  "use strict";
   var RAW = "https://raw.githubusercontent.com/ktr218/civil-engineer-tone/main/prompts/universal.md";
+  var OK_ICON = '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>', BAD_ICON = '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0"></path><path d="M12 16h.01"></path></svg>';
+  var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var hasIO = "IntersectionObserver" in window;
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+  /* ---------- 지침 불러오기·복사 ---------- */
   var prompt = null, line = "";
-  var status = document.getElementById("status");
-  fetch(RAW, { cache: "no-cache" }).then(function (r) { return r.ok ? r.text() : null; }).then(function (t) { prompt = t; }).catch(function () {});
+  var status = $("#status"), pv = $("#pv"), copyBtn = $("#copy"), toastEl = $("#toast");
+  function load() {
+    return fetch(RAW, { cache: "no-cache" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    }).then(function (t) { prompt = t; return t; });
+  }
+  load().catch(function () {});
+
+  var toastTimer;
+  function toast(msg, bad) {
+    toastEl.innerHTML = (bad ? BAD_ICON : OK_ICON) + "<span></span>";
+    toastEl.lastChild.textContent = msg;
+    toastEl.classList.toggle("bad", !!bad);
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 3600);
+  }
   function legacyCopy(text) {
     return new Promise(function (ok, fail) {
-      var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
       document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy") ? ok() : fail(); } catch (e) { fail(e); } finally { document.body.removeChild(ta); }
+      try { if (document.execCommand("copy")) ok(); else fail(); } catch (e) { fail(e); } finally { document.body.removeChild(ta); }
     });
   }
   function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    }
     return legacyCopy(text);
   }
+  function tail() { return (line ? line + " " : "") + "앞으로 이대로 써줘."; }
+  function done(id, on) { var el = $(id); if (el) el.classList.toggle("done", on !== false); }
   function showManual(text) {
-    var box = document.getElementById("manual");
-    box.hidden = false; box.value = text; box.focus(); box.select();
+    var box = $("#manual");
+    box.hidden = false; box.value = text;
+    box.scrollIntoView({ block: "center" });
+    box.focus(); box.select();
     status.textContent = "아래 상자의 글이 선택돼 있습니다. Ctrl+C(복사)를 누르세요.";
+    toast("자동 복사가 막혔습니다. 상자의 글을 Ctrl+C로 복사하세요", true);
   }
-  document.querySelectorAll(".div").forEach(function (b) {
+
+  $$(".div").forEach(function (b) {
     b.addEventListener("click", function () {
       var on = b.getAttribute("aria-pressed") !== "true";
-      document.querySelectorAll(".div").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      $$(".div").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
       b.setAttribute("aria-pressed", on ? "true" : "false");
-      line = on ? b.dataset.line : "";
-      status.textContent = on ? "선택: " + b.querySelector("b").textContent.trim() + " — 이제 2번 버튼을 누르세요" : "";
+      line = on ? b.getAttribute("data-line") : "";
+      pv.textContent = tail();
+      done("#st1", on);
+      status.textContent = on ? b.querySelector("b").textContent + " 부문을 골랐습니다. 이제 [지침 복사하기]를 누르세요." : "";
     });
   });
-  document.getElementById("copy").addEventListener("click", function () {
+
+  var okTimer;
+  function doCopy() {
     function go(t) {
-      var text = t + "\n\n" + (line ? line + " " : "") + "앞으로 이대로 써줘.";
-      copyText(text).then(function () { status.textContent = "✅ 복사됐습니다! 3번에서 AI를 열고 붙여넣으세요."; },
-        function () { showManual(text); });
+      var text = t.replace(/\s+$/, "") + "\n\n" + tail();
+      copyText(text).then(function () {
+        status.textContent = "복사됐습니다! 3번에서 AI를 열고 붙여넣으세요.";
+        toast("복사됐습니다. 이제 AI 채팅창에 붙여넣으세요");
+        copyBtn.classList.add("ok"); done("#st2");
+        var s3 = $("#st3"); s3.classList.remove("go"); void s3.offsetWidth; s3.classList.add("go");
+        clearTimeout(okTimer);
+        okTimer = setTimeout(function () { copyBtn.classList.remove("ok"); }, 2800);
+      }, function () { showManual(text); });
     }
-    if (prompt) return go(prompt);
-    status.textContent = "불러오는 중…";
-    fetch(RAW, { cache: "no-cache" }).then(function (r) { return r.text(); }).then(function (t) { prompt = t; go(t); })
-      .catch(function () { status.innerHTML = '지침을 불러오지 못했습니다. <a href="' + RAW + '" target="_blank" rel="noopener">여기</a>를 열어 전체 선택 → 복사하세요.'; });
+    if (prompt) { go(prompt); return; }
+    status.textContent = "지침을 불러오는 중…";
+    load().then(go).catch(function () {
+      status.innerHTML = '지침을 불러오지 못했습니다. <a href="' + RAW + '" target="_blank" rel="noopener">여기</a>를 열어 전체 선택(Ctrl+A) → 복사(Ctrl+C) 하세요.';
+      toast("지침을 불러오지 못했습니다. 2번 안내를 보세요", true);
+    });
+  }
+  copyBtn.addEventListener("click", doCopy);
+  $("#copy2").addEventListener("click", doCopy);
+
+  $$(".chip").forEach(function (c) {
+    c.addEventListener("click", function () {
+      var t = c.getAttribute("data-text");
+      copyText(t).then(function () {
+        status.textContent = "“" + t + "” 복사됨";
+        toast("“" + t + "” 복사됨");
+        done("#st4");
+      }, function () { toast("복사가 막혔습니다. 직접 입력해 주세요", true); });
+    });
   });
-  document.querySelectorAll(".chip").forEach(function (c) {
-    c.addEventListener("click", function () { copyText(c.textContent).then(function () { status.textContent = "✅ \"" + c.textContent + "\" 복사됨"; }); });
-  });
+
+  /* ---------- 히어로 채팅 예시 ---------- */
+  var demos = [
+    { ask: "이 문단 보고서체로 바꿔줘", src: "이번 도로 확장은 교통 체증을 획기적으로 해소하는 매우 중요한 프로젝트입니다 🚗",
+      out: "금회 과업구간은 교통량 증가로 교통소통이 불량하여 4차로 확장이 필요한 실정이다.",
+      tags: ["~입니다 → ~실정이다", "과장·이모지 삭제", "이번 → 금회"] },
+    { ask: "이 내용 검토의견으로 써줘", src: "검토 결과, 교각 기초 계산에 일부 문제가 있는 것 같습니다. 필요하시면 말씀해 주세요!",
+      out: "∙ 교각 기초 안정검토 시 상재하중 누락\n  ► 상재하중 반영하여 재검토 필요",
+      tags: ["지적 ∙  조치 ►", "~필요 끝맺음", "덧붙임 삭제"] },
+    { ask: "조치결과로 써줘", src: "말씀하신 대로 계획홍수위를 다시 계산해 반영했습니다! 참고로 이 방법에는 한계가 있을 수 있습니다.",
+      out: "∘ (계획홍수위) 검토의견에 따라 재산정하여 반영하였음.",
+      tags: ["~반영하였음", "괄호 소제목", "묻지 않은 한계 삭제"] },
+    { ask: "공문으로 만들어줘", src: "안녕하세요! 조치계획서를 보내드립니다. 확인 부탁드려요 🙏",
+      out: "1. 관련 : ○○\n2. 위 호와 관련하여 조치계획서를 다음과 같이 제출하오니 검토하여 주시기 바랍니다.\n붙임  1. 조치계획서 1부.  끝.",
+      tags: ["공문 서식", "모르는 건 ○○", "인사말·이모지 삭제"] },
+    { ask: "장표 문구로 줄여줘", src: "처리장 용량은 650 m3/day이고, 지름 400mm 관을 3곳에 새로 설치할 예정입니다.",
+      out: "○ 처리용량 Q=650㎥/일\n○ D400mm 관 3개소 신설 예정",
+      tags: ["개조식 ○", "Q=㎥/일 · D400mm", "곳 → 개소"] }
+  ];
+  var tabs = $$("#d-tabs button"), ais = $$(".win-ais img");
+  var av = $("#d-av"), ask = $("#d-ask"), src = $("#d-src"), out = $("#d-out"), tagBox = $("#d-tags");
+  var cur = 0, timers = [], HOLD = 5200, STEP = 30, LEAD = 650;
+  function clearAll() { timers.forEach(clearTimeout); timers = []; }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function render(i) {
+    clearAll(); cur = i;
+    var d = demos[i];
+    tabs.forEach(function (b, k) { b.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+    ais.forEach(function (im, k) { im.classList.toggle("on", k === i % ais.length); });
+    av.src = ais[i % ais.length].getAttribute("src");
+    ask.textContent = d.ask; src.textContent = d.src;
+    tagBox.classList.remove("show"); tagBox.textContent = "";
+    d.tags.forEach(function (t) { var s = document.createElement("span"); s.textContent = t; tagBox.appendChild(s); });
+    if (reduce) { out.textContent = d.out; out.classList.remove("caret"); tagBox.classList.add("show"); return; }
+    var chars = Array.from ? Array.from(d.out) : d.out.split("");
+    var n = 0, total = LEAD + chars.length * STEP + HOLD;
+    tabs[i].style.setProperty("--dur", total + "ms");
+    var bar = tabs[i].querySelector(".bar");
+    if (bar) { bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = ""; }
+    out.textContent = ""; out.classList.add("caret");
+    later(function tick() {
+      n++; out.textContent = chars.slice(0, n).join("");
+      if (n < chars.length) later(tick, STEP);
+      else { out.classList.remove("caret"); tagBox.classList.add("show"); }
+    }, LEAD);
+    later(function () { render((i + 1) % demos.length); }, total);
+  }
+  tabs.forEach(function (b, k) { b.addEventListener("click", function () { render(k); }); });
+  if (hasIO) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) render(cur); else clearAll(); });
+    }, { threshold: 0.2 }).observe($(".win"));
+  } else { render(0); }
+
+  /* ---------- 숫자 카운트·나타나기 ---------- */
+  function countUp(el) {
+    var to = parseInt(el.getAttribute("data-count"), 10) || 0;
+    if (reduce || to === 0) { el.textContent = String(to); return; }
+    var t0 = 0, dur = 1700;
+    function f(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+  }
+  var rs = $$("[data-r]");
+  if (hasIO && !reduce) {
+    $$("[data-count]").forEach(function (el) { if (parseInt(el.getAttribute("data-count"), 10)) el.textContent = "0"; });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("in");
+        $$("[data-count]", e.target).forEach(countUp);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+    rs.forEach(function (el) { io.observe(el); });
+  } else {
+    rs.forEach(function (el) { el.classList.add("in"); });
+  }
 })();
 </script>
 </body>
