@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>엔지니어 말투 AI · 토목 실무 문서체</title>
-<meta name="description" content="AI가 쓴 초안을 토목 실무 문서 말투로 바꿔 주는 지침. 버튼 한 번으로 복사해 ChatGPT·Gemini·Claude에 붙여넣으세요.">
+<meta name="description" content="AI가 쓴 초안을 토목 실무 문서 말투로 바꿔 주는 지침과 점검 도구. 버튼 한 번으로 복사해 ChatGPT·Gemini·Claude에 붙여넣고, 결과는 붙여넣어 바로 점검하세요.">
 <meta name="theme-color" content="#061716">
 <meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="엔지니어 말투 AI">
 <meta property="og:title" content="엔지니어 말투 AI · 토목 실무 문서체">
-<meta property="og:description" content="버튼 한 번 복사해 ChatGPT·Gemini·Claude에 붙여넣기. 설치 없음, 토목 전 부문.">
+<meta property="og:description" content="버튼 한 번 복사해 ChatGPT·Gemini·Claude에 붙여넣기. 붙여넣어 바로 점검. 설치 없음, 토목 전 부문.">
 <meta property="og:url" content="https://ktr218.github.io/civil-engineer-tone/">
 <meta property="og:image" content="https://ktr218.github.io/civil-engineer-tone/og.png">
 <meta property="og:image:width" content="1200">
@@ -268,7 +268,7 @@
   .stat p span{display:block;margin-top:6px;font-size:15.5px;color:#86A19A}
 
   /* ---------- fields ---------- */
-  .words{margin:0;text-align:center;font-size:clamp(38px,5.6vw,80px);font-weight:800;line-height:1.2;letter-spacing:-.05em;color:var(--ink)}
+  .words{margin:0;text-align:center;font-size:clamp(34px,4.8vw,68px);font-weight:800;line-height:1.2;letter-spacing:-.05em;color:var(--ink)}
   .words span{display:inline-block;margin:0 .14em;transition:color .3s,transform .3s var(--ease)}
   .words .o{color:#A9D3C8}
   .words span:hover{color:var(--teal);transform:translateY(-4px)}
@@ -287,6 +287,51 @@
   .qa code{padding:2px 8px;border-radius:6px;background:var(--paper);font-family:Consolas,ui-monospace,monospace;font-size:.86em;color:var(--ink);word-break:break-all}
   .dl{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:12px 20px;border-radius:14px;background:var(--ink);color:#fff;font-weight:800;text-decoration:none;transition:transform .18s var(--ease),background .2s}
   .dl:hover{background:var(--teal);transform:translateY(-1px)}
+
+  /* ---------- check ---------- */
+  .check{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .ck{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;max-width:none;padding:clamp(20px,3vw,36px);background:var(--paper)}
+  .ck-in{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .ck-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+  .ck-ty{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--body)}
+  .ck-ty select{height:46px;padding:0 40px 0 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2422' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center/16px;font:inherit;font-size:16px;font-weight:700;color:var(--ink);-webkit-appearance:none;appearance:none;cursor:pointer}
+  .ck-link{padding:6px 2px;border:0;background:none;color:var(--teal);font-size:16px;font-weight:700;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+  #ck-text{width:100%;min-height:280px;resize:vertical;padding:18px 20px;border:1.5px solid var(--line);border-radius:18px;background:#fff;color:var(--ink);font:inherit;font-size:17px;line-height:1.75}
+  #ck-text:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(0,96,92,.12)}
+  .ck-act{display:flex;flex-wrap:wrap;gap:10px}
+  .ck-act .btn{height:56px;padding:0 24px;font-size:18px}
+  .btn-line{background:#fff;color:var(--ink);border:1.5px solid #CFC9BC}
+  .btn-line:hover{border-color:var(--ink);transform:translateY(-2px)}
+  .ck-note{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;line-height:1.55;color:var(--muted)}
+  .ck-note svg{flex:none;margin-top:3px;font-size:16px;color:var(--teal)}
+  .ck-out{display:flex;flex-direction:column;min-width:0;min-height:380px;padding:22px;border-radius:22px;background:var(--night);color:#DCE8E4}
+  .ck-empty{margin:auto;text-align:center;color:#86A19A;font-size:16px;line-height:1.6}
+  .ck-empty svg{font-size:44px;color:var(--mint)}
+  .ck-empty p{margin:10px 0 4px;color:#C9DAD5}
+  .ck-empty b{color:#fff}
+  .ck-head{display:flex;align-items:center;gap:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .ck-grade{flex:none;display:grid;place-items:center;width:76px;height:76px;border-radius:22px;background:var(--mint);color:#05231F;font-family:var(--latin);font-size:44px;font-weight:800;line-height:1}
+  .ck-grade[data-g="B"]{background:var(--mint-2)}
+  .ck-grade[data-g="C"]{background:#F2C14E}
+  .ck-grade[data-g="D"]{background:#FF8A65}
+  .ck-sum{min-width:0}
+  .ck-sum b{display:block;font-size:20px;line-height:1.35;color:#fff}
+  .ck-sum span{display:block;margin-top:2px;font-size:14px;color:#A9BFB9}
+  .ck-list{display:flex;flex-direction:column;gap:10px;max-height:470px;margin:14px 0 0;padding:0 4px 0 0;overflow:auto;list-style:none}
+  .ck-item{padding:12px 14px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.04)}
+  .ck-item .top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:#86A19A}
+  .sev{padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800}
+  .sev.S1{background:rgba(255,138,101,.18);color:#FFB38A}
+  .sev.S2{background:rgba(242,193,78,.16);color:#F2C14E}
+  .sev.S3{background:rgba(164,243,223,.12);color:var(--mint-2)}
+  .ck-item .ck-m{margin:6px 0 0;font-size:15px;font-weight:700;line-height:1.55;color:#E8F1EE}
+  .ck-item .ck-l{margin:4px 0 0;font-size:15px;line-height:1.6;color:#C9DAD5;overflow-wrap:anywhere}
+  .ck-item mark{padding:0 4px;border-radius:4px;background:rgba(255,138,101,.25);color:#fff}
+  .ck-item .sug{margin:4px 0 0;font-size:14px;color:var(--mint-2)}
+  .ck-ok{margin:auto;text-align:center;font-size:17px;color:#C9DAD5}
+  .ck-ok svg{font-size:44px;color:var(--mint)}
+  .ck-msg{margin:12px 0 0;font-size:14px;color:#A9BFB9}
+  .ck-msg button{margin-left:6px;padding:0;border:0;background:none;color:var(--mint);font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 
   /* ---------- final ---------- */
   .final{padding:clamp(100px,13vw,170px) 0;text-align:center}
@@ -338,6 +383,9 @@
     .stat:nth-child(3){padding-left:0}
     .stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1)}
     .crew{grid-template-columns:repeat(2,1fr)}
+    .ck{grid-template-columns:1fr}
+    .ck-out{min-height:0}
+    .ck-list{max-height:none}
   }
   @media (max-width:760px){
     body{font-size:18px}
@@ -390,6 +438,7 @@
     <nav class="nav-links" aria-label="페이지 안내">
       <a href="#start">사용법</a>
       <a href="#why">달라지는 점</a>
+      <a href="#check">바로 점검</a>
       <a href="#types">문서 9종</a>
       <a href="#proof">근거</a>
       <a href="#faq">자주 묻는 질문</a>
@@ -410,11 +459,11 @@
         <p class="sub rise" style="--d:.16s">지침을 ChatGPT·Gemini·Claude 채팅창에 <b>한 번만 붙여넣으면</b>,<br class="pc"> 그다음부터 보고서·검토의견·공문 말투로 바꿔 씁니다.</p>
         <div class="cta rise" style="--d:.24s">
           <a class="btn btn-mint" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14"></path><path d="M18 13l-6 6"></path><path d="M6 13l6 6"></path></svg>지금 바로 써 보기</a>
-          <a class="btn btn-ghost" href="#why">무엇이 달라지나요?</a>
+          <a class="btn btn-ghost" href="#check"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>내 글 바로 점검</a>
         </div>
         <ul class="trust rise" style="--d:.32s">
           <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>사내 실무 문서 749건 근거</li>
-          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>문서 9종 끝맺음</li>
+          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>토목 18개 분야 새 문서로 재검증</li>
           <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>모르는 수치는 지어내지 않음</li>
         </ul>
       </div>
@@ -466,11 +515,11 @@
               <h3>내 부문 고르기<span class="opt">선택</span></h3>
               <p class="d">고르면 그 부문 용어를 먼저 씁니다. 몰라도 괜찮아요.</p>
               <div class="divs" id="divs">
-                <button type="button" class="div" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span><span><b>물산업</b><small>상하수도 · 수자원</small></span></button>
-                <button type="button" class="div" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 19l4 -14"></path><path d="M16 5l4 14"></path><path d="M12 8v-2"></path><path d="M12 13v-2"></path><path d="M12 18v-2"></path></svg></span><span><b>교통</b><small>도로 · 공항 · 철도</small></span></button>
+                <button type="button" class="div" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span><span><b>물산업</b><small>상하수도 · 수처리 · 건축</small></span></button>
+                <button type="button" class="div" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 19l4 -14"></path><path d="M16 5l4 14"></path><path d="M12 8v-2"></path><path d="M12 13v-2"></path><path d="M12 18v-2"></path></svg></span><span><b>교통</b><small>도로 · 공항 · 철도 · 교통</small></span></button>
                 <button type="button" class="div" data-line="나는 인프라부문 하천 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 7h12a2 2 0 0 1 2 2v9a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-2a4 4 0 0 0 -8 0v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-9a2 2 0 0 1 2 -2"></path></svg></span><span><b>인프라</b><small>하천 · 항만 · 구조 · 지반 · 환경평가</small></span></button>
                 <button type="button" class="div" data-line="나는 도시부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 21l18 0"></path><path d="M5 21v-14l8 -4v18"></path><path d="M19 21v-10l-6 -4"></path><path d="M9 9l0 .01"></path><path d="M9 12l0 .01"></path><path d="M9 15l0 .01"></path><path d="M9 18l0 .01"></path></svg></span><span><b>도시</b><small>도시계획 · 단지 · 조경</small></span></button>
-                <button type="button" class="div" data-line="나는 에너지부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg></span><span><b>에너지</b><small>발전 · 집단에너지</small></span></button>
+                <button type="button" class="div" data-line="나는 에너지부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg></span><span><b>에너지</b><small>발전 · 집단에너지 · 기전</small></span></button>
                 <button type="button" class="div" data-line="나는 CM부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 4a9 9 0 0 1 5.656 16h-11.312a9 9 0 0 1 5.656 -16"></path><path d="M20 9h-8.8a1 1 0 0 0 -.968 1.246c.507 2 1.596 3.418 3.268 4.254c2 1 4.333 1.5 7 1.5"></path></svg></span><span><b>CM · 건설</b><small>건설사업관리 · 감리</small></span></button>
               </div>
             </div>
@@ -574,6 +623,49 @@
     </div>
   </section>
 
+  <!-- CHECK -->
+  <section class="sec check" id="check" aria-labelledby="check-t">
+    <div class="wrap">
+      <div class="head split" data-r>
+        <div>
+          <span class="eyebrow">Check</span>
+          <h2 class="h2" id="check-t">붙여넣고<br>바로 점검</h2>
+        </div>
+        <p class="lede">AI가 쓴 초안이나 내가 쓴 글을 붙여넣으세요. 끝맺음·과장·마크다운·단위를 짚고 A~D 등급을 매깁니다. 글은 이 화면 밖으로 나가지 않습니다.</p>
+      </div>
+      <div class="panel ck" data-r>
+        <div class="ck-in">
+          <div class="ck-bar">
+            <label class="ck-ty" for="ck-type">문서 종류
+              <select id="ck-type">
+                <option value="auto">자동 판별</option>
+                <option value="R">보고서 본문</option>
+                <option value="S">설계기준·시방·과업지시서</option>
+                <option value="B">장표·회의록</option>
+                <option value="C">검토의견</option>
+                <option value="A">조치계획·결과</option>
+                <option value="V">설계VE 제안</option>
+                <option value="P">발표 원고</option>
+                <option value="M">내부 보고·메일·안내</option>
+                <option value="G">공문</option>
+              </select>
+            </label>
+            <button type="button" class="ck-link" id="ck-ex">AI 초안 예시 넣기</button>
+          </div>
+          <textarea id="ck-text" spellcheck="false" placeholder="점검할 글을 여기에 붙여넣으세요." aria-label="점검할 글"></textarea>
+          <div class="ck-act">
+            <button type="button" class="btn btn-mint" id="ck-run"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>점검하기</button>
+            <button type="button" class="btn btn-line" id="ck-fix"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"></path><path d="M15 6l3 3"></path><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path></svg>단위 표기 고치기</button>
+          </div>
+          <p class="ck-note"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"></path><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path><path d="M8 11v-4a4 4 0 1 1 8 0v4"></path></svg>서버로 보내지 않고 이 브라우저 안에서만 검사합니다. 문서 종류를 고르면 더 정확합니다.</p>
+        </div>
+        <div class="ck-out" id="ck-out" aria-live="polite">
+          <div class="ck-empty"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path><path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2"></path><path d="M9 12h6"></path><path d="M9 16h6"></path></svg><p>글을 붙여넣고 <b>점검하기</b>를 누르세요.</p><span>검사 규칙은 Claude 스킬의 검사기와 같습니다.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- DOCUMENT TYPES -->
   <section class="sec types" id="types" aria-labelledby="types-t">
     <div class="wrap">
@@ -606,12 +698,12 @@
           <span class="eyebrow">Evidence</span>
           <h2 class="h2" id="proof-t">감이 아니라<br>실무 문서에서 뽑았습니다</h2>
         </div>
-        <p class="lede">사내 실무 문서의 끝맺음·기호·용어 빈도를 집계해 규칙을 만들고, 사람이 쓴 문서로 검사기를 검증했습니다.</p>
+        <p class="lede">사내 실무 문서의 끝맺음·기호·용어 빈도를 집계해 규칙을 만들고, 규칙에 쓰지 않은 새 문서로 다시 검증했습니다.</p>
       </div>
       <div class="sgrid">
         <div class="stat" data-r><div class="big"><span data-count="749">749</span><small>건</small></div><p>사내 실무 문서에서 끝맺음·기호·용어 집계<span>물산업 340 · 다른 부문 409</span></p></div>
-        <div class="stat" data-r style="--d:.08s"><div class="big"><span data-count="87">87</span><small>%</small></div><p>사람이 쓴 문서 715건 중 A등급<span>멀쩡한 문서는 괜히 고치지 않습니다</span></p></div>
-        <div class="stat" data-r style="--d:.16s"><div class="big"><span data-count="9">9</span><small>종</small></div><p>문서 종류별 끝맺음 규칙<span>보고서부터 공문까지</span></p></div>
+        <div class="stat" data-r style="--d:.08s"><div class="big"><span data-count="388">388</span><small>건</small></div><p>규칙에 쓰지 않은 새 문서로 재검증<span>토목 18개 분야 · 처음 본 문서도 A등급 89%</span></p></div>
+        <div class="stat" data-r style="--d:.16s"><div class="big"><span data-count="90">90</span><small>%</small></div><p>사람이 쓴 문서 1,136건 중 A등급<span>멀쩡한 문서는 괜히 고치지 않습니다</span></p></div>
         <div class="stat" data-r style="--d:.24s"><div class="big"><span data-count="0">0</span><small>건</small></div><p>배포물에 넣은 원문·사업명·수치<span>규칙만 담았습니다</span></p></div>
       </div>
     </div>
@@ -623,9 +715,9 @@
       <div class="head center" data-r>
         <span class="eyebrow">All civil divisions</span>
         <h2 class="h2" id="fields-t">토목 전 부문에서 씁니다</h2>
-        <p class="lede">끝맺음·기호·단위는 전 부문 공통이고, 용어는 고른 부문에 맞춰 씁니다.</p>
+        <p class="lede">끝맺음·기호·단위는 전 부문 공통이고, 용어는 고른 부문에 맞춰 씁니다. 아래 18개 분야 실무 문서로 검증했습니다.</p>
       </div>
-      <p class="words" data-r><span>상하수도</span><span class="o">도로</span><span>철도</span><span class="o">하천</span><span>항만</span><br class="pc"><span class="o">구조</span><span>지반</span><span class="o">환경</span><span>도시</span><span class="o">에너지</span><span>CM</span></p>
+      <p class="words" data-r><span>상하수도</span><span class="o">건축</span><span>도로</span><span class="o">철도</span><span>공항</span><span class="o">교통</span><br class="pc"><span>하천</span><span class="o">항만</span><span>구조</span><span class="o">지반</span><span>환경</span><span class="o">측량</span><br class="pc"><span>도시</span><span class="o">조경</span><span>에너지</span><span class="o">기전</span><span>CM</span><span class="o">지원</span></p>
     </div>
   </section>
 
@@ -638,8 +730,9 @@
       </div>
       <div data-r>
         <details class="qa" open><summary>팀마다 말투가 다르면요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요. 팀 예시가 지침보다 우선합니다.</p></div></details>
-        <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 5천여 자라 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
+        <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 6천 자가 안 돼 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
         <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
+        <details class="qa"><summary>점검 등급(A~D)은 어떻게 매기나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>글 500자마다 지적 점수를 더합니다. 꼭 고칠 것 5점, 고치면 좋은 것 2점, 참고 0.5점이고 0.5점 미만이면 A입니다. 사람이 쓴 실무 문서는 열에 아홉이 A입니다.</p><p>입찰 안내서·서약서처럼 원래 경어로 쓰는 문서는 문서 종류를 <b>내부 보고·메일·안내</b>나 <b>공문</b>으로 고르세요.</p></div></details>
         <details class="qa"><summary>모르는 숫자를 지어내지 않나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>입력에 없는 수치·사업명·법 조항은 ○○ 또는 [확인 필요]로 남깁니다. 결과 뒤에 무엇을 바꿨는지 3~6줄로 알려 줍니다. 최종 확인은 작성자가 합니다.</p></div></details>
         <details class="qa"><summary>회사 자료를 넣어도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>대외비·개인정보가 있는 문장은 외부 AI에 넣지 마세요. 말투만 바꿀 때는 사업명·수치를 ○○로 바꿔 넣어도 됩니다.</p></div></details>
         <details class="qa"><summary>휴대폰에서도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>됩니다. [지침 복사하기]를 누른 뒤 AI 앱 입력칸을 길게 눌러 [붙여넣기] 하세요.</p></div></details>
@@ -686,6 +779,7 @@
 
 <div class="toast" id="toast" aria-hidden="true"></div>
 
+<script src="tonecheck.js"></script>
 <script>
 (function () {
   "use strict";
@@ -840,6 +934,75 @@
       es.forEach(function (e) { if (e.isIntersecting) render(cur); else clearAll(); });
     }, { threshold: 0.2 }).observe($(".win"));
   } else { render(0); }
+
+  /* ---------- 바로 점검 (tonecheck.js, 검사기와 같은 규칙) ---------- */
+  (function () {
+    var TC = window.ToneCheck, ta = $("#ck-text"), sel = $("#ck-type"), out = $("#ck-out");
+    if (!TC || !ta) return;
+    var NAMES = { R: "보고서 본문", S: "설계기준·시방·과업지시서", B: "장표·회의록", C: "검토의견", A: "조치계획·결과",
+      V: "설계VE 제안", P: "발표 원고", M: "내부 보고·메일·안내", G: "공문" };
+    var SEV = { S1: "꼭 고치기", S2: "고치면 좋음", S3: "참고" };
+    var EMPTY = out.innerHTML, OKI = '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>', MAX = 40, undo = null;
+    var EX = "이번 프로젝트는 지역 주민들의 삶의 질을 획기적으로 향상시키는 매우 중요한 사업입니다.\n" +
+      "**핵심 내용** ✅\n" +
+      "처리용량은 650 m3/day이며 지름 400mm 하수 파이프를 3.4km 새로 설치합니다.\n" +
+      "결론적으로 이를 통해 침수 문제를 해결할 수 있습니다.";
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+    }
+    function mark(text, m, fromEnd) {
+      var i = m ? (fromEnd ? text.lastIndexOf(m) : text.indexOf(m)) : -1;
+      if (i < 0) return esc(text);
+      return esc(text.slice(0, i)) + "<mark>" + esc(m) + "</mark>" + esc(text.slice(i + m.length));
+    }
+    function item(x, t) {
+      var end = x.id === "END";
+      var msg = end ? NAMES[t] + "에 맞지 않는 끝맺음: " + x.message.split(": ").pop()
+        : x.message !== "어휘·표기 정규화" ? x.message
+        : { K: "AI 티가 나는 표현", T: "실무 용어로 바꾸기", U: "단위·수치 표기" }[x.id.charAt(0)] || x.message;
+      var sug = x.suggest && x.suggest.length
+        ? '<p class="sug">' + (end ? "쓸 수 있는 끝맺음: " : "→ ") + esc(x.suggest.slice(0, 4).join(", ")) + "</p>" : "";
+      return '<li class="ck-item"><div class="top"><span class="sev ' + x.severity + '">' + SEV[x.severity] + "</span><span>" +
+        (x.line ? x.line + "행" : "문서 전체") + '</span></div><p class="ck-m">' + esc(msg) + "</p>" +
+        '<p class="ck-l">' + (x.text ? mark(x.text, x.match, end) : esc(x.match)) + "</p>" + sug + "</li>";
+    }
+    function run(note) {
+      var text = ta.value;
+      if (!text.trim()) { out.innerHTML = EMPTY; return; }
+      var t = sel.value === "auto" ? TC.detectType(text)[0] : sel.value;
+      var f = TC.check(text, t), s = TC.score(f, text);
+      var head = '<div class="ck-head"><div class="ck-grade" data-g="' + s.grade + '">' + s.grade + '</div><div class="ck-sum"><b>' +
+        (f.length ? "지적 " + f.length + "건" : "지적할 곳이 없습니다") + "</b><span>" + esc(NAMES[t]) + "(" + t + ")" +
+        (sel.value === "auto" ? " · 자동 판별" : "") + " · 꼭 " + s.counts.S1 + " · 권장 " + s.counts.S2 + " · 참고 " + s.counts.S3 +
+        " · 500자당 " + s.per_500_chars + "점</span></div></div>";
+      var body = f.length
+        ? '<ol class="ck-list">' + f.slice(0, MAX).map(function (x) { return item(x, t); }).join("") + "</ol>" +
+          (f.length > MAX ? '<p class="ck-msg">외 ' + (f.length - MAX) + "건</p>" : "")
+        : '<div class="ck-ok">' + OKI + "<p>실무 문서 말투입니다. 수치·사실은 직접 한 번 더 확인하세요.</p></div>";
+      var hint = sel.value === "auto" && (t === "P" || t === "M")
+        ? '<p class="ck-msg">경어체 문장이 많아 ' + NAMES[t] + "(으)로 판별했습니다. 보고서·검토의견으로 쓸 글이면 위에서 문서 종류를 고르세요.</p>" : "";
+      out.innerHTML = head + body + hint + (note || "");
+    }
+    $("#ck-run").addEventListener("click", function () {
+      if (!ta.value.trim()) { toast("먼저 점검할 글을 붙여넣으세요", true); ta.focus(); return; }
+      run();
+      if (window.innerWidth < 1000) out.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+    $("#ck-ex").addEventListener("click", function () { ta.value = EX; sel.value = "R"; undo = null; run(); });
+    sel.addEventListener("change", function () { if (ta.value.trim()) run(); });
+    $("#ck-fix").addEventListener("click", function () {
+      if (!ta.value.trim()) { toast("먼저 점검할 글을 붙여넣으세요", true); ta.focus(); return; }
+      var r = TC.fix(ta.value, sel.value === "auto" ? null : sel.value);
+      if (!r[1].length) { run('<p class="ck-msg">고칠 단위·수치 표기가 없습니다.</p>'); return; }
+      undo = ta.value;
+      ta.value = r[0];
+      run('<p class="ck-msg">단위·수치 표기 ' + r[1].length + '곳을 고쳤습니다(값은 그대로).<button type="button" id="ck-undo">되돌리기</button></p>');
+      toast("단위·수치 표기 " + r[1].length + "곳을 고쳤습니다");
+    });
+    out.addEventListener("click", function (e) {
+      if (e.target && e.target.id === "ck-undo" && undo !== null) { ta.value = undo; undo = null; run(); }
+    });
+  })();
 
   /* ---------- 숫자 카운트·나타나기 ---------- */
   function countUp(el) {

@@ -147,6 +147,50 @@ class TestDetectAndGrade(unittest.TestCase):
         self.assertEqual([f["id"] for f in tonelib.check("□ 개요 ○ 현황 ※ 주) ► ∘ ☞", "B")], [])
 
 
+class TestDataMapFindings(unittest.TestCase):
+    """2026-11 자료지도 재검증(새 문서 388건)에서 찾은 오탐의 회귀 시험."""
+
+    def ids(self, text, doc_type="R"):
+        return [f["id"] for f in tonelib.check(text, doc_type)]
+
+    def test_spaced_letter_headers_detect_as_letter(self):
+        text = ("수   신 : ㈜○○엔지니어링 대표이사\n"
+                "제   목 : 구조계산서에 대한 검토 요청\n"
+                "1. 귀 사의 무궁한 발전을 기원합니다.\n"
+                "2. 시공사가 제출한 기둥규격 변경 구조계산서를 붙임과 같이 송부하오니 검토하여 주시기 바랍니다.\n"
+                "∘ 기둥 단면 변경에 따른 응력 검토 필요\n"
+                "∘ 기초 지지력 재검토 필요\n"
+                "∘ 변경 도면 반영 여부 확인 필요\n"
+                "붙임 : 1. 기술검토요청서 1부.\n"
+                "시  행 : ○○-○○호 (2026. 11. 20.)   접수 :\n"
+                "전화 /전송 ○○○-○○○-○○○○ / ○○○-○○○-○○○○\n")
+        detected, _ = tonelib.detect_type(text)
+        self.assertEqual(detected, "G")
+        self.assertEqual(tonelib.score(tonelib.check(text, detected), text)["grade"], "A")
+
+    def test_legal_form_phrases_not_flagged(self):
+        for line in ["관련 기준을 다음과 같이 고시합니다.", "제출한 증빙자료가 원본과 같음을 확약합니다.",
+                     "참여인원의 신원에 이상이 없음을 보증합니다."]:
+            self.assertNotIn("END", self.ids(line), line)
+        self.assertIn("END", self.ids("대상지역의 계획인구를 검토하였습니다."))
+
+    def test_bold_rule_skips_masking_exponent_and_program_header(self):
+        for text in ["○○구 ○○로1**번길**, 1**동 2***호", "V=0.849×C×R**0.63×I**0.54", "[ **좌안배수분구1** ]"]:
+            self.assertNotIn("K-08", self.ids(text, "B"), text)
+        for text in ["이번 사업의 **핵심**은 관로 교체다", "**목표**: 침수 해소", "처리용량은 **650㎥/일**로"]:
+            self.assertIn("K-08", self.ids(text, "B"), text)
+
+    def test_loanword_rule_skips_company_and_product_type(self):
+        self.assertNotIn("K-11", self.ids("㈜○○솔루션 폐기물처리시설"))
+        self.assertNotIn("K-11", self.ids("임팩트식 스프링클러 반경 35m"))
+        self.assertIn("K-11", self.ids("최적의 솔루션을 제공한다"))
+
+    def test_ppm_only_in_water_quality_context(self):
+        self.assertIn("U-17", self.ids("방류수 BOD 10ppm 이하"))
+        self.assertNotIn("U-17", self.ids("오존 균열시험 50±5ppm"))
+        self.assertNotIn("U-17", self.ids("CO 농도 9ppm"))
+
+
 class TestCLI(unittest.TestCase):
     def run_cli(self, *args):
         env = dict(os.environ, PYTHONIOENCODING="utf-8")

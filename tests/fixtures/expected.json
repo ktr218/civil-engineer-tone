@@ -51,5 +51,67 @@
   "A_future.md": {
     "type": "A",
     "max_grade": "A"
+  },
+  "fields/airport_R.md": {
+    "type": "R",
+    "max_grade": "A"
+  },
+  "fields/traffic_C.md": {
+    "type": "C",
+    "max_grade": "A"
+  },
+  "fields/landscape_S.md": {
+    "type": "S",
+    "max_grade": "A"
+  },
+  "fields/mep_A.md": {
+    "type": "A",
+    "max_grade": "A"
+  },
+  "fields/survey_R.md": {
+    "type": "R",
+    "max_grade": "A"
+  },
+  "fields/support_M.md": {
+    "type": "M",
+    "max_grade": "A"
+  },
+  "fields/arch_S.md": {
+    "type": "S",
+    "max_grade": "A"
+  },
+  "fields/letter_G.md": {
+    "type": "G",
+    "max_grade": "A"
+  },
+  "ai/R_report.md": {
+    "type": null,
+    "check_as": "R",
+    "min_grade": "C"
+  },
+  "ai/A_action.md": {
+    "type": null,
+    "check_as": "A",
+    "min_grade": "C"
+  },
+  "ai/C_review.md": {
+    "type": null,
+    "check_as": "C",
+    "min_grade": "C"
+  },
+  "ai/B_brief.md": {
+    "type": null,
+    "check_as": "B",
+    "min_grade": "C"
+  },
+  "ai/S_spec.md": {
+    "type": null,
+    "check_as": "S",
+    "min_grade": "C"
+  },
+  "ai/G_letter.md": {
+    "type": null,
+    "check_as": "G",
+    "min_grade": "C"
   }
 }

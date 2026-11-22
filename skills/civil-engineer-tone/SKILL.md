@@ -1,7 +1,7 @@
 ---
 name: civil-engineer-tone
 metadata:
-  version: "2.2.1"
+  version: "2.3.0"
 description: >-
   국내 토목 엔지니어링 실무 문서의 문체·용어·기호·수치 표기를 적용해 작성·윤문·점검한다.
   상하수도·도로·철도·구조·수자원·항만·환경·도시·에너지·CM 분야의 보고서, 보고 장표,
@@ -22,7 +22,7 @@ description: >-
    - `작성`: 메모·요점을 받아 새 문서를 쓴다.
    - `윤문`: 일반 문장/AI 문장을 실무 문체로 바꾼다.
    - `점검`: 이미 쓴 실무 문서의 용어·단위·종결을 검사하고 지적한다(바꾸지 않고 목록으로).
-2. **부문** — 입력의 용어로 부문을 정하고 `references/divisions/`의 해당 팩을 읽는다(물산업 `water.md`, 교통 `transport.md`, 인프라 `infra.md`, 도시 `urban.md`, 에너지 `energy.md`, CM·건설 `cm.md`, 지원 `support.md`). 여러 부문이 섞이면 해당 팩을 모두 쓴다. 지원 팩은 아직 초안이며, 어느 팩이든 사용자가 쓴 표현이 우선이다.
+2. **부문** — 입력의 용어로 부문을 정하고 `references/divisions/`의 해당 팩을 읽는다(물산업 `water.md`, 교통 `transport.md`, 인프라 `infra.md`, 도시 `urban.md`, 에너지 `energy.md`, CM·건설 `cm.md`, 지원 `support.md`). 여러 부문이 섞이면 해당 팩을 모두 쓴다. 건축은 `water.md`, 기계·전기·계측은 `energy.md`, 공항·교통 분석은 `transport.md`, 조경·레저는 `urban.md`에 있고, 측량·공간정보는 전 부문 공통이라 `references/glossary.md` 7절에 있다. 어느 팩이든 사용자가 쓴 표현이 우선이다.
 3. **문서 유형** — 어투가 유형별로 완전히 다르다. 유형을 먼저 정하고 그 규칙만 적용한다.
 
 | 코드 | 문서 유형 | 기본 종결 | 기본 형식 |
@@ -64,6 +64,7 @@ description: >-
    python scripts/check_tone.py 결과.md                # 유형 자동 판별 + 위반 목록 + 등급(A~D)
    python scripts/check_tone.py 결과.md --type C --min-grade A
    ```
+   - 입찰 안내서·평가 기준·서약서처럼 원래 경어로 쓰는 지원 업무 문서는 `--type M`(또는 공문이면 `G`)으로 점검한다. 자동 판별에 맡기면 경어체가 위반으로 잡힌다.
    - 등급 A가 목표다. S1이 남으면 반드시 고치고, S2는 고칠 수 있으면 고친다. S3는 원문이 그렇게 썼으면 둔다.
    - 자동 판별 유형이 의도와 다르면 그 자체가 신호다(예: 보고서 본문을 썼는데 `B`로 나오면 서술문이 부족하다).
    - 스크립트를 실행할 수 없는 환경이면 아래 체크리스트로 대신한다.
@@ -111,7 +112,7 @@ description: >-
 | `references/document-templates.md` | 유형별 문서 골격(착수보고, 보고서 장·절, 협의자료, 조치계획서, 검토의견, VE, 발표 시나리오, 메일) | 작성 모드 |
 | `references/phrasebank.md` | 상황별 상투구(목적, 추진경위, 시급성, 기대효과, 판단, 대안 비교 등) | 작성 모드 |
 | `references/examples.md` | Before/After 예시 | 처음 쓸 때, 애매할 때 |
-| `references/lexicon.json` | 어휘집(52항목): 자동교정 표기 규칙 + 문맥 판단 용어 제안 | 용어 선택이 애매할 때 |
+| `references/lexicon.json` | 어휘집(53항목): 자동교정 표기 규칙 + 문맥 판단 용어 제안 | 용어 선택이 애매할 때 |
 | `scripts/check_tone.py` | 유형 자동 판별, 위반 목록, 등급(A~D) | 자체 점검 |
 | `scripts/fix_notation.py` | 단위·수치 표기 자동 교정(값 불변, dry-run 기본) | 수치가 많은 문서 |
 | `references/source-preservation.md` | 윤문 전후 의미 보존·수치 대조·공유자료 근거 확인 수준 | 수치 윤문·성과품 참조 시 |
