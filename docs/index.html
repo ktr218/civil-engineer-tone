@@ -56,7 +56,7 @@
   @keyframes rise{from{opacity:0;transform:translateY(26px)}}
 
   /* ---------- nav ---------- */
-  .nav{position:sticky;top:0;z-index:60;background:rgba(6,23,22,.8);-webkit-backdrop-filter:saturate(1.5) blur(16px);backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid var(--nline)}
+  .nav{position:sticky;top:0;z-index:60;background:var(--night);border-bottom:1px solid var(--nline)}
   .nav .wrap{display:flex;align-items:center;gap:32px;height:72px}
   .brand{display:inline-flex;align-items:center;gap:14px;color:#fff;text-decoration:none;font-weight:800;font-size:19px;letter-spacing:-.02em;white-space:nowrap}
   .brand .ci{width:auto;height:19px}
@@ -67,42 +67,33 @@
   .nav-links a{color:#BFD3CE;text-decoration:none;font-size:17px;font-weight:600;transition:color .2s}
   .nav-links a:hover{color:#fff}
   .nav-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;background:var(--mint);color:#05231F;font-weight:800;font-size:17px;text-decoration:none;white-space:nowrap;transition:transform .15s var(--ease),box-shadow .2s}
-  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px rgba(52,217,179,.9)}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 18px -10px rgba(0,0,0,.6)}
 
   /* ---------- shared dark background ---------- */
   .dark{position:relative;isolation:isolate;overflow:hidden;background:var(--night);color:#E9F3F0}
   .grid-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--nline) 1px,transparent 1px),linear-gradient(90deg,var(--nline) 1px,transparent 1px);background-size:64px 64px;background-position:center top;-webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 25%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 75% 65% at 50% 25%,#000 25%,transparent 78%)}
-  .aura{position:absolute;z-index:-2;border-radius:50%;filter:blur(90px);pointer-events:none;animation:drift 22s ease-in-out infinite alternate}
-  .a1{width:640px;height:640px;background:#0F8F7D;opacity:.55;top:-260px;left:-180px}
-  .a2{width:560px;height:560px;background:#2FD6B0;opacity:.3;top:140px;right:-220px;animation-delay:-7s}
-  .a3{width:460px;height:460px;background:#B08D57;opacity:.22;top:520px;left:28%;animation-delay:-14s}
-  @keyframes drift{to{transform:translate3d(60px,40px,0) scale(1.1)}}
-  .hl{background:linear-gradient(100deg,var(--mint-2) 0%,var(--mint) 42%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hl{color:var(--mint)}
 
   /* ---------- hero ---------- */
-  .hero{padding:104px 0 0}
+  .hero{padding:112px 0 0}
   .hero-in{max-width:1000px;margin:0 auto;text-align:center}
-  .pill{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#CFE6E0;font-size:16px;font-weight:600}
-  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:ping 2.2s infinite}
-  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,217,179,.65)}70%,100%{box-shadow:0 0 0 12px rgba(52,217,179,0)}}
-  .hero h1{margin:30px 0 26px;font-size:clamp(40px,7.6vw,108px);line-height:1.08;letter-spacing:-.05em;font-weight:800;color:#fff}
+  .hero h1{margin:0 0 26px;font-size:clamp(40px,7vw,96px);line-height:1.1;letter-spacing:-.04em;font-weight:800;color:#fff}
   .hero .sub{max-width:780px;margin:0 auto 42px;font-size:clamp(19px,2vw,24px);line-height:1.6;color:#B4C8C3}
   .hero .sub b{color:#fff;font-weight:700}
   .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:64px;padding:0 30px;border:0;border-radius:16px;font-size:21px;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .18s var(--ease),box-shadow .25s,background .25s}
   .btn svg{font-size:24px}
-  .btn-mint{background:var(--mint);color:#05231F;box-shadow:0 14px 36px -12px rgba(52,217,179,.75)}
-  .btn-mint:hover{transform:translateY(-2px);box-shadow:0 20px 44px -12px rgba(52,217,179,.9)}
+  .btn-mint{background:var(--mint);color:#05231F;box-shadow:0 10px 22px -14px rgba(0,0,0,.55)}
+  .btn-mint:hover{transform:translateY(-2px);box-shadow:0 16px 28px -16px rgba(0,0,0,.6)}
   .btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.2)}
   .btn-ghost:hover{background:rgba(255,255,255,.12)}
-  .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin:30px 0 0;padding:0;list-style:none;color:#9DB5AF;font-size:16.5px}
-  .trust li{display:inline-flex;align-items:center;gap:8px}
-  .trust svg{color:var(--mint);font-size:20px}
+  .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 0;margin:30px 0 0;padding:0;list-style:none;color:#A9BFB9;font-size:16.5px}
+  .trust li{padding:0 18px;line-height:1.3}
+  .trust li + li{border-left:1px solid rgba(255,255,255,.18)}
 
   /* hero chat window */
   .stage{position:relative;max-width:1000px;margin:76px auto 0}
-  .stage::before{content:"";position:absolute;inset:-6% 4% 0;z-index:0;background:radial-gradient(closest-side,rgba(52,217,179,.38),transparent 70%);filter:blur(30px)}
-  .win{position:relative;z-index:1;overflow:hidden;background:#fff;color:var(--ink);border-radius:26px 26px 0 0;box-shadow:0 0 0 1px rgba(255,255,255,.5),0 -30px 120px -30px rgba(52,217,179,.35),0 50px 120px -40px rgba(0,0,0,.8)}
+  .win{position:relative;z-index:1;overflow:hidden;background:#fff;color:var(--ink);border-radius:26px 26px 0 0;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 40px 80px -36px rgba(0,0,0,.75)}
   .win-bar{display:flex;align-items:center;gap:14px;height:58px;padding:0 22px;border-bottom:1px solid #EEF0EF;background:#FAFBFA}
   .dots{display:flex;gap:8px}
   .dots i{width:12px;height:12px;border-radius:50%;background:#E3E1DB}
@@ -135,24 +126,8 @@
   .win-tabs button[aria-pressed="true"] .bar{animation:fill var(--dur,6s) linear forwards}
   @keyframes fill{to{transform:scaleX(1)}}
 
-  /* ---------- marquee ---------- */
-  .band{padding:54px 0 46px;overflow:hidden}
-  .band-label{margin:0 0 22px;text-align:center;font-family:var(--latin);font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--muted)}
-  .mq{display:flex;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-  .mq + .mq{margin-top:14px}
-  .track{display:flex;flex:none;gap:14px;padding-right:14px;animation:mq 110s linear infinite}
-  .mq.rev .track{animation-direction:reverse;animation-duration:125s}
-  .mq:hover .track{animation-play-state:paused}
-  @keyframes mq{to{transform:translateX(-100%)}}
-  .pair{flex:none;display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:19px;white-space:nowrap}
-  .pair .f{color:var(--bad)}
-  .pair .ar{color:var(--gold);font-weight:800}
-  .pair .t{color:var(--teal);font-weight:800}
-
   /* ---------- section heads ---------- */
   .sec{padding:clamp(88px,11vw,140px) 0}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--latin);font-size:13.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
-  .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:currentColor}
   .h2{margin:16px 0 18px;font-size:clamp(34px,4.8vw,62px);line-height:1.14;letter-spacing:-.04em;font-weight:800;color:var(--ink)}
   .lede{margin:0;max-width:720px;font-size:clamp(19px,1.7vw,22px);color:var(--body)}
   .head{margin-bottom:clamp(40px,5vw,64px)}
@@ -160,7 +135,6 @@
   .head.center .lede{margin:0 auto}
   .head.split{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:20px 64px}
   .head.split .h2{margin-bottom:0}
-  .dark .eyebrow{color:var(--mint)}
   .dark .h2{color:#fff}
   .dark .lede{color:#A9BFB9}
 
@@ -193,8 +167,6 @@
   .copy{position:relative;overflow:hidden;width:100%;height:88px;display:flex;align-items:center;justify-content:center;gap:14px;border:0;border-radius:22px;background:linear-gradient(135deg,#0A7A72,#004442);color:#fff;font-size:clamp(23px,2.6vw,29px);font-weight:800;letter-spacing:-.02em;cursor:pointer;box-shadow:0 22px 44px -20px rgba(0,96,92,.8);transition:transform .18s var(--ease),box-shadow .25s,background .3s}
   .copy svg{font-size:32px}
   .copy:hover{transform:translateY(-2px);box-shadow:0 28px 54px -20px rgba(0,96,92,.9)}
-  .copy::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
-  @keyframes shine{0%,60%{left:-60%}100%{left:130%}}
   .copy .ok-i,.copy .ok-t{display:none}
   .copy.ok{background:linear-gradient(135deg,#17B28C,#0A7A62)}
   .copy.ok .ok-i,.copy.ok .ok-t{display:inline}
@@ -221,61 +193,60 @@
   .chip svg{color:var(--muted);font-size:19px}
   .chip:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-1px)}
   .chip:hover svg{color:var(--teal)}
-  .tips{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px}
-  .tipc{display:flex;gap:14px;padding:20px 22px;border-radius:20px;background:var(--paper)}
-  .tipc .ic{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#FFF4DF;color:#A1752F;font-size:24px}
-  .tipc .t{display:block;margin-bottom:2px;font-size:19px}
-  .tipc p{margin:0;font-size:17px;line-height:1.55;color:var(--body)}
+  .tips{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;margin-top:56px}
+  .tipc{padding-top:18px;border-top:2px solid var(--ink)}
+  .tipc .t{display:block;margin-bottom:6px;font-size:19px;letter-spacing:-.02em}
+  .tipc p{margin:0;font-size:17px;line-height:1.6;color:var(--body)}
 
   /* ---------- why (AI tells) ---------- */
   .why{background:#fff}
-  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .tell{display:flex;flex-direction:column;padding:28px;border:1px solid var(--line);border-radius:24px;background:var(--paper);transition:transform .25s var(--ease),box-shadow .25s}
-  .tell:hover{transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(0,60,55,.4)}
-  .tell-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-  .tell .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#fff;color:var(--teal);font-size:27px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-  .tell .no{font-family:var(--latin);font-size:15px;font-weight:800;letter-spacing:.08em;color:#B4AE9F}
-  .tell h3{margin:0 0 6px;font-size:25px;letter-spacing:-.03em}
-  .tell .d{margin:0 0 20px;font-size:17.5px;line-height:1.55;color:var(--body)}
-  .ba{display:grid;gap:8px;margin-top:auto}
-  .ba p{display:flex;align-items:baseline;gap:10px;margin:0;padding:12px 14px;border-radius:14px;font-size:17px;line-height:1.5}
-  .ba em{flex:none;padding:2px 8px;border-radius:6px;background:#fff;font-style:normal;font-size:12.5px;font-weight:800}
-  .ba .x{background:var(--bad-bg);color:#9A3412}
-  .ba .x em{color:var(--bad)}
-  .ba .o{background:var(--good-bg);color:#064E49;font-weight:700}
-  .ba .o em{color:var(--teal)}
+  .tells{margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+  .tell{display:grid;grid-template-columns:minmax(220px,.8fr) 1.2fr;align-items:center;gap:12px 56px;padding:30px 0;border-bottom:1px solid var(--line)}
+  .tell h3{margin:0 0 6px;font-size:clamp(22px,2.2vw,26px);letter-spacing:-.03em}
+  .tell-k p{margin:0;font-size:17px;line-height:1.6;color:var(--body)}
+  .fix{display:grid;gap:10px}
+  .fix p{display:grid;grid-template-columns:76px 1fr;align-items:baseline;gap:16px;margin:0;font-size:19px;line-height:1.55}
+  .fix .lab{font-size:14px;font-weight:700;color:var(--muted)}
+  .fix .now .lab{color:var(--teal)}
+  .fix del,.pair-list del{color:#76675F;text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px}
+  .fix ins{text-decoration:none;font-weight:700;color:var(--ink)}
+  .fix .none{font-weight:600;color:var(--muted)}
+  .pairs{margin-top:72px}
+  .tbl-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;margin-bottom:12px}
+  .tbl-head h3{margin:0;font-size:20px;letter-spacing:-.02em}
+  .tbl-head h3 span{margin-right:6px;font-size:16px;font-weight:700;color:var(--muted)}
+  .unit{font-size:15px;color:var(--muted)}
+  .pair-list{display:grid;grid-template-columns:repeat(3,1fr);gap:0 44px;margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+  .pair-list li{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:18px}
+  .pair-list del{text-decoration-thickness:1.5px}
+  .pair-list ins{text-decoration:none;font-weight:700;color:var(--teal)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-  /* ---------- document types ---------- */
-  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .tcard{position:relative;overflow:hidden;padding:30px 28px 28px;border:1px solid var(--line);border-radius:24px;background:#fff;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
-  .tcard:hover{transform:translateY(-3px);border-color:var(--good-line);box-shadow:0 24px 46px -30px rgba(0,60,55,.4)}
-  .tcard .code{position:absolute;top:8px;right:20px;font-family:var(--latin);font-size:84px;font-weight:900;line-height:1;color:var(--teal);opacity:.08;transition:opacity .25s}
-  .tcard:hover .code{opacity:.16}
-  .tcard h3{margin:0 0 10px;font-size:24px;letter-spacing:-.03em}
-  .tcard p{margin:0;font-size:18.5px;line-height:1.6;font-weight:700;color:var(--teal)}
-
-  /* ---------- proof ---------- */
-  .proof .grid-bg{-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000 20%,transparent 80%);mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000 20%,transparent 80%)}
-  .proof .a1{top:auto;bottom:-300px;left:-200px}
-  .proof .a2{top:-200px;opacity:.22}
-  .sgrid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14)}
-  .stat{padding:40px 28px 4px;border-right:1px solid rgba(255,255,255,.1)}
-  .stat:first-child{padding-left:0}
-  .stat:last-child{border-right:0}
-  .big{display:flex;align-items:baseline;gap:6px;font-family:var(--latin);font-size:clamp(60px,7.4vw,108px);font-weight:800;line-height:1;letter-spacing:-.04em;background:linear-gradient(180deg,#fff 30%,var(--mint-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .big small{font-family:var(--sans);font-size:.34em;font-weight:700;letter-spacing:0}
-  .stat p{margin:20px 0 0;font-size:18px;line-height:1.55;color:#C9DAD5}
-  .stat p span{display:block;margin-top:6px;font-size:15.5px;color:#86A19A}
+  /* ---------- report tables (types, proof) ---------- */
+  .types{background:#fff}
+  .doc{width:100%;border-collapse:collapse;font-size:18px;line-height:1.5;font-variant-numeric:tabular-nums}
+  .doc thead th{padding:12px 16px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);background:#EFEBE1;font-size:15px;font-weight:700;color:var(--body);text-align:left;white-space:nowrap}
+  .doc td,.doc tbody th{padding:16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .doc tbody tr:last-child > *{border-bottom:2px solid var(--ink)}
+  .doc tbody th{font-weight:800;color:var(--ink)}
+  .doc .code{width:72px;font-size:20px;font-weight:800;color:var(--teal)}
+  .doc .n{width:110px;text-align:right}
+  .doc tbody .n{font-size:22px;font-weight:800;color:var(--ink)}
+  .doc tbody th small{display:block;margin-top:4px;font-size:15px;font-weight:500;line-height:1.5;color:var(--muted)}
+  .ev .ai .n:last-child{color:var(--bad)}
+  .types .doc td:last-child{font-weight:700;color:var(--teal)}
+  .src{margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--muted)}
+  .src a{color:var(--teal);font-weight:700}
 
   /* ---------- fields ---------- */
-  .words{margin:0;text-align:center;font-size:clamp(34px,4.8vw,68px);font-weight:800;line-height:1.2;letter-spacing:-.05em;color:var(--ink)}
+  .fields{background:#fff}
+  .words{margin:0;text-align:center;font-size:clamp(34px,4.8vw,68px);font-weight:800;line-height:1.2;letter-spacing:-.04em;color:var(--ink)}
   .words span{display:inline-block;margin:0 .14em;transition:color .3s,transform .3s var(--ease)}
-  .words .o{color:#A9D3C8}
-  .words span:hover{color:var(--teal);transform:translateY(-4px)}
+  .words .o{color:var(--teal-2)}
+  .words span:hover{color:var(--teal)}
 
   /* ---------- faq ---------- */
-  .faq{background:#fff}
-  .qa{border-top:1px solid var(--line)}
+    .qa{border-top:1px solid var(--line)}
   .qa:last-child{border-bottom:1px solid var(--line)}
   .qa summary{display:flex;align-items:center;gap:16px;padding:26px 4px;list-style:none;cursor:pointer;font-size:clamp(20px,2.2vw,24px);font-weight:800;letter-spacing:-.02em}
   .qa summary::-webkit-details-marker{display:none}
@@ -289,8 +260,8 @@
   .dl:hover{background:var(--teal);transform:translateY(-1px)}
 
   /* ---------- check ---------- */
-  .check{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .ck{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;max-width:none;padding:clamp(20px,3vw,36px);background:var(--paper)}
+  .check{background:var(--paper)}
+  .ck{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;max-width:none;padding:clamp(20px,3vw,36px);background:#fff}
   .ck-in{display:flex;flex-direction:column;gap:14px;min-width:0}
   .ck-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
   .ck-ty{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--body)}
@@ -335,9 +306,7 @@
 
   /* ---------- final ---------- */
   .final{padding:clamp(100px,13vw,170px) 0;text-align:center}
-  .final .a1{top:-200px;left:auto;right:-160px}
-  .final .a2{top:auto;bottom:-260px;left:-160px;right:auto}
-  .final h2{margin:0 0 22px;font-size:clamp(40px,6.4vw,92px);line-height:1.08;letter-spacing:-.05em;font-weight:800;color:#fff}
+  .final h2{margin:0 0 22px;font-size:clamp(40px,6.4vw,92px);line-height:1.1;letter-spacing:-.04em;font-weight:800;color:#fff}
   .final p{max-width:640px;margin:0 auto 40px;font-size:clamp(19px,2vw,23px);color:#A9BFB9}
   .btn-xl{height:76px;padding:0 40px;border-radius:20px;font-size:24px}
   .btn-xl svg{font-size:28px}
@@ -352,7 +321,7 @@
   .foot nav a:hover{color:#fff}
   .team{margin:36px 0 30px;padding-top:32px;border-top:1px solid var(--nline)}
   .team-t{display:flex;align-items:baseline;gap:12px;margin:0 0 18px;font-size:16px;font-weight:700;letter-spacing:-.01em;color:#BFD3CE}
-  .team-t .lat{font-family:var(--latin);font-size:12px;letter-spacing:.22em;color:var(--mint)}
+  .team-t span{font-weight:600;color:#86A19A}
   .crew{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0;padding:0;list-style:none}
   .crew li{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)}
   .crew .nm{display:flex;align-items:center;gap:8px;margin-bottom:2px;font-size:24px;font-weight:800;line-height:1.3;letter-spacing:-.02em;color:#fff}
@@ -361,27 +330,34 @@
   .crew .rk{margin-top:8px;padding:2px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:13px;font-weight:600;color:#A9BFB9}
   .foot-note{margin:0}
 
+  /* ---------- browser surfaces ---------- */
+  ::selection{background:var(--mint-2);color:var(--ink)}
+  .dark ::selection,.foot ::selection,.ck-out ::selection{background:var(--mint);color:#05231F}
+  textarea,input,select{caret-color:var(--teal)}
+  a{text-underline-offset:.22em}
+  html{scrollbar-color:#B7C1BD var(--paper)}
+  ::-webkit-scrollbar{width:12px;height:12px}
+  ::-webkit-scrollbar-track{background:var(--paper)}
+  ::-webkit-scrollbar-thumb{border:3px solid var(--paper);border-radius:999px;background:#B7C1BD}
+  ::-webkit-scrollbar-thumb:hover{background:#8E9C97}
+  .ck-list{scrollbar-color:#2E4A44 transparent}
+  .ck-list::-webkit-scrollbar-track{background:transparent}
+  .ck-list::-webkit-scrollbar-thumb{border-color:var(--night);background:#2E4A44}
+
   /* ---------- toast ---------- */
   .toast{position:fixed;left:50%;bottom:28px;z-index:90;display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);padding:16px 24px;border-radius:999px;background:#0B2422;color:#fff;font-size:19px;font-weight:700;box-shadow:0 20px 50px -14px rgba(0,0,0,.5);opacity:0;transform:translate(-50%,150%);transition:transform .4s var(--ease),opacity .3s;pointer-events:none}
   .toast.show{opacity:1;transform:translate(-50%,0)}
   .toast svg{font-size:24px;color:var(--mint)}
   .toast.bad svg{color:#FFB38A}
 
-  /* ---------- reveal ---------- */
-  .js [data-r]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
-  .js [data-r].in{opacity:1;transform:none}
-
   /* ---------- responsive ---------- */
   @media (max-width:1000px){
     .nav-links{display:none}
     .nav-cta{margin-left:auto}
     .head.split{grid-template-columns:1fr}
-    .bento,.tgrid{grid-template-columns:repeat(2,1fr)}
+    .pair-list{grid-template-columns:repeat(2,1fr)}
+    .tell{grid-template-columns:1fr;gap:14px}
     .divs{grid-template-columns:repeat(2,1fr)}
-    .sgrid{grid-template-columns:repeat(2,1fr)}
-    .stat:nth-child(2){border-right:0}
-    .stat:nth-child(3){padding-left:0}
-    .stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1)}
     .crew{grid-template-columns:repeat(2,1fr)}
     .ck{grid-template-columns:1fr}
     .ck-out{min-height:0}
@@ -403,14 +379,20 @@
     .st{grid-template-columns:1fr;gap:14px}
     .st::before{display:none}
     .num{width:52px;height:52px;font-size:22px}
-    .divs,.ais,.tips,.bento,.tgrid{grid-template-columns:1fr}
+    .divs,.ais,.tips,.pair-list{grid-template-columns:1fr}
+    .trust{flex-direction:column;align-items:center;gap:6px}
+    .trust li + li{border-left:0}
+    .fix p{grid-template-columns:1fr;gap:2px}
+    .doc{font-size:16.5px}
+    .doc td,.doc tbody th{padding:13px 10px}
+    .doc thead th{padding:10px}
+    .doc .code{width:44px}
+    .doc .n{width:64px}
+    .doc tbody .n{font-size:19px}
     .copy{height:78px}
     .panel{border-radius:24px}
   }
   @media (max-width:520px){
-    .sgrid{grid-template-columns:1fr}
-    .stat{padding-left:0;border-right:0;border-top:1px solid rgba(255,255,255,.1)}
-    .stat:first-child{border-top:0}
     .keys .mob{width:100%;margin:4px 0 0}
     .nav .brand .sep,.nav .brand-name{display:none}
     .crew{gap:10px}
@@ -421,10 +403,6 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation:none!important;transition:none!important}
-    .js [data-r]{opacity:1;transform:none}
-    .mq{-webkit-mask-image:none;mask-image:none}
-    .track{flex-wrap:wrap;justify-content:center;padding:0 16px}
-    .track[aria-hidden="true"]{display:none}
     .tags{opacity:1;transform:none}
   }
 </style>
@@ -450,25 +428,24 @@
 <main>
   <!-- HERO -->
   <section class="hero dark" aria-labelledby="hero-t">
-    <div class="aura a1"></div><div class="aura a2"></div><div class="aura a3"></div>
     <div class="grid-bg"></div>
     <div class="wrap">
       <div class="hero-in">
-        <span class="pill rise"><span class="dot"></span>토목 전 부문 · 설치·로그인 없이</span>
-        <h1 id="hero-t" class="rise" style="--d:.08s">AI가 쓴 초안을<br><span class="hl">엔지니어 말투</span>로</h1>
-        <p class="sub rise" style="--d:.16s">지침을 ChatGPT·Gemini·Claude 채팅창에 <b>한 번만 붙여넣으면</b>,<br class="pc"> 그다음부터 보고서·검토의견·공문 말투로 바꿔 씁니다.</p>
-        <div class="cta rise" style="--d:.24s">
+        <h1 id="hero-t" class="rise">AI가 쓴 초안을<br><span class="hl">엔지니어 말투</span>로</h1>
+        <p class="sub rise" style="--d:.08s">지침을 ChatGPT·Gemini·Claude 채팅창에 <b>한 번만 붙여넣으면</b>,<br class="pc"> 그다음부터 보고서·검토의견·공문 말투로 바꿔 씁니다.</p>
+        <div class="cta rise" style="--d:.16s">
           <a class="btn btn-mint" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14"></path><path d="M18 13l-6 6"></path><path d="M6 13l6 6"></path></svg>지금 바로 써 보기</a>
           <a class="btn btn-ghost" href="#check"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>내 글 바로 점검</a>
         </div>
-        <ul class="trust rise" style="--d:.32s">
-          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>사내 실무 문서 749건 근거</li>
-          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>토목 18개 분야 새 문서로 재검증</li>
-          <li><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg>모르는 수치는 지어내지 않음</li>
+        <ul class="trust rise" style="--d:.24s">
+          <li>설치·로그인 없음</li>
+          <li>사내 실무 문서 749건 근거</li>
+          <li>토목 18개 분야 새 문서로 재검증</li>
+          <li>모르는 수치는 지어내지 않음</li>
         </ul>
       </div>
 
-      <div class="stage rise" style="--d:.4s">
+      <div class="stage rise" style="--d:.32s">
         <div class="win" role="group" aria-label="사용 예시: AI 채팅창 화면">
           <div class="win-bar">
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -492,22 +469,14 @@
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <section class="band" aria-label="바뀌는 예">
-    <p class="band-label">BEFORE → AFTER</p>
-    <div class="mq"><div class="track"><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span></div><div class="track" aria-hidden="true"><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span><span class="pair"><span class="f">반영할게요!</span><span class="ar" aria-hidden="true">→</span><span class="t">반영하겠음</span></span><span class="pair"><span class="f">이번 사업</span><span class="ar" aria-hidden="true">→</span><span class="t">금회 사업</span></span><span class="pair"><span class="f">원래 계획</span><span class="ar" aria-hidden="true">→</span><span class="t">당초 계획</span></span><span class="pair"><span class="f">650 m3/day</span><span class="ar" aria-hidden="true">→</span><span class="t">Q=650㎥/일</span></span><span class="pair"><span class="f">지름 400mm 관</span><span class="ar" aria-hidden="true">→</span><span class="t">D400mm 관</span></span><span class="pair"><span class="f">길이 13km</span><span class="ar" aria-hidden="true">→</span><span class="t">L=13.0km</span></span><span class="pair"><span class="f">2억 원</span><span class="ar" aria-hidden="true">→</span><span class="t">2억원</span></span><span class="pair"><span class="f">3곳</span><span class="ar" aria-hidden="true">→</span><span class="t">3개소</span></span><span class="pair"><span class="f">~것 같아요</span><span class="ar" aria-hidden="true">→</span><span class="t">~것으로 판단됨</span></span></div></div>
-    <div class="mq rev"><div class="track"><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span></div><div class="track" aria-hidden="true"><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span><span class="pair"><span class="f">물탱크</span><span class="ar" aria-hidden="true">→</span><span class="t">배수지</span></span><span class="pair"><span class="f">다리</span><span class="ar" aria-hidden="true">→</span><span class="t">교량</span></span><span class="pair"><span class="f">둑</span><span class="ar" aria-hidden="true">→</span><span class="t">제방</span></span><span class="pair"><span class="f">오래된 관</span><span class="ar" aria-hidden="true">→</span><span class="t">노후관로</span></span><span class="pair"><span class="f">새로 설치</span><span class="ar" aria-hidden="true">→</span><span class="t">신설</span></span><span class="pair"><span class="f">땅을 파다</span><span class="ar" aria-hidden="true">→</span><span class="t">터파기</span></span><span class="pair"><span class="f">방해물</span><span class="ar" aria-hidden="true">→</span><span class="t">지장물</span></span><span class="pair"><span class="f">설계사</span><span class="ar" aria-hidden="true">→</span><span class="t">과업수행사</span></span><span class="pair"><span class="f">해결책</span><span class="ar" aria-hidden="true">→</span><span class="t">개선방안</span></span><span class="pair"><span class="f">그래서</span><span class="ar" aria-hidden="true">→</span><span class="t">따라서</span></span></div></div>
-  </section>
-
   <!-- COPY STATION -->
   <section class="sec station" id="start" aria-labelledby="start-t">
     <div class="wrap">
-      <div class="head center" data-r>
-        <span class="eyebrow">How to use</span>
+      <div class="head center">
         <h2 class="h2" id="start-t">버튼 한 번이면 준비 끝</h2>
         <p class="lede">설치도 로그인도 없습니다. 위에서부터 차례로 따라 하세요.</p>
       </div>
-      <div class="panel" data-r>
+      <div class="panel">
         <ol class="steps">
           <li class="st" id="st1">
             <div class="num"><span>1</span><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l5 5l10 -10"></path></svg></div>
@@ -565,8 +534,8 @@
           </li>
         </ol>
         <div class="tips">
-          <div class="tipc"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg></span><div><strong class="t">팀마다 말투가 다르면</strong><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요.</p></div></div>
-          <div class="tipc"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span><div><strong class="t">매번 붙여넣기 번거로우면</strong><p>ChatGPT <b>GPT 만들기</b>, Gemini <b>Gem 만들기</b>의 지침 칸에 한 번만 넣어 두세요.</p></div></div>
+          <div class="tipc"><strong class="t">팀마다 말투가 다르면</strong><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요.</p></div>
+          <div class="tipc"><strong class="t">매번 붙여넣기 번거로우면</strong><p>ChatGPT <b>GPT 만들기</b>, Gemini <b>Gem 만들기</b>의 지침 칸에 한 번만 넣어 두세요.</p></div>
         </div>
       </div>
     </div>
@@ -575,50 +544,41 @@
   <!-- WHY -->
   <section class="sec why" id="why" aria-labelledby="why-t">
     <div class="wrap">
-      <div class="head split" data-r>
+      <div class="head split">
         <div>
-          <span class="eyebrow">Why</span>
           <h2 class="h2" id="why-t">AI 초안,<br>여기서 티가 납니다</h2>
         </div>
         <p class="lede">지침은 이 여섯 가지를 잡아 실무 문서체로 바꿉니다. 내용과 수치는 그대로 둡니다.</p>
       </div>
-      <div class="bento">
-        <article class="tell" data-r>
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"></path></svg></span><span class="no">01</span></div>
-          <h3>경어체</h3>
-          <p class="d">보고서 본문에 ~입니다를 씁니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>검토한 결과 적정한 것 같습니다.</p><p class="o"><em>지침</em>검토결과 적정한 것으로 판단된다.</p></div>
-        </article>
-        <article class="tell" data-r style="--d:.08s">
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2m-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6"></path></svg></span><span class="no">02</span></div>
-          <h3>과장·상투어</h3>
-          <p class="d">획기적·혁신적 같은 말이 붙습니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>삶의 질이 획기적으로 향상될 것으로 기대됩니다.</p><p class="o"><em>지침</em>생활환경 개선에 기여할 것으로 판단된다.</p></div>
-        </article>
-        <article class="tell" data-r style="--d:.16s">
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 9l14 0"></path><path d="M5 15l14 0"></path><path d="M11 4l-4 16"></path><path d="M17 4l-4 16"></path></svg></span><span class="no">03</span></div>
-          <h3>마크다운 기호</h3>
-          <p class="d">HWP·PPT로 옮기면 ###, ** 가 그대로 남습니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>### 개선방안 **매우 중요**</p><p class="o"><em>지침</em>□ 개선방안</p></div>
-        </article>
-        <article class="tell" data-r>
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 10l.01 0"></path><path d="M15 10l.01 0"></path><path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path></svg></span><span class="no">04</span></div>
-          <h3>이모지·느낌표</h3>
-          <p class="d">공문서에 쓰지 않는 기호가 섞입니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>반영했습니다! 🚀</p><p class="o"><em>지침</em>반영하였음.</p></div>
-        </article>
-        <article class="tell" data-r style="--d:.08s">
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 9h8"></path><path d="M8 13h6"></path><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5"></path><path d="M16 19h6"></path><path d="M19 16v6"></path></svg></span><span class="no">05</span></div>
-          <h3>묻지 않은 덧붙임</h3>
-          <p class="d">한계점, “참고로”, 끝인사를 붙입니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>필요하시면 말씀해 주세요!</p><p class="o"><em>지침</em>(덧붙임 없이 본문만)</p></div>
-        </article>
-        <article class="tell" data-r style="--d:.16s">
-          <div class="tell-top"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M17 3l4 4l-14 14l-4 -4l14 -14"></path><path d="M16 7l-1.5 -1.5"></path><path d="M13 10l-1.5 -1.5"></path><path d="M10 13l-1.5 -1.5"></path><path d="M7 16l-1.5 -1.5"></path></svg></span><span class="no">06</span></div>
-          <h3>일반어·단위</h3>
-          <p class="d">현장에서 쓰지 않는 말과 단위를 씁니다.</p>
-          <div class="ba"><p class="x"><em>AI</em>물탱크 · 오래된 관 · 650 m3/day</p><p class="o"><em>지침</em>배수지 · 노후관로 · Q=650㎥/일</p></div>
-        </article>
+      <ul class="tells">
+        <li class="tell">
+          <div class="tell-k"><h3>경어체</h3><p>보고서 본문에 ~입니다를 씁니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>검토한 결과 적정한 것 같습니다.</del></p><p class="now"><span class="lab">지침 적용</span><ins>검토결과 적정한 것으로 판단된다.</ins></p></div>
+        </li>
+        <li class="tell">
+          <div class="tell-k"><h3>과장·상투어</h3><p>획기적·혁신적 같은 말이 붙습니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>삶의 질이 획기적으로 향상될 것으로 기대됩니다.</del></p><p class="now"><span class="lab">지침 적용</span><ins>생활환경 개선에 기여할 것으로 판단된다.</ins></p></div>
+        </li>
+        <li class="tell">
+          <div class="tell-k"><h3>마크다운 기호</h3><p>HWP·PPT로 옮기면 ###, ** 가 그대로 남습니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>### 개선방안 **매우 중요**</del></p><p class="now"><span class="lab">지침 적용</span><ins>□ 개선방안</ins></p></div>
+        </li>
+        <li class="tell">
+          <div class="tell-k"><h3>이모지·느낌표</h3><p>공문서에 쓰지 않는 기호가 섞입니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>반영했습니다! 🚀</del></p><p class="now"><span class="lab">지침 적용</span><ins>반영하였음.</ins></p></div>
+        </li>
+        <li class="tell">
+          <div class="tell-k"><h3>묻지 않은 덧붙임</h3><p>한계점, “참고로”, 끝인사를 붙입니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>필요하시면 말씀해 주세요!</del></p><p class="now"><span class="lab">지침 적용</span><ins class="none">덧붙임 없이 본문만 씀</ins></p></div>
+        </li>
+        <li class="tell">
+          <div class="tell-k"><h3>일반어·단위</h3><p>현장에서 쓰지 않는 말과 단위를 씁니다.</p></div>
+          <div class="fix"><p class="was"><span class="lab">AI 초안</span><del>물탱크 · 오래된 관 · 650 m3/day</del></p><p class="now"><span class="lab">지침 적용</span><ins>배수지 · 노후관로 · Q=650㎥/일</ins></p></div>
+        </li>
+      </ul>
+      <div class="pairs">
+        <div class="tbl-head"><h3 id="pairs-t"><span>&lt;표 1&gt;</span>자주 바뀌는 말</h3><span class="unit">AI 초안 → 지침 적용</span></div>
+        <ul class="pair-list" aria-labelledby="pairs-t"><li><del>반영할게요!</del><span class="sr"> → </span><ins>반영하겠음</ins></li><li><del>이번 사업</del><span class="sr"> → </span><ins>금회 사업</ins></li><li><del>원래 계획</del><span class="sr"> → </span><ins>당초 계획</ins></li><li><del>650 m3/day</del><span class="sr"> → </span><ins>Q=650㎥/일</ins></li><li><del>지름 400mm 관</del><span class="sr"> → </span><ins>D400mm 관</ins></li><li><del>길이 13km</del><span class="sr"> → </span><ins>L=13.0km</ins></li><li><del>3곳</del><span class="sr"> → </span><ins>3개소</ins></li><li><del>~것 같아요</del><span class="sr"> → </span><ins>~것으로 판단됨</ins></li><li><del>물탱크</del><span class="sr"> → </span><ins>배수지</ins></li><li><del>다리</del><span class="sr"> → </span><ins>교량</ins></li><li><del>둑</del><span class="sr"> → </span><ins>제방</ins></li><li><del>오래된 관</del><span class="sr"> → </span><ins>노후관로</ins></li><li><del>새로 설치</del><span class="sr"> → </span><ins>신설</ins></li><li><del>땅을 파다</del><span class="sr"> → </span><ins>터파기</ins></li><li><del>방해물</del><span class="sr"> → </span><ins>지장물</ins></li><li><del>설계사</del><span class="sr"> → </span><ins>과업수행사</ins></li><li><del>해결책</del><span class="sr"> → </span><ins>개선방안</ins></li><li><del>그래서</del><span class="sr"> → </span><ins>따라서</ins></li></ul>
       </div>
     </div>
   </section>
@@ -626,14 +586,13 @@
   <!-- CHECK -->
   <section class="sec check" id="check" aria-labelledby="check-t">
     <div class="wrap">
-      <div class="head split" data-r>
+      <div class="head split">
         <div>
-          <span class="eyebrow">Check</span>
           <h2 class="h2" id="check-t">붙여넣고<br>바로 점검</h2>
         </div>
         <p class="lede">AI가 쓴 초안이나 내가 쓴 글을 붙여넣으세요. 끝맺음·과장·마크다운·단위를 짚고 A~D 등급을 매깁니다. 글은 이 화면 밖으로 나가지 않습니다.</p>
       </div>
-      <div class="panel ck" data-r>
+      <div class="panel ck">
         <div class="ck-in">
           <div class="ck-bar">
             <label class="ck-ty" for="ck-type">문서 종류
@@ -669,66 +628,66 @@
   <!-- DOCUMENT TYPES -->
   <section class="sec types" id="types" aria-labelledby="types-t">
     <div class="wrap">
-      <div class="head center" data-r>
-        <span class="eyebrow">9 Document types</span>
-        <h2 class="h2" id="types-t">문서마다<br>끝맺음이 다릅니다</h2>
+      <div class="head split">
+        <div><h2 class="h2" id="types-t">문서마다<br>끝맺음이 다릅니다</h2></div>
         <p class="lede">“보고서체로”, “검토의견으로”처럼 문서 종류를 말하면 그 문서의 끝맺음과 기호로 씁니다.</p>
       </div>
-      <div class="tgrid">
-        <article class="tcard" data-r><span class="code" aria-hidden="true">R</span><h3>보고서 본문</h3><p>~하였다 · ~것으로 판단된다 · ~실정이다</p></article>
-        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">S</span><h3>설계기준·과업지시서</h3><p>~을 원칙으로 한다 · ~하여야 한다</p></article>
-        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">B</span><h3>장표·회의록</h3><p>□ ○ - · 개조식 · ~수립 · ~필요</p></article>
-        <article class="tcard" data-r><span class="code" aria-hidden="true">C</span><h3>검토의견</h3><p>~제시 필요 · ~검토 필요 · ~누락</p></article>
-        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">A</span><h3>조치계획·결과</h3><p>~반영하였음 · ~반영하겠음</p></article>
-        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">V</span><h3>설계VE 제안</h3><p>~변경하자 · ~최적화하자</p></article>
-        <article class="tcard" data-r><span class="code" aria-hidden="true">P</span><h3>발표 원고</h3><p>~보고 드리겠습니다 · ~되겠습니다</p></article>
-        <article class="tcard" data-r style="--d:.06s"><span class="code" aria-hidden="true">M</span><h3>내부 메일</h3><p>~공유드립니다 · ~검토 부탁드립니다</p></article>
-        <article class="tcard" data-r style="--d:.12s"><span class="code" aria-hidden="true">G</span><h3>공문</h3><p>~제출하오니 검토하여 주시기 바랍니다. 끝.</p></article>
-      </div>
+      <div class="tbl-head"><h3 id="types-tbl"><span>&lt;표 2&gt;</span>문서 종류별 끝맺음</h3><span class="unit">코드는 점검 결과에 나오는 유형 표시</span></div>
+      <table class="doc" aria-labelledby="types-tbl">
+        <thead><tr><th scope="col">코드</th><th scope="col">문서 종류</th><th scope="col">끝맺음·형식</th></tr></thead>
+        <tbody>
+            <tr><td class="code">R</td><th scope="row">보고서 본문</th><td>~하였다 · ~것으로 판단된다 · ~실정이다</td></tr>
+            <tr><td class="code">S</td><th scope="row">설계기준·과업지시서</th><td>~을 원칙으로 한다 · ~하여야 한다</td></tr>
+            <tr><td class="code">B</td><th scope="row">장표·회의록</th><td>□ ○ - · 개조식 · ~수립 · ~필요</td></tr>
+            <tr><td class="code">C</td><th scope="row">검토의견</th><td>~제시 필요 · ~검토 필요 · ~누락</td></tr>
+            <tr><td class="code">A</td><th scope="row">조치계획·결과</th><td>~반영하였음 · ~반영하겠음</td></tr>
+            <tr><td class="code">V</td><th scope="row">설계VE 제안</th><td>~변경하자 · ~최적화하자</td></tr>
+            <tr><td class="code">P</td><th scope="row">발표 원고</th><td>~보고 드리겠습니다 · ~되겠습니다</td></tr>
+            <tr><td class="code">M</td><th scope="row">내부 메일</th><td>~공유드립니다 · ~검토 부탁드립니다</td></tr>
+            <tr><td class="code">G</td><th scope="row">공문</th><td>~제출하오니 검토하여 주시기 바랍니다. 끝.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <!-- PROOF -->
-  <section class="sec proof dark" id="proof" aria-labelledby="proof-t">
-    <div class="aura a1"></div><div class="aura a2"></div>
-    <div class="grid-bg"></div>
+  <section class="sec proof" id="proof" aria-labelledby="proof-t">
     <div class="wrap">
-      <div class="head split" data-r>
-        <div>
-          <span class="eyebrow">Evidence</span>
-          <h2 class="h2" id="proof-t">감이 아니라<br>실무 문서에서 뽑았습니다</h2>
-        </div>
-        <p class="lede">사내 실무 문서의 끝맺음·기호·용어 빈도를 집계해 규칙을 만들고, 규칙에 쓰지 않은 새 문서로 다시 검증했습니다.</p>
+      <div class="head split">
+        <div><h2 class="h2" id="proof-t">감이 아니라<br>실무 문서에서 뽑았습니다</h2></div>
+        <p class="lede">사내 실무 문서 749건의 끝맺음·기호·용어 빈도로 규칙을 만들고, 규칙에 쓰지 않은 새 문서로 다시 검증했습니다.</p>
       </div>
-      <div class="sgrid">
-        <div class="stat" data-r><div class="big"><span data-count="749">749</span><small>건</small></div><p>사내 실무 문서에서 끝맺음·기호·용어 집계<span>물산업 340 · 다른 부문 409</span></p></div>
-        <div class="stat" data-r style="--d:.08s"><div class="big"><span data-count="388">388</span><small>건</small></div><p>규칙에 쓰지 않은 새 문서로 재검증<span>토목 18개 분야 · 처음 본 문서도 A등급 89%</span></p></div>
-        <div class="stat" data-r style="--d:.16s"><div class="big"><span data-count="90">90</span><small>%</small></div><p>사람이 쓴 문서 1,136건 중 A등급<span>멀쩡한 문서는 괜히 고치지 않습니다</span></p></div>
-        <div class="stat" data-r style="--d:.24s"><div class="big"><span data-count="0">0</span><small>건</small></div><p>배포물에 넣은 원문·사업명·수치<span>규칙만 담았습니다</span></p></div>
-      </div>
+      <div class="tbl-head"><h3 id="ev-t"><span>&lt;표 3&gt;</span>검사기 검증 결과</h3><span class="unit">(단위 : 건, %)</span></div>
+      <table class="doc ev" aria-labelledby="ev-t">
+        <thead><tr><th scope="col">구분</th><th scope="col" class="n">문서</th><th scope="col" class="n">A등급</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">규칙을 만든 실무 문서<small>사람이 쓴 문서 · 물산업 306, 다른 부문 409</small></th><td class="n">715</td><td class="n">89</td></tr>
+          <tr><th scope="row">규칙에 쓰지 않은 새 문서<small>토목 18개 분야 · 처음 본 상태 그대로(오탐 수정 후 93)</small></th><td class="n">388</td><td class="n">89</td></tr>
+          <tr class="ai"><th scope="row">AI가 쓴 초안<small>시험 문서 · 모두 D등급</small></th><td class="n">7</td><td class="n">0</td></tr>
+        </tbody>
+      </table>
+      <p class="src">자료) 사내 실무 문서 1,103건(2026. 11.)과 시험용 AI 초안 7건. 원문·사업명·수치는 배포물에 넣지 않았습니다. <a href="https://github.com/ktr218/civil-engineer-tone/blob/main/skills/civil-engineer-tone/references/divisions/README.md">부문별 결과</a></p>
     </div>
   </section>
 
   <!-- FIELDS -->
   <section class="sec fields" aria-labelledby="fields-t">
     <div class="wrap">
-      <div class="head center" data-r>
-        <span class="eyebrow">All civil divisions</span>
+      <div class="head center">
         <h2 class="h2" id="fields-t">토목 전 부문에서 씁니다</h2>
         <p class="lede">끝맺음·기호·단위는 전 부문 공통이고, 용어는 고른 부문에 맞춰 씁니다. 아래 18개 분야 실무 문서로 검증했습니다.</p>
       </div>
-      <p class="words" data-r><span>상하수도</span><span class="o">건축</span><span>도로</span><span class="o">철도</span><span>공항</span><span class="o">교통</span><br class="pc"><span>하천</span><span class="o">항만</span><span>구조</span><span class="o">지반</span><span>환경</span><span class="o">측량</span><br class="pc"><span>도시</span><span class="o">조경</span><span>에너지</span><span class="o">기전</span><span>CM</span><span class="o">지원</span></p>
+      <p class="words"><span>상하수도</span><span class="o">건축</span><span>도로</span><span class="o">철도</span><span>공항</span><span class="o">교통</span><br class="pc"><span>하천</span><span class="o">항만</span><span>구조</span><span class="o">지반</span><span>환경</span><span class="o">측량</span><br class="pc"><span>도시</span><span class="o">조경</span><span>에너지</span><span class="o">기전</span><span>CM</span><span class="o">지원</span></p>
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="sec faq" id="faq" aria-labelledby="faq-t">
     <div class="wrap narrow">
-      <div class="head center" data-r>
-        <span class="eyebrow">FAQ</span>
+      <div class="head center">
         <h2 class="h2" id="faq-t">알아 두세요</h2>
       </div>
-      <div data-r>
+      <div>
         <details class="qa" open><summary>팀마다 말투가 다르면요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요. 팀 예시가 지침보다 우선합니다.</p></div></details>
         <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 6천 자가 안 돼 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
         <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
@@ -743,13 +702,12 @@
 
   <!-- FINAL CTA -->
   <section class="final dark" aria-labelledby="final-t">
-    <div class="aura a1"></div><div class="aura a2"></div>
     <div class="grid-bg"></div>
     <div class="wrap">
-      <h2 id="final-t" data-r>오늘 쓰는 보고서부터<br><span class="hl">엔지니어 말투</span>로</h2>
-      <p data-r style="--d:.08s">지침을 복사해 AI 채팅창에 붙여넣기만 하면 됩니다.</p>
-      <div data-r style="--d:.16s"><button type="button" class="btn btn-mint btn-xl" id="copy2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사하기</button></div>
-      <div class="final-ais" data-r style="--d:.24s"><span>어디서나</span><img src="img/chatgpt.png" alt="ChatGPT"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></div>
+      <h2 id="final-t">오늘 쓰는 보고서부터<br><span class="hl">엔지니어 말투</span>로</h2>
+      <p>지침을 복사해 AI 채팅창에 붙여넣기만 하면 됩니다.</p>
+      <div><button type="button" class="btn btn-mint btn-xl" id="copy2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사하기</button></div>
+      <div class="final-ais"><span>어디서나</span><img src="img/chatgpt.png" alt="ChatGPT"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></div>
     </div>
   </section>
 </main>
@@ -765,7 +723,7 @@
       </nav>
     </div>
     <div class="team">
-      <h2 class="team-t"><span class="lat">TEAM</span>문체정비사업단</h2>
+      <h2 class="team-t">문체정비사업단 <span>만든 사람들</span></h2>
       <ul class="crew">
         <li><strong class="nm">김태호<em class="lead">대표</em></strong><span class="rl">기획·구현</span><span class="rk">과장</span></li>
         <li><strong class="nm">엄재훈</strong><span class="rl">AI 말투 문제 진단</span><span class="rk">대리</span></li>
@@ -1004,34 +962,6 @@
     });
   })();
 
-  /* ---------- 숫자 카운트·나타나기 ---------- */
-  function countUp(el) {
-    var to = parseInt(el.getAttribute("data-count"), 10) || 0;
-    if (reduce || to === 0) { el.textContent = String(to); return; }
-    var t0 = 0, dur = 1700;
-    function f(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min(1, (ts - t0) / dur);
-      el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) requestAnimationFrame(f);
-    }
-    requestAnimationFrame(f);
-  }
-  var rs = $$("[data-r]");
-  if (hasIO && !reduce) {
-    $$("[data-count]").forEach(function (el) { if (parseInt(el.getAttribute("data-count"), 10)) el.textContent = "0"; });
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.classList.add("in");
-        $$("[data-count]", e.target).forEach(countUp);
-        io.unobserve(e.target);
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
-    rs.forEach(function (el) { io.observe(el); });
-  } else {
-    rs.forEach(function (el) { el.classList.add("in"); });
-  }
 })();
 </script>
 </body>
