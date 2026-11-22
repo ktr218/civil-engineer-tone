@@ -16,8 +16,7 @@ class TestSkillZip(unittest.TestCase):
             expected = sorted(arc for _, arc in build_skill_zip.skill_files())
             self.assertEqual(names, expected, "python tools/build_skill_zip.py 로 zip을 다시 만드세요")
             for p, arc in build_skill_zip.skill_files():
-                with open(p, "rb") as f:
-                    self.assertEqual(z.read(arc), f.read(), arc + " 내용이 다름: python tools/build_skill_zip.py")
+                self.assertEqual(z.read(arc), build_skill_zip.payload(p), arc + " 내용이 다름: python tools/build_skill_zip.py")
         self.assertIn("civil-engineer-tone/SKILL.md", names)
 
 
