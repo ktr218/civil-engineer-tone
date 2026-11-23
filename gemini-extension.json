@@ -1,6 +1,6 @@
 {
   "name": "civil-engineer-tone",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "토목 엔지니어 어투·용어로 보고서·장표·검토의견·조치계획서·공문을 작성·윤문·점검",
   "contextFileName": "GEMINI.md"
 }

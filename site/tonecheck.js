@@ -1,4 +1,4 @@
-/* 토목 실무 문체 검사기 — skills/civil-engineer-tone/scripts/tonelib.py를 브라우저용으로 옮긴 것.
+/* 토목 실무 문체 검사기 — skills/civil-engineer-tone/scripts/tonelib.py와 check_values.py(수치 대조)를 브라우저용으로 옮긴 것.
  * 규칙·판정은 Python판과 같아야 한다(tests/test_site.py가 시험 문서로 대조한다).
  * site/build.js가 아래 LEXICON 자리에 references/lexicon.json을 넣어 docs/tonecheck.js로 쓴다.
  * 브라우저: window.ToneCheck / Node: require("./tonecheck.js")
@@ -281,8 +281,104 @@
     return [out.join(""), changes];
   }
 
+  /* ---------- 수치 대조: scripts/check_values.py를 옮긴 것(결과가 같아야 한다) ---------- */
+  // 수치 환산은 하지 않는다. 표기만 동등한 단위와 어휘집의 auto 규칙을 쓴다.
+  var VALUE_UNITS = [
+    "ℓ/인·일", "m³/일", "m³/min", "m³/s", "㎥/일", "㎥/min", "㎥/s",
+    "mm/hr", "mm/h", "km/h", "m/s", "mg/L", "㎎/L", "kg/m³", "kN/m²",
+    "MWh/년", "Gcal/년", "TOE/년", "백만원", "억원", "천원", "원",
+    "km²", "m²", "m³", "㎢", "㎡", "㎥", "km", "mm", "cm", "m",
+    "MPa", "kPa", "Pa", "kN", "N", "MW", "kW", "W", "kV", "V",
+    "kg", "mg", "㎎", "g", "ℓ", "L", "ha", "ppm", "℃", "°C", "%p", "%",
+    "개소", "개", "기", "대", "명", "인", "년", "개월", "월", "일", "시간", "분", "초"
+  ];
+  var VALUE_SCOPE = "숫자·인식한 단위·부등호의 출현 개수를 비교함. 숫자 순서와 문장 재배치는 허용함. " +
+    "같은 수치가 다른 시설·항목에 옮겨 붙은 경우, 단위 환산, 표 머리글의 단위, " +
+    "미지원 단위, 사업명·근거·부정문·계획/완료 변경은 별도 원문 대조가 필요함. " +
+    "fenced code는 제외하며 문서 번호·날짜도 숫자로 집계함. 차이 미검출은 사실 검증 통과가 아님.";
+  // Python re의 \d는 유니코드 숫자, \s는 PY_WS다.
+  var ND = "\\p{Nd}", SP = "[" + PY_WS + "]";
+  var VNUMBER = "(?:" + ND + "{1,3}(?:," + ND + "{3})+(?!" + ND + ")|" + ND + "+)(?:\\." + ND + "+)?|\\." + ND + "+";
+  var VSYMBOL = "D(?:N)?" + SP + "*=?" + SP + "*|[ΦØφ]" + SP + "*|(?:GL|EL|DL)\\.?" + SP + "*";
+  var VREL = "<=|>=|≤|≥|<|>";
+  var VUNIT = VALUE_UNITS.slice().sort(function (a, b) { return len(b) - len(a); })
+    .map(function (u) { return u.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&"); }).join("|");
+  // Python의 조건부 그룹 (?(symbol)|(?<![A-Za-z0-9_]))은 기호가 있는 갈래와 없는 갈래로 나눠 같은 순서로 시도한다.
+  var VTOKEN = new RegExp("(?<![0-9_])(?:(?<symbol>" + VSYMBOL + ")(?<rel>" + VREL + ")?" + SP + "*|(?<rel2>" + VREL + ")?" + SP +
+    "*(?<![A-Za-z0-9_]))(?<number>[+−±△-]?" + SP + "*(?:" + VNUMBER + ")(?:[eE][+-]?" + ND + "+)?)" +
+    "(?:" + SP + "*(?<unit>(?:" + VUNIT + ")(?![A-Za-z0-9_])))?", "gu");
+  var VSTRIP = new RegExp("[" + PY_WS + ",]", "g"), ND1 = new RegExp("^" + ND + "$", "u");
+
+  // 유니코드 숫자 → 0~9. Nd 숫자는 0부터 9까지 연속으로 배정되어 있다.
+  function digit(ch) {
+    var cp = ch.codePointAt(0), start = cp;
+    if (cp >= 48 && cp <= 57) return ch;
+    while (ND1.test(String.fromCodePoint(start - 1))) start--;
+    return String((cp - start) % 10);
+  }
+
+  // Python의 Decimal(value).as_tuple()로 만든 키와 같은 문자열(뒤의 0을 지수로 옮김)
+  function numberKey(value) {
+    var v = value.replace(VSTRIP, "").replace(/−/g, "-"), prefix = "", sign = "";
+    if (v.charAt(0) === "±" || v.charAt(0) === "△") { prefix = v.charAt(0); v = v.slice(1); }
+    if (v.charAt(0) === "+" || v.charAt(0) === "-") { sign = v.charAt(0) === "-" ? "-" : ""; v = v.slice(1); }
+    v = Array.from(v).map(function (ch) { return ND1.test(ch) ? digit(ch) : ch; }).join("");
+    var m = /^(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/.exec(v);
+    if (!m) throw new Error("수치를 읽지 못함: " + value);
+    var frac = m[2] || "", digits = ((m[1] || "") + frac).replace(/^0+/, "");
+    if (!digits) return prefix + "0";
+    var core = digits.replace(/0+$/, "");
+    var exp = (m[3] ? parseInt(m[3], 10) : 0) - frac.length + (digits.length - core.length);
+    return prefix + sign + core + "e" + exp;
+  }
+
+  function extractValues(text) {
+    var rows = [];
+    contentLines(fix(text, null)[0]).forEach(function (x) {
+      var line = x[1], cps = null, m;
+      VTOKEN.lastIndex = 0;
+      while ((m = VTOKEN.exec(line))) {
+        var g = m.groups, rel = g.rel || g.rel2 || "";
+        var start = len(line.slice(0, m.index)), end = start + len(m[0]);
+        cps = cps || Array.from(line);
+        rows.push({
+          key: [rel === "≤" ? "<=" : rel === "≥" ? ">=" : rel, numberKey(g.number), (g.unit || "").normalize("NFKC")],
+          line: x[0], value: strip(m[0]), context: strip(cps.slice(Math.max(0, start - 30), end + 30).join(""))
+        });
+      }
+    });
+    return rows;
+  }
+
+  // 원문과 윤문의 숫자·단위 출현 개수 비교. removed는 원문에서 줄어든 값, added는 윤문에서 늘어난 값.
+  function compareValues(original, revised) {
+    var before = extractValues(original), after = extractValues(revised);
+    function tally(rows) {
+      var c = new Map();
+      rows.forEach(function (r) { var k = JSON.stringify(r.key); c.set(k, (c.get(k) || 0) + 1); });
+      return c;
+    }
+    function differences(rows, mine, other) {
+      var where = new Map(), out = [];
+      rows.forEach(function (r) {
+        var k = JSON.stringify(r.key);
+        if (!where.has(k)) where.set(k, []);
+        where.get(k).push({ line: r.line, value: r.value, context: r.context });
+      });
+      mine.forEach(function (n, k) {
+        var d = n - (other.get(k) || 0);
+        if (d > 0) out.push({ value: where.get(k)[0].value, count: d, locations: where.get(k) });
+      });
+      return out;
+    }
+    var a = tally(before), b = tally(after), removed = differences(before, a, b), added = differences(after, b, a);
+    return { needs_review: removed.length > 0 || added.length > 0, original_count: before.length, revised_count: after.length,
+      removed: removed, added: added, scope: VALUE_SCOPE };
+  }
+
   return {
     TYPES: TYPES, END_NAME: END_NAME, setLexicon: setLexicon, lexicon: lexicon,
-    classifyEnding: classifyEnding, detectType: detectType, check: check, score: score, fix: fix
+    classifyEnding: classifyEnding, detectType: detectType, check: check, score: score, fix: fix,
+    VALUE_UNITS: VALUE_UNITS, VALUE_SCOPE: VALUE_SCOPE, extractValues: extractValues, compareValues: compareValues
   };
 });

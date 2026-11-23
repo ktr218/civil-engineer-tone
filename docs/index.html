@@ -297,8 +297,20 @@
   .ck-ty{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--body)}
   .ck-ty select{height:46px;padding:0 40px 0 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2422' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center/16px;font:inherit;font-size:16px;font-weight:700;color:var(--ink);-webkit-appearance:none;appearance:none;cursor:pointer}
   .ck-link{padding:6px 2px;border:0;background:none;color:var(--teal);font-size:16px;font-weight:700;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-  #ck-text{width:100%;min-height:280px;resize:vertical;padding:18px 20px;border:1.5px solid var(--line);border-radius:18px;background:#fff;color:var(--ink);font:inherit;font-size:17px;line-height:1.75}
-  #ck-text:focus{outline:2px solid var(--teal);outline-offset:2px;border-color:var(--teal)}
+  #ck-text,#ck-orig{width:100%;min-height:280px;resize:vertical;padding:18px 20px;border:1.5px solid var(--line);border-radius:18px;background:#fff;color:var(--ink);font:inherit;font-size:17px;line-height:1.75}
+  #ck-text:focus,#ck-orig:focus{outline:2px solid var(--teal);outline-offset:2px;border-color:var(--teal)}
+  #ck-orig{min-height:150px}
+  .ck-in.vs #ck-text{min-height:190px}
+  .ck-tog{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:46px;padding:0 16px;border:1.5px dashed var(--line-2);border-radius:12px;background:transparent;color:var(--teal);font-size:16px;font-weight:700;cursor:pointer;transition:border-color .2s,background .2s}
+  .ck-tog:hover{border-color:var(--teal);background:#fff}
+  .ck-tog svg:last-child{transition:transform .25s var(--ease)}
+  .ck-tog[aria-expanded="true"]{border-style:solid;border-color:var(--teal);background:#fff}
+  .ck-tog[aria-expanded="true"] svg:last-child{transform:rotate(180deg)}
+  .ck-orig{display:flex;flex-direction:column;gap:8px}
+  .ck-orig[hidden]{display:none}
+  .ck-orig-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 16px}
+  .ck-orig-bar label{font-size:16px;font-weight:700;color:var(--body)}
+  .ck-orig-bar label span{margin-left:8px;font-size:14px;font-weight:600;color:var(--muted)}
   .ck-act{display:flex;flex-wrap:wrap;gap:10px}
   .ck-act .btn{height:56px;padding:0 24px;font-size:18px}
   .btn-line{background:#fff;color:var(--ink);border:1.5px solid var(--line-2)}
@@ -331,7 +343,29 @@
   .ck-item .sug{margin:4px 0 0;font-size:14px;color:var(--mint-2)}
   .ck-ok{margin:auto;text-align:center;font-size:17px;color:#C9DAD5}
   .ck-ok svg{font-size:44px;color:var(--mint)}
+  .ck-ok.sm{display:flex;align-items:center;gap:10px;margin:16px 0 0;text-align:left;font-size:15.5px}
+  .ck-ok.sm svg{font-size:26px}
+  .ck-ok.sm p{margin:0}
   .ck-msg{margin:12px 0 0;font-size:14px;color:#A9BFB9}
+  .ck-val{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .ck-val-h{display:flex;align-items:flex-start;gap:10px}
+  .ck-val-h svg{flex:none;margin-top:3px;font-size:22px;color:var(--mint)}
+  .ck-val.bad .ck-val-h svg{color:#FFB38A}
+  .ck-val-h b{display:block;font-size:17px;line-height:1.4;color:#fff}
+  .ck-val-h span{display:block;margin-top:2px;font-size:13.5px;color:#A9BFB9}
+  .ck-vals{display:flex;flex-direction:column;gap:12px;margin:14px 0 0;padding:0;list-style:none}
+  .ck-vals li{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+  .ck-vals .vk{flex:none;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800}
+  .ck-vals .del .vk{background:rgba(255,138,101,.18);color:#FFB38A}
+  .ck-vals .ins .vk{background:rgba(164,243,223,.12);color:var(--mint-2)}
+  .ck-vals del,.ck-vals ins{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
+  .ck-vals del{color:#FFB38A;text-decoration-thickness:2px}
+  .ck-vals ins{color:var(--mint);text-decoration:none}
+  .ck-vals .vn{font-size:14px;font-weight:700;color:#C9DAD5}
+  .ck-vals .vl{margin-left:auto;font-size:13px;color:#86A19A}
+  .ck-vals .vc{flex-basis:100%;font-size:14px;line-height:1.55;color:#A9BFB9;overflow-wrap:anywhere}
+  .ck-vals mark{padding:0 3px;border-radius:4px;background:rgba(255,255,255,.12);color:#fff}
+  .ck-val .ck-msg{margin-top:12px}
   .ck-msg button{margin-left:6px;padding:0;border:0;background:none;color:var(--mint);font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 
   /* ---------- final ---------- */
@@ -637,7 +671,7 @@
         <div>
           <h2 class="h2" id="check-t">붙여넣고<br>바로 점검</h2>
         </div>
-        <p class="lede">AI가 쓴 초안이나 내가 쓴 글을 붙여넣으세요. 끝맺음·과장·마크다운·단위를 짚고 A~D 등급을 매깁니다. 글은 이 화면 밖으로 나가지 않습니다.</p>
+        <p class="lede">AI가 쓴 초안이나 내가 쓴 글을 붙여넣으세요. 끝맺음·과장·마크다운·단위를 짚고 A~D 등급을 매깁니다. 원문을 함께 넣으면 바뀐 숫자·단위도 찾습니다. 글은 이 화면 밖으로 나가지 않습니다.</p>
       </div>
       <div class="panel ck">
         <div class="ck-in">
@@ -659,6 +693,14 @@
             <button type="button" class="ck-link" id="ck-ex">AI 초안 예시 넣기</button>
           </div>
           <textarea id="ck-text" spellcheck="false" placeholder="점검할 글을 여기에 붙여넣으세요." aria-label="점검할 글"></textarea>
+          <button type="button" class="ck-tog" id="ck-tog" aria-expanded="false" aria-controls="ck-orig-wrap"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M17 3l4 4l-14 14l-4 -4l14 -14"></path><path d="M16 7l-1.5 -1.5"></path><path d="M13 10l-1.5 -1.5"></path><path d="M10 13l-1.5 -1.5"></path><path d="M7 16l-1.5 -1.5"></path></svg>원문과 수치 대조<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></button>
+          <div class="ck-orig" id="ck-orig-wrap" hidden>
+            <div class="ck-orig-bar">
+              <label for="ck-orig">원문<span>AI에 넣기 전 글</span></label>
+              <button type="button" class="ck-link" id="ck-vex">수치 대조 예시 넣기</button>
+            </div>
+            <textarea id="ck-orig" spellcheck="false" placeholder="AI에 넣기 전 원문을 붙여넣으면, 위 글과 숫자·단위를 대조합니다."></textarea>
+          </div>
           <div class="ck-act">
             <button type="button" class="btn btn-mint" id="ck-run"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>점검하기</button>
             <button type="button" class="btn btn-line" id="ck-fix"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"></path><path d="M15 6l3 3"></path><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path></svg>단위 표기 고치기</button>
@@ -739,7 +781,7 @@
         <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 6천 자가 안 돼 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
         <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
         <details class="qa"><summary>점검 등급(A~D)은 어떻게 매기나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>글 500자마다 지적 점수를 더합니다. 꼭 고칠 것 5점, 고치면 좋은 것 2점, 참고 0.5점이고 0.5점 미만이면 A입니다. 사람이 쓴 실무 문서는 열에 아홉이 A입니다.</p><p>입찰 안내서·서약서처럼 원래 경어로 쓰는 문서는 문서 종류를 <b>내부 보고·메일·안내</b>나 <b>공문</b>으로 고르세요.</p></div></details>
-        <details class="qa"><summary>모르는 숫자를 지어내지 않나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>입력에 없는 수치·사업명·법 조항은 ○○ 또는 [확인 필요]로 남깁니다. 결과 뒤에 무엇을 바꿨는지 3~6줄로 알려 줍니다. 최종 확인은 작성자가 합니다.</p></div></details>
+        <details class="qa"><summary>모르는 숫자를 지어내지 않나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>입력에 없는 수치·사업명·법 조항은 ○○ 또는 [확인 필요]로 남깁니다. 결과 뒤에 무엇을 바꿨는지 3~6줄로 알려 줍니다.</p><p>위 <b>바로 점검</b>에서 [원문과 수치 대조]를 열고 AI에 넣기 전 글을 넣으면, 바뀌거나 빠진 숫자·단위를 짚어 줍니다. 최종 확인은 작성자가 합니다.</p></div></details>
         <details class="qa"><summary>회사 자료를 넣어도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>대외비·개인정보가 있는 문장은 외부 AI에 넣지 마세요. 말투만 바꿀 때는 사업명·수치를 ○○로 바꿔 넣어도 됩니다.</p></div></details>
         <details class="qa"><summary>휴대폰에서도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>됩니다. [지침 복사하기]를 누른 뒤 AI 앱 입력칸을 길게 눌러 [붙여넣기] 하세요.</p></div></details>
         <details class="qa"><summary>어떤 AI에서 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>ChatGPT·Gemini·Claude 등 채팅형 AI라면 어디서나 됩니다. 붙여넣은 대화 안에서는 계속 이 말투로 씁니다.</p></div></details>
@@ -786,8 +828,8 @@
       </ul>
       <dl class="tb-meta">
         <div><dt>축척</dt><dd>NONE</dd></div>
-        <div><dt>개정</dt><dd>2.3.0</dd></div>
-        <div><dt>일자</dt><dd>2026. 11. 22.</dd></div>
+        <div><dt>개정</dt><dd>2.4.0</dd></div>
+        <div><dt>일자</dt><dd>2026. 11. 23.</dd></div>
       </dl>
     </div>
     <p class="foot-note">회사가 공식 배포하는 자료는 아닙니다. 최종 확인은 작성자가 합니다.</p>
@@ -955,6 +997,7 @@
   /* ---------- 바로 점검 (tonecheck.js, 검사기와 같은 규칙) ---------- */
   (function () {
     var TC = window.ToneCheck, ta = $("#ck-text"), sel = $("#ck-type"), out = $("#ck-out");
+    var tog = $("#ck-tog"), wrap = $("#ck-orig-wrap"), orig = $("#ck-orig");
     if (!TC || !ta) return;
     var NAMES = { R: "보고서 본문", S: "설계기준·시방·과업지시서", B: "장표·회의록", C: "검토의견", A: "조치계획·결과",
       V: "설계VE 제안", P: "발표 원고", M: "내부 보고·메일·안내", G: "공문" };
@@ -964,6 +1007,9 @@
       "**핵심 내용** ✅\n" +
       "처리용량은 650 m3/day이며 지름 400mm 하수 파이프를 3.4km 새로 설치합니다.\n" +
       "결론적으로 이를 통해 침수 문제를 해결할 수 있습니다.";
+    // 수치 대조 예시: 말투는 고쳐졌지만 3.4km가 4.3km로 바뀐 글
+    var VEX = "금회 사업은 처리용량 Q=650㎥/일 규모로 D400mm 하수관로 L=4.3km를 신설하는 사업이다.\n" +
+      "사업이 완료되면 우기 시 침수 피해가 저감될 것으로 판단된다.";
     function esc(s) {
       return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
     }
@@ -983,11 +1029,40 @@
         (x.line ? x.line + "행" : "문서 전체") + '</span></div><p class="ck-m">' + esc(msg) + "</p>" +
         '<p class="ck-l">' + (x.text ? mark(x.text, x.match, end) : esc(x.match)) + "</p>" + sug + "</li>";
     }
+    /* 원문과 수치 대조 (check_values.py와 같은 규칙) */
+    function rowsAt(locs) {
+      var seen = [];
+      locs.forEach(function (l) { if (seen.indexOf(l.line) < 0) seen.push(l.line); });
+      return seen.join("·") + "행";
+    }
+    function vrow(x, kind) {
+      return '<li class="' + kind + '"><span class="vk">' + (kind === "del" ? "원문에만" : "고친 글에만") + "</span><" + kind + ">" +
+        esc(x.value) + "</" + kind + ">" + (x.count > 1 ? '<span class="vn">×' + x.count + "</span>" : "") +
+        '<span class="vl">' + (kind === "del" ? "원문 " : "") + rowsAt(x.locations) + "</span>" +
+        '<span class="vc">' + mark(x.locations[0].context, x.value) + "</span></li>";
+    }
+    function values(text) {
+      var v;
+      try { v = TC.compareValues(orig.value, text); }
+      catch (e) { return '<p class="ck-msg">원문 수치 대조 중 오류가 났습니다. 원문과 직접 대조하세요.</p>'; }
+      var n = 0, rows = v.removed.map(function (x) { return vrow(x, "del"); }).concat(v.added.map(function (x) { return vrow(x, "ins"); }));
+      v.removed.concat(v.added).forEach(function (x) { n += x.count; });
+      var title = n ? "원문과 다른 숫자·단위 " + n + "곳" : v.original_count ? "숫자·단위가 원문과 같습니다" : "대조할 숫자가 없습니다";
+      var sub = n ? "원문 " + v.original_count + "개 · 고친 글 " + v.revised_count + "개 대조"
+        : v.original_count ? "값 " + v.original_count + "개 대조 · 표기와 순서가 달라도 같은 값으로 봅니다" : "원문과 위 글에 숫자가 없습니다";
+      return '<div class="ck-val' + (n ? " bad" : "") + '"><div class="ck-val-h">' + (n ? BAD_ICON : OKI) + "<div><b>" + title +
+        "</b><span>" + sub + "</span></div></div>" +
+        (rows.length ? '<ul class="ck-vals">' + rows.slice(0, 12).join("") + "</ul>" : "") +
+        (rows.length > 12 ? '<p class="ck-msg">외 ' + (rows.length - 12) + "건</p>" : "") +
+        (n ? '<p class="ck-msg">단위를 환산한 값은 다른 값으로 표시합니다. 같은 값이 다른 항목으로 옮겨 간 경우는 찾지 못하니 원문과 한 번 더 대조하세요.</p>' : "") +
+        "</div>";
+    }
     function run(note) {
       var text = ta.value;
       if (!text.trim()) { out.innerHTML = EMPTY; return; }
       var t = sel.value === "auto" ? TC.detectType(text)[0] : sel.value;
       var f = TC.check(text, t), s = TC.score(f, text);
+      var open = !wrap.hidden, has = open && !!orig.value.trim();
       var head = '<div class="ck-head"><div class="ck-grade" data-g="' + s.grade + '">' + s.grade + '</div><div class="ck-sum"><b>' +
         (f.length ? "지적 " + f.length + "건" : "지적할 곳이 없습니다") + "</b><span>" + esc(NAMES[t]) + "(" + t + ")" +
         (sel.value === "auto" ? " · 자동 판별" : "") + " · 꼭 " + s.counts.S1 + " · 권장 " + s.counts.S2 + " · 참고 " + s.counts.S3 +
@@ -995,17 +1070,29 @@
       var body = f.length
         ? '<ol class="ck-list">' + f.slice(0, MAX).map(function (x) { return item(x, t); }).join("") + "</ol>" +
           (f.length > MAX ? '<p class="ck-msg">외 ' + (f.length - MAX) + "건</p>" : "")
-        : '<div class="ck-ok">' + OKI + "<p>실무 문서 말투입니다. 수치·사실은 직접 한 번 더 확인하세요.</p></div>";
+        : '<div class="ck-ok' + (has ? " sm" : "") + '">' + OKI + "<p>실무 문서 말투입니다. 수치·사실은 직접 한 번 더 확인하세요.</p></div>";
       var hint = sel.value === "auto" && (t === "P" || t === "M")
         ? '<p class="ck-msg">경어체 문장이 많아 ' + NAMES[t] + "(으)로 판별했습니다. 보고서·검토의견으로 쓸 글이면 위에서 문서 종류를 고르세요.</p>" : "";
-      out.innerHTML = head + body + hint + (note || "");
+      var oh = open && !has ? '<p class="ck-msg">원문 칸에 AI에 넣기 전 글을 넣으면 숫자·단위도 대조합니다.</p>' : "";
+      out.innerHTML = head + (has ? values(text) : "") + body + hint + oh + (note || "");
+    }
+    function reveal() {
+      if (window.innerWidth < 1000) out.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     }
     $("#ck-run").addEventListener("click", function () {
       if (!ta.value.trim()) { toast("먼저 점검할 글을 붙여넣으세요", true); ta.focus(); return; }
       run();
-      if (window.innerWidth < 1000) out.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      reveal();
     });
-    $("#ck-ex").addEventListener("click", function () { ta.value = EX; sel.value = "R"; undo = null; run(); });
+    $("#ck-ex").addEventListener("click", function () { ta.value = EX; sel.value = "R"; undo = null; run(); reveal(); });
+    tog.addEventListener("click", function () {
+      var open = tog.getAttribute("aria-expanded") !== "true";
+      tog.setAttribute("aria-expanded", String(open));
+      wrap.hidden = !open;
+      wrap.parentNode.classList.toggle("vs", open);
+      if (ta.value.trim() && out.querySelector(".ck-head")) run();
+    });
+    $("#ck-vex").addEventListener("click", function () { orig.value = EX; ta.value = VEX; sel.value = "R"; undo = null; run(); reveal(); });
     sel.addEventListener("change", function () { if (ta.value.trim()) run(); });
     $("#ck-fix").addEventListener("click", function () {
       if (!ta.value.trim()) { toast("먼저 점검할 글을 붙여넣으세요", true); ta.focus(); return; }
