@@ -1,7 +1,8 @@
 // 랜딩페이지 빌드. 외부 패키지 없이 Node만 있으면 된다.
 //   node site/build.js            → docs/index.html, docs/tonecheck.js
 //   node site/build.js <출력폴더>  → 그 폴더에 같은 두 파일(시험용)
-// index.tpl.html의 {{TbXxx}}는 icons.json(Tabler Icons, MIT)의 SVG로, {{PAIRS}}는 아래 예시 표로 채운다.
+// index.tpl.html의 {{TbXxx}}는 icons.json(Tabler Icons, MIT)의 SVG로, {{PAIRS}}는 아래 예시 표로,
+// {{VERSION}}·{{RELEASED}}(하단 표제란의 개정·일자)는 CHANGELOG.md 맨 위 항목으로 채운다.
 // tonecheck.js에는 스킬의 references/lexicon.json을 넣는다. 검사 규칙의 원본은 스킬 쪽이다.
 "use strict";
 const fs = require("fs");
@@ -11,6 +12,17 @@ const SITE = __dirname;
 const ROOT = path.join(SITE, "..");
 const OUT = process.argv[2] ? path.resolve(process.argv[2]) : path.join(ROOT, "docs");
 const LEXICON = path.join(ROOT, "skills", "civil-engineer-tone", "references", "lexicon.json");
+const CHANGELOG = path.join(ROOT, "CHANGELOG.md");
+const PLUGIN = path.join(ROOT, ".claude-plugin", "plugin.json");
+
+// 변경 이력 맨 위의 "## x.y.z (YYYY-MM-DD)". plugin.json 버전과 다르면 빌드를 멈춘다.
+function release() {
+  const m = fs.readFileSync(CHANGELOG, "utf8").match(/^## (\d+\.\d+\.\d+) \((\d{4})-(\d{2})-(\d{2})\)/m);
+  if (!m) throw new Error("CHANGELOG.md에서 버전·날짜를 찾지 못했습니다");
+  const plugin = JSON.parse(fs.readFileSync(PLUGIN, "utf8")).version;
+  if (plugin !== m[1]) throw new Error(`plugin.json 버전(${plugin})과 CHANGELOG.md(${m[1]})가 다릅니다`);
+  return { version: m[1], date: `${m[2]}. ${+m[3]}. ${+m[4]}.` };
+}
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -30,6 +42,8 @@ function build() {
   const icons = JSON.parse(fs.readFileSync(path.join(SITE, "icons.json"), "utf8"));
   let html = fs.readFileSync(path.join(SITE, "index.tpl.html"), "utf8");
   html = html.split("{{PAIRS}}").join(pairRows());
+  const rel = release();
+  html = html.split("{{VERSION}}").join(rel.version).split("{{RELEASED}}").join(rel.date);
   html = html.replace(/\{\{(Tb\w+)\}\}/g, (_, n) => {
     if (!icons[n]) throw new Error("icons.json에 없는 아이콘: " + n);
     return icons[n];

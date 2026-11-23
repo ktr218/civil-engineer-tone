@@ -28,6 +28,7 @@
 <style>
   :root{
     --night:#061716; --nline:rgba(255,255,255,.07);
+    --grid-1:rgba(164,243,223,.035); --grid-2:rgba(164,243,223,.075); --sheet-line:rgba(164,243,223,.2); --sheet-mark:rgba(164,243,223,.56); --sheet-label:rgba(164,243,223,.56);
     --paper:#F2F5F4; --paper-2:#E6ECEA;
     --ink:#0B2422; --body:#41514D; --muted:#5F6E6A; --line:#DBE3E0; --line-2:#C3CFCA;
     --teal:#00605C; --teal-2:#0A7A72; --mint:#34D9B3; --mint-2:#A4F3DF;
@@ -68,6 +69,41 @@
   /* ---------- shared dark background ---------- */
   .dark{position:relative;isolation:isolate;overflow:hidden;background:var(--night);color:#E9F3F0}
   .hl{color:var(--mint)}
+
+  /* ---------- drawing sheet: 도면 윤곽선·구역 번호·중심 마크·방안 격자(가는 선 16px, 굵은 선 80px) ---------- */
+  .sheet{--m:28px;position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .sheet-grid,.sheet-frame{position:absolute;top:var(--mt,var(--m));right:var(--m);bottom:var(--mb,var(--m));left:var(--m)}
+  .sheet-grid{background-image:linear-gradient(var(--grid-2) 1px,transparent 1px),linear-gradient(90deg,var(--grid-2) 1px,transparent 1px),linear-gradient(var(--grid-1) 1px,transparent 1px),linear-gradient(90deg,var(--grid-1) 1px,transparent 1px);background-size:80px 80px,80px 80px,16px 16px,16px 16px;background-position:0 var(--gy,0),calc(50% + 40px) 0,0 var(--gy,0),calc(50% + 8px) 0}
+  .sheet-frame{border:1px solid var(--sheet-line)}
+  .sheet-frame::before,.sheet-frame::after{content:"";position:absolute;top:50%;width:20px;border-top:1px solid var(--sheet-mark)}
+  .sheet-frame::before{left:-11px}
+  .sheet-frame::after{right:-11px}
+  .sheet::before,.sheet::after{content:"";position:absolute;left:50%;height:20px;border-left:1px solid var(--sheet-mark)}
+  .sheet::before{top:calc(var(--mt,var(--m)) - 10px)}
+  .sheet::after{bottom:calc(var(--mb,var(--m)) - 10px)}
+  .zx,.zy{position:absolute;display:flex;margin:0;padding:0;list-style:none;color:var(--sheet-label);font-size:12px;font-weight:600;line-height:1;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+  .zx{top:0;right:var(--m);left:var(--m);height:var(--m)}
+  .zx.b{top:auto;bottom:0}
+  .zy{top:var(--mt,var(--m));bottom:var(--mb,var(--m));width:var(--m);flex-direction:column}
+  .zy.l{left:0}
+  .zy.r{right:0}
+  .zx li,.zy li{position:relative;flex:1;display:grid;place-items:center}
+  .zx li+li::before,.zy li+li::before{content:"";position:absolute;border:0 solid var(--sheet-line)}
+  .zx li+li::before{left:0;bottom:0;height:7px;border-left-width:1px}
+  .zx.b li+li::before{top:0;bottom:auto}
+  .zy li+li::before{top:0;width:7px;border-top-width:1px}
+  .zy.l li+li::before{right:0}
+  .zy.r li+li::before{left:0}
+  .hero .sheet,.final .sheet{--mb:0}
+  .final .sheet{--gy:100%}
+  .foot .sheet{--mt:0}
+  .hero .sheet-frame,.final .sheet-frame{border-bottom:0}
+  .foot .sheet-frame{border-top:0}
+  .hero .sheet::after,.final .sheet::after,.foot .sheet::before,.final .sheet-frame::before,.final .sheet-frame::after,.foot .sheet-frame::before,.foot .sheet-frame::after{display:none}
+  @media (max-width:1279px){
+    .sheet{--m:12px}
+    .zx,.zy{display:none}
+  }
 
   /* ---------- hero ---------- */
   .hero{padding:112px 0 0}
@@ -308,20 +344,27 @@
   .final-ais img{width:40px;height:40px;padding:5px;border-radius:12px;background:#fff}
 
   /* ---------- footer ---------- */
-  .foot{padding:48px 0 44px;border-top:1px solid var(--nline);background:var(--night);color:#86A19A;font-size:16px}
+  .foot{position:relative;isolation:isolate;overflow:hidden;padding:48px 0 64px;background:var(--night);color:#86A19A;font-size:16px}
   .foot-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
   .foot nav{display:flex;flex-wrap:wrap;gap:22px}
   .foot nav a{color:#BFD3CE;text-decoration:none}
   .foot nav a:hover{color:#fff}
-  .team{margin:36px 0 30px;padding-top:32px;border-top:1px solid var(--nline)}
-  .team-t{display:flex;align-items:baseline;gap:12px;margin:0 0 18px;font-size:16px;font-weight:700;letter-spacing:-.01em;color:#BFD3CE}
-  .team-t span{font-weight:600;color:#86A19A}
-  .crew{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0;padding:0;list-style:none}
-  .crew li{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)}
-  .crew .nm{display:flex;align-items:center;gap:8px;margin-bottom:2px;font-size:24px;font-weight:800;line-height:1.3;letter-spacing:-.02em;color:#fff}
-  .crew .lead{padding:3px 9px;border-radius:999px;background:rgba(52,217,179,.16);color:var(--mint);font-size:12px;font-style:normal;font-weight:800;line-height:1.2;letter-spacing:0}
-  .crew .rl{font-size:16px;line-height:1.45;color:#C9DAD5}
-  .crew .rk{margin-top:8px;padding:2px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:13px;font-weight:600;color:#A9BFB9}
+  /* 팀 소개: 도면 표제란 */
+  .team{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,4fr) minmax(0,1fr);margin:36px 0 28px;border:1px solid var(--sheet-line);background:var(--night)}
+  .team-t{display:flex;flex-direction:column;justify-content:space-between;gap:8px;margin:0;padding:18px 22px 20px;border-right:1px solid var(--sheet-line);font-size:21px;font-weight:800;line-height:1.3;letter-spacing:-.02em;color:#fff}
+  .team-t span,.tb-meta dt{font-size:13.5px;font-weight:600;line-height:1.4;letter-spacing:0;color:#86A19A}
+  .crew{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none}
+  .crew li{display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;padding:18px 20px 20px}
+  .crew li+li{border-left:1px solid var(--sheet-line)}
+  .crew .rl{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px;font-weight:600;line-height:1.4;color:#A9BFB9}
+  .crew .who{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+  .crew .nm{font-size:24px;font-weight:800;line-height:1.25;letter-spacing:-.02em;color:#fff}
+  .crew .rk{font-size:15px;font-weight:600;color:#A9BFB9}
+  .crew .lead{flex:none;padding:2px 7px;border:1px solid rgba(52,217,179,.55);border-radius:3px;color:var(--mint);font-size:12px;font-style:normal;font-weight:800;line-height:1.2}
+  .tb-meta{display:flex;flex-direction:column;justify-content:center;gap:6px;margin:0;padding:18px 20px;border-left:1px solid var(--sheet-line)}
+  .tb-meta div{display:flex;align-items:baseline;gap:12px}
+  .tb-meta dt{flex:none;width:2.4em}
+  .tb-meta dd{margin:0;font-size:15px;font-weight:700;color:#C9DAD5;font-variant-numeric:tabular-nums}
   .foot-note{margin:0}
 
   /* ---------- browser surfaces ---------- */
@@ -352,7 +395,14 @@
     .pair-list{grid-template-columns:repeat(2,1fr)}
     .tell{grid-template-columns:1fr;gap:14px}
     .divs{grid-template-columns:repeat(2,1fr)}
-    .crew{grid-template-columns:repeat(2,1fr)}
+    .team{grid-template-columns:1fr}
+    .team-t{flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:flex-start;gap:4px 12px;padding:16px 18px;border-right:0;border-bottom:1px solid var(--sheet-line)}
+    .crew{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .crew li+li{border-left:0}
+    .crew li:nth-child(even){border-left:1px solid var(--sheet-line)}
+    .crew li:nth-child(n+3){border-top:1px solid var(--sheet-line)}
+    .tb-meta{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:6px 24px;padding:14px 18px;border-left:0;border-top:1px solid var(--sheet-line)}
+    .tb-meta dt{width:auto}
     .ck{grid-template-columns:1fr}
     .ck-out{min-height:0}
     .ck-list{max-height:none}
@@ -363,6 +413,7 @@
     .pc{display:none}
     .brand{font-size:17px;gap:12px}
     .hero{padding-top:64px}
+    .sheet{--m:8px}
     .cta{flex-direction:column;align-items:stretch;max-width:420px;margin:0 auto}
     .btn{height:60px;font-size:19px}
     .stage{margin-top:52px}
@@ -388,10 +439,8 @@
   @media (max-width:520px){
     .keys .mob{width:100%;margin:4px 0 0}
     .nav .brand .sep,.nav .brand-name{display:none}
-    .crew{gap:10px}
-    .crew li{padding:16px}
+    .crew li{padding:14px 14px 16px}
     .crew .nm{font-size:21px}
-    .crew .rl{font-size:15px}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -421,6 +470,12 @@
 <main>
   <!-- HERO -->
   <section class="hero dark" aria-labelledby="hero-t">
+    <div class="sheet" aria-hidden="true">
+      <div class="sheet-grid"></div><div class="sheet-frame"></div>
+      <ol class="zx"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ol>
+      <ol class="zy l"><li>A</li><li>B</li><li>C</li><li>D</li></ol>
+      <ol class="zy r"><li>A</li><li>B</li><li>C</li><li>D</li></ol>
+    </div>
     <div class="wrap">
       <div class="hero-in">
         <h1 id="hero-t" class="rise">AI가 쓴 초안을<br><span class="hl">엔지니어 말투</span>로</h1>
@@ -694,6 +749,10 @@
 
   <!-- FINAL CTA -->
   <section class="final dark" aria-labelledby="final-t">
+    <div class="sheet" aria-hidden="true">
+      <div class="sheet-grid"></div><div class="sheet-frame"></div>
+      <ol class="zx"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ol>
+    </div>
     <div class="wrap">
       <h2 id="final-t">오늘 쓰는 보고서부터<br><span class="hl">엔지니어 말투</span>로</h2>
       <p>지침을 복사해 AI 채팅창에 붙여넣기만 하면 됩니다.</p>
@@ -704,6 +763,10 @@
 </main>
 
 <footer class="foot">
+  <div class="sheet" aria-hidden="true">
+    <div class="sheet-grid"></div><div class="sheet-frame"></div>
+    <ol class="zx b"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ol>
+  </div>
   <div class="wrap">
     <div class="foot-top">
       <a class="brand" href="#top"><img class="ci" src="img/dohwa_white.svg" alt="DOHWA" width="117" height="19"><span class="sep" aria-hidden="true"></span><span class="brand-name"><img class="mark" src="img/favicon.svg" alt="" width="26" height="26">엔지니어 말투 AI</span></a>
@@ -714,13 +777,18 @@
       </nav>
     </div>
     <div class="team">
-      <p class="team-t" id="team-t">문체정비사업단 <span>만든 사람들</span></p>
+      <p class="team-t" id="team-t"><span>만든 사람들</span> 문체정비사업단</p>
       <ul class="crew" aria-labelledby="team-t">
-        <li><strong class="nm">김태호<em class="lead">대표</em></strong><span class="rl">기획·구현</span><span class="rk">과장</span></li>
-        <li><strong class="nm">엄재훈</strong><span class="rl">AI 말투 문제 진단</span><span class="rk">대리</span></li>
-        <li><strong class="nm">조규연</strong><span class="rl">행정 문서 검토</span><span class="rk">과장</span></li>
-        <li><strong class="nm">김규리</strong><span class="rl">확산·시연 기획</span><span class="rk">대리</span></li>
+        <li><span class="rl">기획·구현 <em class="lead">대표</em></span><span class="who"><strong class="nm">김태호</strong> <span class="rk">과장</span></span></li>
+        <li><span class="rl">AI 말투 문제 진단</span><span class="who"><strong class="nm">엄재훈</strong> <span class="rk">대리</span></span></li>
+        <li><span class="rl">행정 문서 검토</span><span class="who"><strong class="nm">조규연</strong> <span class="rk">과장</span></span></li>
+        <li><span class="rl">확산·시연 기획</span><span class="who"><strong class="nm">김규리</strong> <span class="rk">대리</span></span></li>
       </ul>
+      <dl class="tb-meta">
+        <div><dt>축척</dt><dd>NONE</dd></div>
+        <div><dt>개정</dt><dd>2.3.0</dd></div>
+        <div><dt>일자</dt><dd>2026. 11. 22.</dd></div>
+      </dl>
     </div>
     <p class="foot-note">회사가 공식 배포하는 자료는 아닙니다. 최종 확인은 작성자가 합니다.</p>
   </div>
