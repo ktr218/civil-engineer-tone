@@ -31,7 +31,6 @@
    * built: the project · redesign: polish · v2.0.0 */
   /* Hallmark · waive 29 · the glow sits on the drafting sheet lines and zone labels only, never behind a line of copy · the project owner asked for the drawing grid to read as neon on the night ground */
   /* Hallmark · waive 39b · six division tiles each hold an icon, a division name and a field list · selection tiles in this project that pick a division pack, not call-to-action buttons */
-  /* Hallmark · dismissed F4 · checked the hero, the second action is transparent with a border; the fill the linter reads comes from the #ck-text id rule, which it applies to every element */
   :root{
     --night:#061716; --nline:rgba(255,255,255,.07);
     --grid-1:rgba(52,217,179,.08); --grid-2:rgba(52,217,179,.26); --sheet-line:rgba(52,217,179,.62); --sheet-mark:var(--mint); --sheet-label:rgba(164,243,223,.9); --sheet-glow:rgba(52,217,179,.85); --tb-line:rgba(52,217,179,.3);
@@ -86,6 +85,11 @@
     --shade-50:rgba(0,0,0,.5);
     --shade-55:rgba(0,0,0,.55);
     --shade-75:rgba(0,0,0,.75);
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --key-edge:#B3C1BC; --key-drop:rgba(11,36,34,.22); --key-hi:rgba(255,255,255,.95); --key-press:rgba(11,36,34,.14);
+    --mint-edge:#17947A; --mint-hi:rgba(255,255,255,.5); --mint-press:rgba(5,35,31,.28);
+    --teal-edge:#003532; --teal-hi:rgba(255,255,255,.2); --ink-edge:#020A09;
+    --water-light:#A8F7E2; --water-deep:#04110F; --water-shade:#0B302C;
   }
   *,*::before,*::after{box-sizing:border-box}
   html{overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -104,8 +108,20 @@
   .pc{display:inline}
   .rise{animation:rise .9s var(--ease) both;animation-delay:var(--d,0s)}
   @keyframes rise{from{opacity:0;transform:translateY(26px)}}
-  .btn:active,.copy:active,.nav-cta:active,.dl:active,.chip:active,.div:active,.ck-tog:active,.win-pause:active,.ais a:active{transform:translateY(1px)}
   button:disabled,select:disabled,textarea:disabled{opacity:.55;cursor:not-allowed}
+
+  /* ---------- 키캡: 아래에 턱이 있는 버튼. 올리면 1px 뜨고, 누르면 턱 깊이만큼 내려간다(Hallmark Cobalt 테마의 키캡) ----------
+     눌린 토글(aria-pressed, 펼친 aria-expanded)은 내려간 채로 둔다. 색마다 턱 색(--edge)만 바꾼다. */
+  .key{--lift:3px;--edge:var(--key-edge);--drop:var(--key-drop);--hi:var(--key-hi);--press:var(--key-press);margin-bottom:var(--lift);box-shadow:0 var(--lift) 0 0 var(--edge),0 6px 8px -4px var(--drop),inset 0 1px 0 var(--hi);transition:transform .12s var(--ease-out),box-shadow .12s var(--ease-out),background-color .2s,border-color .2s,color .2s}
+  @media (hover:hover){
+    .key:hover{transform:translateY(-1px);box-shadow:0 calc(var(--lift) + 1px) 0 0 var(--edge),0 8px 10px -5px var(--drop),inset 0 1px 0 var(--hi)}
+  }
+  .key:active,.key[aria-pressed="true"],.key[aria-expanded="true"]{transform:translateY(var(--lift));box-shadow:0 0 0 0 var(--edge),0 1px 2px -1px var(--drop),inset 0 1px 3px var(--press)}
+  .key:disabled{transform:none;box-shadow:0 var(--lift) 0 0 var(--edge)}
+  .btn-mint,.nav-cta{--edge:var(--mint-edge);--drop:var(--shade-45);--hi:var(--mint-hi);--press:var(--mint-press)}
+  .btn-ghost,.water-tog{--edge:var(--veil-18);--drop:transparent;--hi:var(--veil-10);--press:var(--shade-45)}
+  .copy{--edge:var(--teal-edge);--drop:var(--shade-45);--hi:var(--teal-hi);--press:var(--shade-20)}
+  .dl{--edge:var(--ink-edge);--hi:var(--veil-12);--press:var(--shade-45)}
 
   /* ---------- nav ---------- */
   .nav{position:sticky;top:0;z-index:60;background:var(--night);border-bottom:1px solid var(--nline)}
@@ -118,15 +134,16 @@
   .nav-links{display:flex;gap:28px;margin-left:auto}
   .nav-links a{color:var(--on-dark-link);text-decoration:none;font-size:17px;font-weight:700;white-space:nowrap;transition:color .2s}
   .nav-links a:hover{color:var(--white)}
-  .nav-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;background:var(--mint);color:var(--on-mint);font-weight:800;font-size:17px;text-decoration:none;white-space:nowrap;transition:background .2s}
-  .nav-cta:hover{background:var(--mint-2)}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;background:var(--mint);color:var(--on-mint);font-weight:800;font-size:17px;text-decoration:none;white-space:nowrap}
 
   /* ---------- shared dark background ---------- */
   .dark{position:relative;isolation:isolate;overflow:hidden;background:var(--night);color:var(--on-dark)}
   .hl{color:var(--mint)}
 
   /* ---------- drawing sheet: 도면 윤곽선·구역 번호·중심 마크·방안 격자(가는 선 16px, 굵은 선 80px) ---------- */
-  .sheet{--m:28px;position:absolute;inset:0;z-index:-1;pointer-events:none;filter:drop-shadow(0 0 4px var(--sheet-glow))}
+  .hero,.final,.foot{--m:28px}
+  .sheet{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .sheet>:not(.water),.sheet::before,.sheet::after{filter:drop-shadow(0 0 4px var(--sheet-glow))}
   .sheet-grid,.sheet-frame{position:absolute;top:var(--mt,var(--m));right:var(--m);bottom:var(--mb,var(--m));left:var(--m)}
   .sheet-grid{background-image:linear-gradient(var(--grid-2) 1px,transparent 1px),linear-gradient(90deg,var(--grid-2) 1px,transparent 1px),linear-gradient(var(--grid-1) 1px,transparent 1px),linear-gradient(90deg,var(--grid-1) 1px,transparent 1px);background-size:80px 80px,80px 80px,16px 16px,16px 16px;background-position:0 var(--gy,0),calc(50% + 40px) 0,0 var(--gy,0),calc(50% + 8px) 0}
   .sheet-frame{border:1px solid var(--sheet-line)}
@@ -149,14 +166,23 @@
   .zy li+li::before{top:0;width:7px;border-top-width:1px}
   .zy.l li+li::before{right:0}
   .zy.r li+li::before{left:0}
-  .hero .sheet,.final .sheet{--mb:0}
+  .hero .sheet,.final .sheet{--mb:0px}
   .final .sheet{--gy:100%}
-  .foot .sheet{--mt:0}
+  .foot .sheet{--mt:0px}
   .hero .sheet-frame,.final .sheet-frame{border-bottom:0}
   .foot .sheet-frame{border-top:0}
   .hero .sheet::after,.final .sheet::after,.foot .sheet::before,.final .sheet-frame::before,.final .sheet-frame::after,.foot .sheet-frame::before,.foot .sheet-frame::after{display:none}
+  /* 도면 위 물결: 격자가 물에 잠긴 듯 일렁이고 그 위로 빛 그물이 지나간다. WebGL 첫 장면이 그려지면 CSS 격자와 바꿔 낀다 */
+  .water{position:absolute;top:var(--mt,var(--m));left:var(--m);width:calc(100% - 2 * var(--m));height:calc(100% - var(--mt,var(--m)) - var(--mb,var(--m)));opacity:0;transition:opacity 1.2s var(--ease)}
+  .water.on{opacity:1}
+  .sheet-grid{transition:opacity 1.2s var(--ease)}
+  .sheet.wet .sheet-grid{opacity:0}
+  .water-tog{position:absolute;top:calc(var(--m) + 14px);right:calc(var(--m) + 14px);z-index:2;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--veil-18);border-radius:10px;background:var(--night);color:var(--on-dark-3);font-size:15px;font-weight:700;cursor:pointer}
+  .water-tog svg{font-size:16px}
+  .water-tog[aria-pressed="true"]{border-color:var(--mint-line);color:var(--mint)}
+  .water-tog[hidden]{display:none}
   @media (max-width:1279px){
-    .sheet{--m:12px}
+    .hero,.final,.foot{--m:12px}
     .zx,.zy{display:none}
   }
 
@@ -167,12 +193,10 @@
   .hero .sub{max-width:780px;margin:0 auto 42px;font-size:clamp(19px,2vw,24px);line-height:1.6;color:var(--on-dark-sub)}
   .hero .sub b{color:var(--white);font-weight:700}
   .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 28px;border:0;border-radius:14px;font-size:19px;font-weight:800;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 28px;border:0;border-radius:14px;font-size:19px;font-weight:800;text-decoration:none;white-space:nowrap;cursor:pointer}
   .btn svg{font-size:22px}
-  .btn-mint{background:var(--mint);color:var(--on-mint);box-shadow:0 10px 22px -14px var(--shade-55)}
-  .btn-mint:hover{background:var(--mint-2)}
+  .btn-mint{background:var(--mint);color:var(--on-mint)}
   .btn-ghost{background:transparent;color:var(--white);border:1.5px solid var(--veil-30)}
-  .btn-ghost:hover{border-color:var(--mint)}
   .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 0;margin:30px 0 0;padding:0;list-style:none;color:var(--on-dark-3);font-size:16.5px}
   .trust li{padding:0 18px;line-height:1.3}
   .trust li + li{border-left:1px solid var(--veil-18)}
@@ -181,9 +205,9 @@
   .stage{position:relative;max-width:1000px;margin:76px auto 0}
   .win{position:relative;z-index:1;overflow:hidden;background:var(--white);color:var(--ink);border-radius:26px 26px 0 0;box-shadow:0 0 0 1px var(--veil-12),0 40px 80px -36px var(--shade-75)}
   .win-bar{display:flex;align-items:center;gap:14px;height:58px;padding:0 22px;border-bottom:1px solid var(--win-line);background:var(--win-bar)}
-  .win-pause{min-height:44px;padding:0 14px;border:1px solid var(--win-edge);border-radius:10px;background:var(--white);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;transition:border-color .2s,color .2s}
-  .win-pause:hover{border-color:var(--line-2);color:var(--ink)}
-  .win-pause[aria-pressed="true"]{border-color:var(--teal);color:var(--teal)}
+  .win-pause{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border:1px solid var(--win-edge);border-radius:10px;background:var(--white);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer}
+  .win-pause svg{font-size:15px}
+  .win-pause[aria-pressed="true"]{border-color:var(--good-line);background:var(--good-bg);color:var(--teal)}
   .win-pause[hidden]{display:none}
   .win.held .win-tabs .bar{animation-play-state:paused}
   .win-ais{display:flex;align-items:center;gap:8px;margin-left:auto}
@@ -206,11 +230,10 @@
   .js .tags{opacity:0;transform:translateY(6px)}
   .js .tags.show{opacity:1;transform:none}
   .tags span{padding:4px 10px;border-radius:6px;background:var(--white);border:1px solid var(--good-line);color:var(--teal);font-size:14.5px;font-weight:700}
-  .win-tabs{display:flex;gap:6px;padding:12px 16px;border-top:1px solid var(--win-line);background:var(--win-bar);overflow-x:auto;scrollbar-width:none}
+  .win-tabs{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--win-line);background:var(--paper);box-shadow:inset 0 1px 3px var(--shade-08);overflow-x:auto;scrollbar-width:none}
   .win-tabs::-webkit-scrollbar{display:none}
-  .win-tabs button{position:relative;flex:none;padding:9px 18px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-size:16.5px;font-weight:700;cursor:pointer}
-  .win-tabs button:hover{color:var(--ink)}
-  .win-tabs button[aria-pressed="true"]{background:var(--white);color:var(--teal);box-shadow:0 1px 0 var(--win-edge),0 4px 12px -6px var(--shade-15)}
+  .win-tabs button{--lift:2px;position:relative;flex:none;padding:8px 18px;border:1px solid var(--win-edge);border-radius:10px;background:var(--white);color:var(--muted);font-size:16.5px;font-weight:700;cursor:pointer}
+  .win-tabs button[aria-pressed="true"]{border-color:var(--good-line);background:var(--good-bg);color:var(--teal)}
   .win-tabs .bar{position:absolute;left:14px;right:14px;bottom:4px;height:2px;border-radius:2px;background:var(--mint);transform:scaleX(0);transform-origin:left}
   .win-tabs button[aria-pressed="true"] .bar{animation:fill var(--dur,6s) linear forwards}
   @keyframes fill{to{transform:scaleX(1)}}
@@ -244,17 +267,15 @@
   .opt{display:inline-block;margin-left:10px;padding:3px 10px;border-radius:8px;background:var(--good-bg);color:var(--teal);font-size:15px;font-weight:700;letter-spacing:0;vertical-align:middle}
   .st .d{margin:0 0 22px;color:var(--body)}
   .divs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-  .div{position:relative;display:flex;align-items:center;gap:16px;min-height:96px;padding:16px 18px;border:2px solid var(--line);border-radius:20px;background:var(--white);text-align:left;cursor:pointer;transition:border-color .2s,background .2s}
-  .div:hover{border-color:var(--teal-2)}
+  .div{--lift:4px;position:relative;display:flex;align-items:center;gap:16px;min-height:96px;padding:16px 18px;border:1.5px solid var(--line-2);border-radius:20px;background:var(--white);text-align:left;cursor:pointer}
   .div .ic{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--white);color:var(--teal);font-size:28px;box-shadow:0 1px 2px var(--shade-06);transition:background .2s,color .2s}
   .div b{display:block;font-size:22px;line-height:1.3;letter-spacing:-.02em}
   .div small{display:block;margin-top:2px;font-size:15.5px;line-height:1.4;color:var(--muted)}
   .div[aria-pressed="true"]{border-color:var(--teal);background:var(--good-bg)}
   .div[aria-pressed="true"] .ic{background:var(--teal);color:var(--white)}
   .div[aria-pressed="true"]::after{content:"선택됨";position:absolute;top:10px;right:12px;padding:1px 8px;border-radius:6px;background:var(--teal);color:var(--white);font-size:13px;font-weight:700}
-  .copy{position:relative;overflow:hidden;width:100%;height:52px;display:flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:14px;background:var(--teal);color:var(--white);font-size:20px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;cursor:pointer;box-shadow:0 14px 28px -18px var(--shade-45);transition:background .2s}
+  .copy{position:relative;overflow:hidden;width:100%;height:52px;display:flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:14px;background:var(--teal);color:var(--white);font-size:20px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;cursor:pointer}
   .copy svg{font-size:24px}
-  .copy:hover{background:var(--teal-dark)}
   .copy .ok-i,.copy .ok-t{display:none}
   .copy.ok{background:var(--teal-ok)}
   .copy.ok .ok-i,.copy.ok .ok-t{display:inline}
@@ -265,10 +286,9 @@
   .status a{color:inherit}
   #manual{width:100%;height:170px;margin-top:8px;padding:12px;border:2px solid var(--teal);border-radius:14px;background:var(--white);color:var(--ink);font:inherit;font-size:15px}
   .ais{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-  .ais a{display:flex;align-items:center;gap:14px;padding:16px 18px;border:2px solid var(--line);border-radius:20px;background:var(--white);color:var(--ink);text-decoration:none;font-size:22px;font-weight:800;transition:border-color .2s}
+  .ais a{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1.5px solid var(--line-2);border-radius:20px;background:var(--white);color:var(--ink);text-decoration:none;font-size:22px;font-weight:800}
   .ais img{width:52px;height:52px;padding:7px;border-radius:15px;background:var(--white);box-shadow:0 1px 2px var(--shade-08)}
   .ais .x{margin-left:auto;color:var(--muted);font-size:22px}
-  .ais a:hover{border-color:var(--teal)}
   .st.go .ais a{animation:nudge 1.4s ease-in-out 2}
   @keyframes nudge{50%{border-color:var(--teal);background:var(--white)}}
   .keys{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px;color:var(--muted);font-size:17px}
@@ -277,10 +297,8 @@
   .keys > svg{font-size:22px;color:var(--teal-2)}
   .keys .mob{margin-left:6px}
   .chips{display:flex;flex-wrap:wrap;gap:12px}
-  .chip{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border:1.5px solid var(--line);border-radius:999px;background:var(--white);font-size:19px;font-weight:700;cursor:pointer;transition:border-color .2s,color .2s}
-  .chip svg{color:var(--muted);font-size:19px}
-  .chip:hover{border-color:var(--teal);color:var(--teal)}
-  .chip:hover svg{color:var(--teal)}
+  .chip{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1.5px solid var(--line-2);border-radius:12px;background:var(--white);font-size:19px;font-weight:700;cursor:pointer}
+  .chip svg{color:var(--teal);font-size:19px}
   .tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px var(--col-gap);margin-top:56px}
   .tipc{padding-top:18px;border-top:2px solid var(--ink)}
   .tipc .t{display:block;margin-bottom:6px;font-size:19px;letter-spacing:-.02em}
@@ -309,6 +327,34 @@
   .pair-list del{text-decoration-thickness:1.5px}
   .pair-list ins{text-decoration:none;font-weight:700;color:var(--teal)}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ---------- 문체 비교: 손잡이를 끌면 같은 문단이 AI 초안에서 실무 문체로 바뀐다(Hallmark Vantage 테마의 비교 손잡이) ----------
+     줄마다 두 글을 한 칸에 겹쳐 두고, 손잡이 왼쪽은 지침 적용, 오른쪽은 AI 초안만 보이게 자른다. 스크립트가 없으면 두 글을 차례로 보인다. */
+  .cmp{margin:0 0 clamp(64px,8vw,104px)}
+  .cmp-stage{--split:40%;--pad:clamp(20px,4vw,56px);--focus:var(--mint);position:relative;padding:72px var(--pad) 76px;border-radius:22px;background:var(--night);color:var(--on-dark-1)}
+  .cmp-stage::before{content:"";position:absolute;inset:14px;border:1px solid var(--sheet-line);pointer-events:none;-webkit-mask:conic-gradient(at 14px 14px,transparent 75%,var(--ink) 0) 0 0/calc(100% - 14px) calc(100% - 14px);mask:conic-gradient(at 14px 14px,transparent 75%,var(--ink) 0) 0 0/calc(100% - 14px) calc(100% - 14px)}
+  .cmp-tag{position:absolute;top:30px;display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;line-height:1;color:var(--on-dark-3)}
+  .cmp-tag.now{left:var(--pad);color:var(--mint-2)}
+  .cmp-tag.was{right:var(--pad)}
+  .cmp-tag i{width:7px;height:7px;border-radius:50%;background:var(--mint)}
+  .cmp-doc{position:relative;display:grid;gap:12px;font-size:clamp(17px,1.75vw,24px);line-height:1.7;letter-spacing:-.01em}
+  .cmp-doc p{margin:0}
+  .cmp-was{color:var(--on-dark-3)}
+  .cmp-was del{color:var(--warn-ink);text-decoration:line-through;text-decoration-thickness:2px}
+  .cmp-now{font-weight:700;color:var(--white)}
+  .cmp-now ins{text-decoration:none;color:var(--mint)}
+  .cmp-now .cut{font-size:.86em;font-weight:400;color:var(--on-dark-4)}
+  .cmp-hd{display:none}
+  .cmp-cap{margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--muted)}
+  .js .cmp-doc{cursor:ew-resize;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+  .js .cmp-row{display:grid}
+  .js .cmp-row>p{grid-area:1/1;pointer-events:none}
+  .js .cmp-now{-webkit-mask:linear-gradient(90deg,var(--ink) calc(var(--split) - 14px),transparent var(--split));mask:linear-gradient(90deg,var(--ink) calc(var(--split) - 14px),transparent var(--split))}
+  .js .cmp-was{clip-path:inset(0 0 0 var(--split))}
+  .js .cmp-hd{position:absolute;top:-16px;bottom:-62px;left:var(--split);display:flex;align-items:flex-end;justify-content:center;width:44px;transform:translateX(-50%);pointer-events:none}
+  .cmp-hd::before{content:"";position:absolute;top:0;bottom:22px;left:50%;width:1px;background:var(--mint-line)}
+  .cmp-knob{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--night);color:var(--mint);font-size:20px;box-shadow:inset 0 0 0 1.5px var(--mint-line);cursor:grab;pointer-events:auto;transition:transform .12s var(--ease-out)}
+  .cmp-stage.is-drag .cmp-knob{transform:scale(.94);cursor:grabbing}
 
   /* ---------- report tables (types, proof) ---------- */
   .types{background:var(--white)}
@@ -343,8 +389,7 @@
   .qa .a p{margin:0}
   .qa .a p + p{margin-top:10px}
   .qa code{padding:2px 8px;border-radius:6px;background:var(--paper);font-family:var(--mono);font-size:.86em;color:var(--ink);word-break:break-all}
-  .dl{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:12px 20px;border-radius:14px;background:var(--ink);color:var(--white);font-weight:800;text-decoration:none;transition:background .2s}
-  .dl:hover{background:var(--teal)}
+  .dl{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:12px 20px;border-radius:14px;background:var(--ink);color:var(--white);font-weight:800;text-decoration:none}
 
   /* ---------- check ---------- */
   .check{background:var(--paper)}
@@ -358,10 +403,9 @@
   #ck-text:focus,#ck-orig:focus{outline:2px solid var(--teal);outline-offset:2px;border-color:var(--teal)}
   #ck-orig{min-height:150px}
   .ck-in.vs #ck-text{min-height:190px}
-  .ck-tog{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:46px;padding:0 16px;border:1.5px dashed var(--line-2);border-radius:12px;background:transparent;color:var(--teal);font-size:16px;font-weight:700;cursor:pointer;transition:border-color .2s,background .2s}
-  .ck-tog:hover{border-color:var(--teal);background:var(--white)}
+  .ck-tog{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:46px;padding:0 16px;border:1.5px solid var(--line-2);border-radius:12px;background:var(--white);color:var(--teal);font-size:16px;font-weight:700;cursor:pointer}
   .ck-tog svg:last-child{transition:transform .25s var(--ease)}
-  .ck-tog[aria-expanded="true"]{border-style:solid;border-color:var(--teal);background:var(--white)}
+  .ck-tog[aria-expanded="true"]{border-color:var(--good-line);background:var(--good-bg)}
   .ck-tog[aria-expanded="true"] svg:last-child{transform:rotate(180deg)}
   .ck-orig{display:flex;flex-direction:column;gap:8px}
   .ck-orig[hidden]{display:none}
@@ -371,7 +415,6 @@
   .ck-act{display:flex;flex-wrap:wrap;gap:10px}
   .ck-act .btn{padding:0 24px;font-size:18px}
   .btn-line{background:var(--white);color:var(--ink);border:1.5px solid var(--line-2)}
-  .btn-line:hover{border-color:var(--ink)}
   .ck-note{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;line-height:1.55;color:var(--muted)}
   .ck-note svg{flex:none;margin-top:3px;font-size:16px;color:var(--teal)}
   .ck-out{display:flex;flex-direction:column;min-width:0;min-height:380px;padding:22px;border-radius:22px;background:var(--night);color:var(--on-dark-1)}
@@ -506,7 +549,8 @@
     .pc{display:none}
     .brand{font-size:17px;gap:12px}
     .hero{padding-top:64px}
-    .sheet{--m:8px}
+    .hero,.final,.foot{--m:8px}
+    .water-tog{top:calc(var(--m) + 4px);right:calc(var(--m) + 4px);padding:0 12px;font-size:14px}
     .cta{flex-direction:column;align-items:stretch;max-width:420px;margin:0 auto}
     .btn{font-size:18px}
     .stage{margin-top:52px}
@@ -555,7 +599,7 @@
       <a href="#proof">근거</a>
       <a href="#faq">자주 묻는 질문</a>
     </nav>
-    <a class="nav-cta" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사</a>
+    <a class="nav-cta key" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사</a>
   </div>
 </header>
 
@@ -563,18 +607,20 @@
   <!-- HERO -->
   <section class="hero dark" aria-labelledby="hero-t">
     <div class="sheet" aria-hidden="true">
+      <canvas class="water" data-water="top" aria-hidden="true"></canvas>
       <div class="sheet-grid"></div><div class="sheet-frame"></div>
       <ol class="zx"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ol>
       <ol class="zy l"><li>A</li><li>B</li><li>C</li><li>D</li></ol>
       <ol class="zy r"><li>A</li><li>B</li><li>C</li><li>D</li></ol>
     </div>
+    <button type="button" class="water-tog key" data-water-tog aria-pressed="false" hidden><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path></svg>물결 멈춤</button>
     <div class="wrap">
-      <div class="hero-in">
+      <div class="hero-in" data-dry>
         <h1 id="hero-t" class="rise">AI가 쓴 초안을<br><span class="hl">엔지니어 말투</span>로</h1>
         <p class="sub rise" style="--d:.08s">지침을 ChatGPT·Gemini·Claude 채팅창에 <b>한 번만 붙여넣으면</b>,<br class="pc"> 그다음부터 보고서·검토의견·공문 말투로 바꿔 씁니다.</p>
         <div class="cta rise" style="--d:.16s">
-          <a class="btn btn-mint" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14"></path><path d="M18 13l-6 6"></path><path d="M6 13l6 6"></path></svg>지금 바로 써 보기</a>
-          <a class="btn btn-ghost" href="#check"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>내 글 바로 점검</a>
+          <a class="btn btn-mint key" href="#start"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14"></path><path d="M18 13l-6 6"></path><path d="M6 13l6 6"></path></svg>지금 바로 써 보기</a>
+          <a class="btn btn-ghost key" href="#check"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>내 글 바로 점검</a>
         </div>
         <ul class="trust rise" style="--d:.24s">
           <li>설치·로그인 없음</li>
@@ -587,7 +633,7 @@
       <div class="stage rise" style="--d:.32s">
         <div class="win" role="group" aria-label="사용 예시: AI 채팅창 화면">
           <div class="win-bar">
-            <button type="button" class="win-pause" id="d-pause" aria-pressed="false" hidden>자동 넘김 멈추기</button>
+            <button type="button" class="win-pause key" id="d-pause" aria-pressed="false" hidden><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path></svg>자동 넘김 멈춤</button>
             <span class="win-ais"><img src="img/chatgpt.png" alt="ChatGPT" class="on"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></span>
           </div>
           <div class="win-body">
@@ -596,11 +642,11 @@
             <div class="msg ai"><img class="ai-av" id="d-av" src="img/chatgpt.png" alt=""><div class="bub"><div class="out" id="d-out">금회 과업구간은 교통량 증가로 교통소통이 불량하여 4차로 확장이 필요한 실정이다.</div><div class="tags show" id="d-tags"><span>~입니다 → ~실정이다</span><span>과장·이모지 삭제</span><span>이번 → 금회</span></div></div></div>
           </div>
           <div class="win-tabs" id="d-tabs" aria-label="문서 종류별 예시">
-            <button type="button" aria-pressed="true">보고서<i class="bar"></i></button>
-            <button type="button" aria-pressed="false">검토의견<i class="bar"></i></button>
-            <button type="button" aria-pressed="false">조치결과<i class="bar"></i></button>
-            <button type="button" aria-pressed="false">공문<i class="bar"></i></button>
-            <button type="button" aria-pressed="false">장표<i class="bar"></i></button>
+            <button type="button" class="key" aria-pressed="true">보고서<i class="bar"></i></button>
+            <button type="button" class="key" aria-pressed="false">검토의견<i class="bar"></i></button>
+            <button type="button" class="key" aria-pressed="false">조치결과<i class="bar"></i></button>
+            <button type="button" class="key" aria-pressed="false">공문<i class="bar"></i></button>
+            <button type="button" class="key" aria-pressed="false">장표<i class="bar"></i></button>
           </div>
         </div>
       </div>
@@ -622,12 +668,12 @@
               <h3>내 부문 고르기<span class="opt">선택</span></h3>
               <p class="d">고르면 그 부문 용어를 먼저 씁니다. 몰라도 괜찮아요.</p>
               <div class="divs" id="divs">
-                <button type="button" class="div" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span><span><b>물산업</b><small>상하수도·수처리·건축</small></span></button>
-                <button type="button" class="div" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 19l4 -14"></path><path d="M16 5l4 14"></path><path d="M12 8v-2"></path><path d="M12 13v-2"></path><path d="M12 18v-2"></path></svg></span><span><b>교통</b><small>도로·공항·철도·교통</small></span></button>
-                <button type="button" class="div" data-line="나는 인프라부문 하천 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 7h12a2 2 0 0 1 2 2v9a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-2a4 4 0 0 0 -8 0v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-9a2 2 0 0 1 2 -2"></path></svg></span><span><b>인프라</b><small>하천·항만·구조·지반·환경평가</small></span></button>
-                <button type="button" class="div" data-line="나는 도시부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 21l18 0"></path><path d="M5 21v-14l8 -4v18"></path><path d="M19 21v-10l-6 -4"></path><path d="M9 9l0 .01"></path><path d="M9 12l0 .01"></path><path d="M9 15l0 .01"></path><path d="M9 18l0 .01"></path></svg></span><span><b>도시</b><small>도시계획·단지·조경</small></span></button>
-                <button type="button" class="div" data-line="나는 에너지부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg></span><span><b>에너지</b><small>발전·집단에너지·기전</small></span></button>
-                <button type="button" class="div" data-line="나는 CM부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 4a9 9 0 0 1 5.656 16h-11.312a9 9 0 0 1 5.656 -16"></path><path d="M20 9h-8.8a1 1 0 0 0 -.968 1.246c.507 2 1.596 3.418 3.268 4.254c2 1 4.333 1.5 7 1.5"></path></svg></span><span><b>CM·건설</b><small>건설사업관리·감리</small></span></button>
+                <button type="button" class="div key" data-line="나는 물산업부문 상하수도 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"></path></svg></span><span><b>물산업</b><small>상하수도·수처리·건축</small></span></button>
+                <button type="button" class="div key" data-line="나는 교통부문 도로 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 19l4 -14"></path><path d="M16 5l4 14"></path><path d="M12 8v-2"></path><path d="M12 13v-2"></path><path d="M12 18v-2"></path></svg></span><span><b>교통</b><small>도로·공항·철도·교통</small></span></button>
+                <button type="button" class="div key" data-line="나는 인프라부문 하천 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 7h12a2 2 0 0 1 2 2v9a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-2a4 4 0 0 0 -8 0v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-9a2 2 0 0 1 2 -2"></path></svg></span><span><b>인프라</b><small>하천·항만·구조·지반·환경평가</small></span></button>
+                <button type="button" class="div key" data-line="나는 도시부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 21l18 0"></path><path d="M5 21v-14l8 -4v18"></path><path d="M19 21v-10l-6 -4"></path><path d="M9 9l0 .01"></path><path d="M9 12l0 .01"></path><path d="M9 15l0 .01"></path><path d="M9 18l0 .01"></path></svg></span><span><b>도시</b><small>도시계획·단지·조경</small></span></button>
+                <button type="button" class="div key" data-line="나는 에너지부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path></svg></span><span><b>에너지</b><small>발전·집단에너지·기전</small></span></button>
+                <button type="button" class="div key" data-line="나는 CM부문 담당이야." aria-pressed="false"><span class="ic"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 4a9 9 0 0 1 5.656 16h-11.312a9 9 0 0 1 5.656 -16"></path><path d="M20 9h-8.8a1 1 0 0 0 -.968 1.246c.507 2 1.596 3.418 3.268 4.254c2 1 4.333 1.5 7 1.5"></path></svg></span><span><b>CM·건설</b><small>건설사업관리·감리</small></span></button>
               </div>
             </div>
           </li>
@@ -636,7 +682,7 @@
             <div>
               <h3>지침 복사하기</h3>
               <p class="d">누르면 지침 전체가 복사됩니다.</p>
-              <button type="button" class="copy" id="copy"><span class="go-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg></span><span class="ok-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg></span><span class="go-t">지침 복사하기</span><span class="ok-t">복사됐습니다</span></button>
+              <button type="button" class="copy key" id="copy"><span class="go-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg></span><span class="ok-i"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M9 12l2 2l4 -4"></path></svg></span><span class="go-t">지침 복사하기</span><span class="ok-t">복사됐습니다</span></button>
               <div class="pv"><span>맨 끝에 함께 붙는 문장</span><code id="pv">앞으로 이대로 써줘.</code></div>
               <div class="status" id="status" role="status"></div>
               <textarea id="manual" hidden readonly aria-label="복사할 지침"></textarea>
@@ -648,9 +694,9 @@
               <h3>AI 열고 붙여넣기</h3>
               <p class="d">AI를 열고 입력칸에 붙여넣은 뒤 보내세요.</p>
               <div class="ais">
-                <a href="https://chatgpt.com/" target="_blank" rel="noopener"><img src="img/chatgpt.png" alt="">ChatGPT<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
-                <a href="https://gemini.google.com/" target="_blank" rel="noopener"><img src="img/gemini.png" alt="">Gemini<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
-                <a href="https://claude.ai/" target="_blank" rel="noopener"><img src="img/claude.png" alt="">Claude<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+                <a class="key" href="https://chatgpt.com/" target="_blank" rel="noopener"><img src="img/chatgpt.png" alt="">ChatGPT<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+                <a class="key" href="https://gemini.google.com/" target="_blank" rel="noopener"><img src="img/gemini.png" alt="">Gemini<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
+                <a class="key" href="https://claude.ai/" target="_blank" rel="noopener"><img src="img/claude.png" alt="">Claude<span class="x"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"></path><path d="M11 13l9 -9"></path><path d="M15 4h5v5"></path></svg></span></a>
               </div>
               <div class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>V</kbd><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 12l14 0"></path><path d="M13 18l6 -6"></path><path d="M13 6l6 6"></path></svg><kbd>Enter</kbd><span class="mob">휴대폰은 입력칸을 길게 눌러 [붙여넣기]</span></div>
             </div>
@@ -661,12 +707,12 @@
               <h3>바꿀 글 붙여넣고 한마디</h3>
               <p class="d">바꿀 글을 붙여넣고 이렇게 말하세요. 누르면 복사됩니다.</p>
               <div class="chips">
-                <button type="button" class="chip" data-text="이 문단 보고서체로 바꿔줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 문단 보고서체로 바꿔줘</button>
-                <button type="button" class="chip" data-text="이 내용 검토의견으로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 내용 검토의견으로 써줘</button>
-                <button type="button" class="chip" data-text="조치결과로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>조치결과로 써줘</button>
-                <button type="button" class="chip" data-text="공문으로 만들어줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>공문으로 만들어줘</button>
-                <button type="button" class="chip" data-text="장표 문구로 줄여줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>장표 문구로 줄여줘</button>
-                <button type="button" class="chip" data-text="용어랑 단위만 점검해줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>용어랑 단위만 점검해줘</button>
+                <button type="button" class="chip key" data-text="이 문단 보고서체로 바꿔줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 문단 보고서체로 바꿔줘</button>
+                <button type="button" class="chip key" data-text="이 내용 검토의견으로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>이 내용 검토의견으로 써줘</button>
+                <button type="button" class="chip key" data-text="조치결과로 써줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>조치결과로 써줘</button>
+                <button type="button" class="chip key" data-text="공문으로 만들어줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>공문으로 만들어줘</button>
+                <button type="button" class="chip key" data-text="장표 문구로 줄여줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>장표 문구로 줄여줘</button>
+                <button type="button" class="chip key" data-text="용어랑 단위만 점검해줘"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>용어랑 단위만 점검해줘</button>
               </div>
             </div>
           </li>
@@ -688,6 +734,21 @@
         </div>
         <p class="lede">지침은 이 여섯 가지를 잡아 실무 문서체로 바꿉니다. 내용과 수치는 그대로 둡니다.</p>
       </div>
+      <figure class="cmp">
+        <div class="cmp-stage" id="cmp">
+          <span class="cmp-tag now"><i aria-hidden="true"></i>지침 적용</span>
+          <span class="cmp-tag was">AI 초안</span>
+          <div class="cmp-doc" id="cmp-doc">
+            <div class="cmp-row"><p class="cmp-was"><span class="sr">AI 초안: </span><del>### 📌</del> 사업 개요<del>: 핵심만 한눈에 보기 쉽게 정리해 드릴게요! ✨</del></p><p class="cmp-now"><span class="sr">지침 적용: </span><ins>□</ins> 사업 개요</p></div>
+            <div class="cmp-row"><p class="cmp-was"><span class="sr">AI 초안: </span><del>이번 프로젝트는</del> 지역 주민들의 삶의 질을 <del>획기적으로</del> 향상시키는 <del>매우 중요한</del> 사업<del>입니다</del>.</p><p class="cmp-now"><span class="sr">지침 적용: </span><ins>금회 사업은</ins> 지역 <ins>생활환경 개선</ins>을 위한 사업<ins>이다</ins>.</p></div>
+            <div class="cmp-row"><p class="cmp-was"><span class="sr">AI 초안: </span>처리용량은 <del>650 m3/day</del>이며 <del>지름 400mm 하수 파이프</del>를 3.4km <del>새로 설치할 예정입니다</del>.</p><p class="cmp-now"><span class="sr">지침 적용: </span>처리용량 <ins>Q=650㎥/일</ins> 규모로 <ins>하수관로 D400mm, L=3.4km</ins>를 <ins>신설한다</ins>.</p></div>
+            <div class="cmp-row"><p class="cmp-was"><span class="sr">AI 초안: </span><del>결론적으로</del> 이를 통해 비가 많이 와도 침수 문제를 <del>완벽하게 해결할 수 있을 것입니다!</del></p><p class="cmp-now"><span class="sr">지침 적용: </span>사업이 완료되면 우기 시 침수 피해가 <ins>저감될 것으로 판단된다</ins>.</p></div>
+            <div class="cmp-row"><p class="cmp-was"><span class="sr">AI 초안: </span><del>더 궁금한 점이 있으시면 언제든지 편하게 말씀해 주세요. 도와드릴게요 😊</del></p><p class="cmp-now"><span class="sr">지침 적용: </span><span class="cut">묻지 않은 끝인사는 쓰지 않음</span></p></div>
+            <div class="cmp-hd"><span class="cmp-knob" id="cmp-knob" role="slider" tabindex="0" aria-label="문체 비교 손잡이" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" aria-valuetext="지침 적용 40%"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 9l3 3l-3 3"></path><path d="M15 12h6"></path><path d="M6 9l-3 3l3 3"></path><path d="M3 12h6"></path></svg></span></div>
+          </div>
+        </div>
+        <figcaption class="cmp-cap">손잡이를 오른쪽으로 끌면 AI 초안이 실무 문체로 바뀝니다. 내용과 수치는 그대로입니다.</figcaption>
+      </figure>
       <ul class="tells">
         <li class="tell">
           <div class="tell-k"><h3>경어체</h3><p>보고서 본문에 ~입니다를 씁니다.</p></div>
@@ -750,7 +811,7 @@
             <button type="button" class="ck-link" id="ck-ex">AI 초안 예시 넣기</button>
           </div>
           <textarea id="ck-text" spellcheck="false" placeholder="점검할 글을 여기에 붙여넣으세요." aria-label="점검할 글"></textarea>
-          <button type="button" class="ck-tog" id="ck-tog" aria-expanded="false" aria-controls="ck-orig-wrap"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M17 3l4 4l-14 14l-4 -4l14 -14"></path><path d="M16 7l-1.5 -1.5"></path><path d="M13 10l-1.5 -1.5"></path><path d="M10 13l-1.5 -1.5"></path><path d="M7 16l-1.5 -1.5"></path></svg>원문과 수치 대조<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></button>
+          <button type="button" class="ck-tog key" id="ck-tog" aria-expanded="false" aria-controls="ck-orig-wrap"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M17 3l4 4l-14 14l-4 -4l14 -14"></path><path d="M16 7l-1.5 -1.5"></path><path d="M13 10l-1.5 -1.5"></path><path d="M10 13l-1.5 -1.5"></path><path d="M7 16l-1.5 -1.5"></path></svg>원문과 수치 대조<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></button>
           <div class="ck-orig" id="ck-orig-wrap" hidden>
             <div class="ck-orig-bar">
               <label for="ck-orig">원문<span>AI에 넣기 전 글</span></label>
@@ -759,8 +820,8 @@
             <textarea id="ck-orig" spellcheck="false" placeholder="AI에 넣기 전 원문을 붙여넣으면, 위 글과 숫자·단위를 대조합니다."></textarea>
           </div>
           <div class="ck-act">
-            <button type="button" class="btn btn-mint" id="ck-run"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>점검하기</button>
-            <button type="button" class="btn btn-line" id="ck-fix"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"></path><path d="M15 6l3 3"></path><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path></svg>단위 표기 고치기</button>
+            <button type="button" class="btn btn-mint key" id="ck-run"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path><path d="M11 6l9 0"></path><path d="M11 12l9 0"></path><path d="M11 18l9 0"></path></svg>점검하기</button>
+            <button type="button" class="btn btn-line key" id="ck-fix"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"></path><path d="M15 6l3 3"></path><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path></svg>단위 표기 고치기</button>
           </div>
           <p class="ck-note"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"></path><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path><path d="M8 11v-4a4 4 0 1 1 8 0v4"></path></svg>서버로 보내지 않고 이 브라우저 안에서만 검사합니다. 문서 종류를 고르면 더 정확합니다.</p>
         </div>
@@ -836,7 +897,7 @@
       <div>
         <details class="qa" open><summary>팀마다 말투가 다르면요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>우리 팀이 쓴 문서 2~3개를 붙여넣고 “앞으로 이 문서들 말투에 맞춰줘”라고 하세요. 팀 예시가 지침보다 우선합니다.</p></div></details>
         <details class="qa"><summary>매번 붙여넣어야 하나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>아니요. ChatGPT는 <b>GPT 만들기</b>, Gemini는 <b>Gem 만들기</b>, Claude는 <b>프로젝트</b>의 지침 칸에 복사한 글을 한 번만 넣어 두면 됩니다. 지침은 6천 자가 안 돼 GPT 지침 칸(8,000자)에도 들어갑니다.</p></div></details>
-        <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
+        <details class="qa"><summary>Claude 스킬로 등록할 수 있나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>네. 아래 zip을 받아 claude.ai <b>설정 → 기능 → 스킬</b>에서 업로드하세요. 스킬판에는 부문 용어 팩과 검사기까지 들어 있습니다.</p><p>Claude Code에서는 <code>/plugin marketplace add ktr218/civil-engineer-tone</code> 다음 <code>/plugin install civil-engineer-tone@civil-engineer-tone</code></p><a class="dl key" href="civil-engineer-tone-skill.zip" download><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path><path d="M7 11l5 5l5 -5"></path><path d="M12 4l0 12"></path></svg>Claude 스킬 zip 받기</a></div></details>
         <details class="qa"><summary>점검 등급(A~D)은 어떻게 매기나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>글 500자마다 지적 점수를 더합니다. 꼭 고칠 것 5점, 고치면 좋은 것 2점, 참고 0.5점이고 0.5점 미만이면 A입니다. 사람이 쓴 실무 문서는 열에 아홉이 A입니다.</p><p>입찰 안내서·서약서처럼 원래 경어로 쓰는 문서는 문서 종류를 <b>내부 보고·메일·안내</b>나 <b>공문</b>으로 고르세요.</p></div></details>
         <details class="qa"><summary>모르는 숫자를 지어내지 않나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>입력에 없는 수치·사업명·법 조항은 ○○ 또는 [확인 필요]로 남깁니다. 결과 뒤에 무엇을 바꿨는지 3~6줄로 알려 줍니다.</p><p>위 <b>바로 점검</b>에서 [원문과 수치 대조]를 열고 AI에 넣기 전 글을 넣으면, 바뀌거나 빠진 숫자·단위를 짚어 줍니다. 최종 확인은 작성자가 합니다.</p></div></details>
         <details class="qa"><summary>회사 자료를 넣어도 되나요?<span class="pm"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6l6 -6"></path></svg></span></summary><div class="a"><p>대외비·개인정보가 있는 문장은 외부 AI에 넣지 마세요. 말투만 바꿀 때는 사업명·수치를 ○○로 바꿔 넣어도 됩니다.</p></div></details>
@@ -849,13 +910,15 @@
   <!-- FINAL CTA -->
   <section class="final dark" aria-labelledby="final-t">
     <div class="sheet" aria-hidden="true">
+      <canvas class="water" data-water="bottom" aria-hidden="true"></canvas>
       <div class="sheet-grid"></div><div class="sheet-frame"></div>
       <ol class="zx"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ol>
     </div>
-    <div class="wrap">
+    <button type="button" class="water-tog key" data-water-tog aria-pressed="false" hidden><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path></svg>물결 멈춤</button>
+    <div class="wrap" data-dry>
       <h2 id="final-t">오늘 쓰는 보고서부터<br><span class="hl">엔지니어 말투</span>로</h2>
       <p>지침을 복사해 AI 채팅창에 붙여넣기만 하면 됩니다.</p>
-      <div><button type="button" class="btn btn-mint btn-xl" id="copy2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사하기</button></div>
+      <div><button type="button" class="btn btn-mint btn-xl key" id="copy2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="i" aria-hidden="true" focusable="false" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"></path><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path></svg>지침 복사하기</button></div>
       <div class="final-ais"><span>어디서나</span><img src="img/chatgpt.png" alt="ChatGPT"><img src="img/gemini.png" alt="Gemini"><img src="img/claude.png" alt="Claude"></div>
     </div>
   </section>
@@ -885,7 +948,7 @@
       </ul>
       <dl class="tb-meta">
         <div><dt>축척</dt><dd>NONE</dd></div>
-        <div><dt>개정</dt><dd>2.4.1</dd></div>
+        <div><dt>개정</dt><dd>2.5.0</dd></div>
         <div><dt>일자</dt><dd>2026. 11. 24.</dd></div>
       </dl>
     </div>
@@ -1050,7 +1113,7 @@
     }, LEAD);
     if (!stopped()) later(function () { render((i + 1) % demos.length); }, total);
   }
-  // 자동 넘김은 마우스를 올리거나 초점이 들어오면 멈추고, [자동 넘김 멈추기]로 끈다
+  // 자동 넘김은 마우스를 올리거나 초점이 들어오면 멈추고, [자동 넘김 멈춤] 키를 눌러 두면 꺼진 채로 있다
   function hold() { clearAll(); finish(); win.classList.add("held"); }
   function resume() {
     if (reduce || stopped()) return;
@@ -1067,7 +1130,6 @@
     pauseBtn.addEventListener("click", function () {
       paused = !paused;
       pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
-      pauseBtn.textContent = paused ? "자동 넘김 다시 켜기" : "자동 넘김 멈추기";
       if (paused) hold(); else resume();
     });
   }
@@ -1077,6 +1139,317 @@
       es.forEach(function (e) { if (e.isIntersecting) render(cur); else clearAll(); });
     }, { threshold: 0.2 }).observe($(".win"));
   } else { render(0); }
+
+  // iOS Safari는 터치 리스너가 있어야 :active(키가 눌리는 모습)를 그린다
+  document.addEventListener("touchstart", function () {}, { passive: true });
+
+  /* ---------- 도면 위 물결 ----------
+     Hallmark Refract 테마(MIT)의 수면 셰이더를 도면에 맞춰 옮겼다. CSS 격자와 같은 자리(가는 선 16px, 굵은 선 80px)의
+     선을 물에 잠긴 듯 휘어 그리고, 그 위로 빛 그물을 얹는다. 빛은 글 아래에서 옅어진다.
+     WebGL이 없으면 CSS 격자가 그대로 남는다. 줄인 움직임에서는 멈춘 한 장면만 그리고, 화면 밖이거나 [물결 멈춤]이면 멈춘다. */
+  (function () {
+    var cvs = $$("canvas[data-water]");
+    if (!cvs.length) return;
+    var css = getComputedStyle(document.documentElement);
+    function rgb(name, d) {
+      var m = /^#([0-9a-f]{6})$/i.exec(css.getPropertyValue(name).trim());
+      if (!m) return d;
+      var v = parseInt(m[1], 16);
+      return [(v >> 16 & 255) / 255, (v >> 8 & 255) / 255, (v & 255) / 255];
+    }
+    var LINE = rgb("--mint", [0.2, 0.85, 0.7]), LIGHT = rgb("--water-light", [0.66, 0.97, 0.89]),
+      DEEP = rgb("--water-deep", [0.02, 0.07, 0.06]), SHADE = rgb("--water-shade", [0.04, 0.19, 0.17]);
+    var VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
+    var NOISE = [
+      "precision highp float;",
+      "float h1(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}",
+      "float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);",
+      " return mix(mix(h1(i),h1(i+vec2(1.0,0.0)),u.x),mix(h1(i+vec2(0.0,1.0)),h1(i+vec2(1.0,1.0)),u.x),u.y);}",
+      "vec2 warp(vec2 p,float t){return vec2(vnoise(p*0.32+vec2(t*0.05,0.0)),vnoise(p*0.32+vec2(5.2,t*0.043)))-0.5;}"
+    ].join("\n");
+    // 1단계(절반 해상도): 빛 그물, 물의 깊이, 격자를 휠 양을 한 장에 담는다. 무거운 계산은 여기서만 한다
+    var FRAG_WATER = NOISE + "\n" + [
+      "uniform vec2 uLo;uniform vec2 uSize;uniform float uTime;uniform float uClock;uniform vec3 uRip[4];",
+      // 움직이는 수면을 지난 빛은 가는 그물로 접히고, 접힌 선이 겹치는 곳이 가장 밝다
+      "float web(vec2 p,float t){vec2 q=p*1.7-250.0;vec2 i=q;float c=1.0;float k=0.0048;",
+      " for(int n=0;n<5;n++){float tt=t*(1.0-3.5/float(n+1));",
+      "  i=q+vec2(cos(tt-i.x)+sin(tt+i.y),sin(tt-i.y)+cos(tt+i.x));",
+      "  c+=1.0/length(vec2(q.x/(sin(i.x+tt)/k),q.y/(cos(i.y+tt)/k)));}",
+      " c/=5.0;c=1.17-pow(c,1.4);return pow(abs(c),9.0);}",
+      "float caustic(vec2 p,float t){p+=warp(p,t)*0.6;",
+      " float lit=0.55+0.6*smoothstep(0.1,0.9,vnoise(p*0.8+vec2(t*0.05,-t*0.04)));",
+      " return min(web(p,t*0.42+23.0)*1.5,1.7)*lit;}",
+      "void main(){",
+      " vec2 px=gl_FragCoord.xy*uLo;float t=uTime;",
+      // 포인터가 남긴 물결: 퍼져 나가며 지나는 빛과 선을 휜다
+      " vec2 bend=vec2(0.0);",
+      " for(int i=0;i<4;i++){vec3 r=uRip[i];float age=uClock-r.z;",
+      "  if(r.z>0.0&&age<3.5){vec2 dv=px-r.xy;float d=length(dv)+0.001;float front=d-age*210.0;",
+      "   bend+=dv/d*sin(front*0.07)*exp(-front*front/12000.0)*exp(-age*0.9)*exp(-d/700.0);}}",
+      " vec2 p=(px+bend*30.0)/118.0;",
+      " vec2 off=warp(p*1.6,t)*6.0+vec2(bend.x,-bend.y)*8.0;",
+      " float depth=vnoise(vec2(px.x,uSize.y-px.y)/420.0+vec2(t*0.006,0.0));",
+      " gl_FragColor=vec4(caustic(p,t)*0.5,depth,clamp(off/32.0+0.5,0.0,1.0));}"
+    ].join("\n");
+    // 2단계(화면 해상도): 물 아래 도면의 선을 휜 만큼 옮겨 긋고, 빛을 세 번 조금씩 비껴 읽어 무지갯빛 테두리를 낸다
+    var FRAG_SHEET = [
+      "precision highp float;",
+      "uniform sampler2D uTex;uniform vec2 uRes;uniform float uDpr;uniform vec2 uOrigin;uniform vec4 uHole;",
+      "uniform vec3 uLine;uniform vec3 uLight;uniform vec3 uDeep;uniform vec3 uShade;",
+      "float gap(float x,float s){return abs(mod(x+0.5*s,s)-0.5*s);}",
+      "float box(vec2 p,vec2 b){vec2 q=abs(p)-b;return length(max(q,0.0))+min(max(q.x,q.y),0.0);}",
+      "void main(){",
+      " vec2 uv=gl_FragCoord.xy/uRes;vec2 sh=vec2(3.3,2.0)*uDpr/uRes;",
+      " vec4 s=texture2D(uTex,uv);",
+      " vec3 c=vec3(texture2D(uTex,uv+sh).r,s.r,texture2D(uTex,uv-sh).r)*2.0;c=c*c;",
+      " vec2 size=uRes/uDpr;vec2 px=gl_FragCoord.xy/uDpr;vec2 tp=vec2(px.x,size.y-px.y);",
+      " vec2 g=tp+(s.ba-0.5)*32.0-uOrigin-0.5;",
+      " float dM=min(gap(g.x,80.0),gap(g.y,80.0)),dm=min(gap(g.x,16.0),gap(g.y,16.0));",
+      " float lit=min(c.g,1.5);",
+      " float aM=clamp(1.0-dM,0.0,1.0)*0.26,am=clamp(1.0-dm,0.0,1.0)*0.08;",
+      " float aG=min((1.0-(1.0-aM)*(1.0-am))*(1.0+1.2*lit)+exp(-dM*dM*0.125)*0.05*(1.0+lit),0.9);",
+      // 물: 느리게 바뀌는 깊이. 글 아래에서는 빛이 옅어진다
+      " vec3 body=mix(uDeep,uShade,s.g);float aB=0.5;",
+      " float open=mix(0.14,1.0,smoothstep(-24.0,90.0,box(tp-uHole.xy,uHole.zw)));",
+      " vec3 L=uLight*c*0.34*open;",
+      " float lm=min(max(L.r,max(L.g,L.b)),1.0);",
+      " vec3 col=body*aB;float a=aB;",
+      " col=L+col*(1.0-lm);a=lm+a*(1.0-lm);",
+      " col=uLine*aG+col*(1.0-aG);a=aG+a*(1.0-aG);",
+      " gl_FragColor=vec4(min(col,vec3(a)),a);}"
+    ].join("\n");
+
+    // 글이 차지한 자리(글자 줄의 바깥 상자): 빛을 옅게 할 곳
+    function textBox(el) {
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false), r = document.createRange(), n, b, o = null;
+      while ((n = w.nextNode())) {
+        if (!n.nodeValue.trim()) continue;
+        r.selectNodeContents(n); b = r.getBoundingClientRect();
+        if (!b.width || !b.height) continue;
+        o = o ? { l: Math.min(o.l, b.left), t: Math.min(o.t, b.top), r: Math.max(o.r, b.right), b: Math.max(o.b, b.bottom) }
+          : { l: b.left, t: b.top, r: b.right, b: b.bottom };
+      }
+      return o;
+    }
+    function make(cv) {
+      var gl = null;
+      try { gl = cv.getContext("webgl", { premultipliedAlpha: true, antialias: false, alpha: true }); } catch (e) { gl = null; }
+      if (!gl) return null;
+      function program(src, names) {
+        function sh(type, code) {
+          var o = gl.createShader(type);
+          gl.shaderSource(o, code); gl.compileShader(o);
+          return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null;
+        }
+        var vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, src);
+        if (!vs || !fs) return null;
+        var pr = gl.createProgram();
+        gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.bindAttribLocation(pr, 0, "p"); gl.linkProgram(pr);
+        if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+        var u = {};
+        names.forEach(function (k) { u[k] = gl.getUniformLocation(pr, k); });
+        return { pr: pr, u: u };
+      }
+      var A = program(FRAG_WATER, ["uLo", "uSize", "uTime", "uClock", "uRip"]);
+      var B = program(FRAG_SHEET, ["uTex", "uRes", "uDpr", "uOrigin", "uHole", "uLine", "uLight", "uDeep", "uShade"]);
+      if (!A || !B) return null;
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+      // 1단계 결과를 담을 절반 크기 그림
+      var tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      var fbo = gl.createFramebuffer();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+      var complete = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      if (!complete) return null;
+      gl.useProgram(B.pr);
+      gl.uniform1i(B.u.uTex, 0);
+      gl.uniform3fv(B.u.uLine, LINE); gl.uniform3fv(B.u.uLight, LIGHT); gl.uniform3fv(B.u.uDeep, DEEP); gl.uniform3fv(B.u.uShade, SHADE);
+      var sec = cv.closest("section");
+      var s = { cv: cv, sec: sec, sheet: cv.parentNode, dry: sec.querySelector("[data-dry]"), bottom: cv.getAttribute("data-water") === "bottom",
+        rip: new Float32Array(12), n: 0, w: 0, h: 0, lw: 0, lh: 0, visible: false, on: false, lost: false };
+      s.resize = function () {
+        var r = cv.getBoundingClientRect();
+        if (!r.width || !r.height || s.lost) return;
+        // 화면 배율을 따르되 한 장에 300만 화소를 넘기지 않는다(휴대폰은 선명하게, 큰 화면은 가볍게)
+        var dpr = Math.max(0.75, Math.min(window.devicePixelRatio || 1, 2, Math.sqrt(3e6 / (r.width * r.height))));
+        var w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+        if (w !== s.w || h !== s.h) {
+          cv.width = w; cv.height = h; s.w = w; s.h = h;
+          s.lw = Math.max(1, Math.round(w / 2)); s.lh = Math.max(1, Math.round(h / 2));
+          gl.bindTexture(gl.TEXTURE_2D, tex);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, s.lw, s.lh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        }
+        gl.useProgram(A.pr);
+        gl.uniform2f(A.u.uLo, r.width / s.lw, r.height / s.lh); gl.uniform2f(A.u.uSize, r.width, r.height);
+        gl.useProgram(B.pr);
+        gl.uniform2f(B.u.uRes, w, h); gl.uniform1f(B.u.uDpr, w / r.width);
+        gl.uniform2f(B.u.uOrigin, r.width / 2, s.bottom ? r.height : 0);
+        var b = s.dry && textBox(s.dry);
+        if (b) gl.uniform4f(B.u.uHole, (b.l + b.r) / 2 - r.left, (b.t + b.b) / 2 - r.top, (b.r - b.l) / 2 + 24, (b.b - b.t) / 2 + 24);
+        else gl.uniform4f(B.u.uHole, -1e5, -1e5, 0, 0);
+      };
+      s.draw = function (t) {
+        if (s.lost || !s.w) return;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.viewport(0, 0, s.lw, s.lh);
+        gl.useProgram(A.pr);
+        gl.uniform1f(A.u.uTime, t); gl.uniform1f(A.u.uClock, performance.now() / 1000); gl.uniform3fv(A.u.uRip, s.rip);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, s.w, s.h);
+        gl.useProgram(B.pr); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (!s.on) { s.on = true; cv.classList.add("on"); s.sheet.classList.add("wet"); }
+      };
+      cv.addEventListener("webglcontextlost", function (e) { e.preventDefault(); s.lost = true; cv.classList.remove("on"); s.sheet.classList.remove("wet"); });
+      s.resize();
+      return s;
+    }
+    var surfaces = [];
+    cvs.forEach(function (cv) { var s = make(cv); if (s) surfaces.push(s); });
+    if (!surfaces.length) return;
+
+    var T0 = 14, SPEED = 0.32, clock = 0, prev = 0, raf = 0, stopped = false;
+    function time() { return T0 + clock * SPEED; }
+    function anyVisible() { return surfaces.some(function (s) { return s.visible && !s.lost; }); }
+    function still() { surfaces.forEach(function (s) { if (s.visible) s.draw(time()); }); }
+    function frame(ts) {
+      raf = 0;
+      if (stopped || document.hidden || !anyVisible()) { prev = 0; return; }
+      raf = requestAnimationFrame(frame);
+      if (prev && ts - prev < 32) return;   // 물은 천천히 움직이니 초당 30장이면 충분하다
+      if (prev) clock += Math.min(0.1, (ts - prev) / 1000);
+      prev = ts;
+      still();
+    }
+    function run() { if (!raf && !reduce && !stopped) raf = requestAnimationFrame(frame); }
+
+    if (hasIO) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          surfaces.forEach(function (s) { if (s.cv === e.target) s.visible = e.isIntersecting; });
+        });
+        if (reduce || stopped) still(); else run();
+      }, { rootMargin: "80px" });
+      surfaces.forEach(function (s) { io.observe(s.cv); });
+    } else {
+      surfaces.forEach(function (s) { s.visible = true; });
+      if (reduce) still(); else run();
+    }
+
+    // 포인터가 지나간 자리에 물결이 인다
+    if (!reduce) surfaces.forEach(function (s) {
+      var last = 0;
+      function drop(e, force) {
+        if (stopped) return;
+        var t = performance.now();
+        if (!force && t - last < 520) return;
+        var r = s.cv.getBoundingClientRect(), x = e.clientX - r.left, y = r.bottom - e.clientY;
+        if (x < 0 || y < 0 || x > r.width || y > r.height) return;
+        last = t;
+        var k = (s.n++ % 4) * 3;
+        s.rip[k] = x; s.rip[k + 1] = y; s.rip[k + 2] = t / 1000;
+      }
+      s.sec.addEventListener("pointermove", function (e) { drop(e, false); }, { passive: true });
+      s.sec.addEventListener("pointerdown", function (e) { drop(e, true); }, { passive: true });
+    });
+
+    // [물결 멈춤]: 두 곳의 키가 함께 눌리고 함께 풀린다
+    var togs = $$("[data-water-tog]");
+    if (!reduce) togs.forEach(function (b) {
+      b.hidden = false;
+      b.addEventListener("click", function () {
+        stopped = !stopped;
+        togs.forEach(function (x) { x.setAttribute("aria-pressed", stopped ? "true" : "false"); });
+        if (stopped) { if (raf) cancelAnimationFrame(raf); raf = 0; prev = 0; } else run();
+      });
+    });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) run(); });
+
+    // 크기가 바뀌거나 글꼴이 늦게 오거나 제목이 떠오르며 자리를 잡으면 다시 잰다
+    var rt = 0;
+    function remeasure() {
+      clearTimeout(rt);
+      rt = setTimeout(function () { surfaces.forEach(function (s) { s.resize(); }); still(); }, 100);
+    }
+    if ("ResizeObserver" in window) {
+      var ro = new ResizeObserver(remeasure);
+      surfaces.forEach(function (s) { ro.observe(s.cv); });
+    }
+    window.addEventListener("resize", remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    setTimeout(remeasure, 1300);
+  })();
+
+  /* ---------- 문체 비교 손잡이 ----------
+     Hallmark Vantage 테마의 비교 손잡이를 글에 옮겼다. 손잡이 왼쪽은 지침을 적용한 글, 오른쪽은 AI 초안이다.
+     끌거나 눌러 옮기고, 손잡이에 초점이 있으면 화살표·Home·End로 옮긴다.
+     처음 화면에 들어오면 한 번, 선이 왼쪽 끝에서 쓸고 지나가며 문단을 바꿔 보인다(줄인 움직임에서는 생략). */
+  (function () {
+    var stage = $("#cmp"), doc = $("#cmp-doc"), knob = $("#cmp-knob");
+    if (!stage || !doc || !knob) return;
+    var REST = 0.4, split = REST, intro = 0, touched = false, drag = null;
+    function set(f) {
+      split = Math.max(0, Math.min(1, f));
+      stage.style.setProperty("--split", (split * 100).toFixed(2) + "%");
+      var v = Math.round(split * 100);
+      knob.setAttribute("aria-valuenow", String(v));
+      knob.setAttribute("aria-valuetext", "지침 적용 " + v + "%");
+    }
+    function at(e) { var r = doc.getBoundingClientRect(); if (r.width) set((e.clientX - r.left) / r.width); }
+    function claim() { touched = true; if (intro) { cancelAnimationFrame(intro); intro = 0; } }
+    doc.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      claim();
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, on: e.pointerType !== "touch" };
+      if (drag.on) { doc.setPointerCapture(e.pointerId); stage.classList.add("is-drag"); at(e); }
+    });
+    doc.addEventListener("pointermove", function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.on) {   // 손가락은 옆으로 끌 때만 잡는다. 위아래로 밀면 화면이 그대로 내려간다
+        var dx = Math.abs(e.clientX - drag.x), dy = Math.abs(e.clientY - drag.y);
+        if (dx < 8 || dx < dy) return;
+        drag.on = true; doc.setPointerCapture(e.pointerId); stage.classList.add("is-drag");
+      }
+      at(e);
+    });
+    function end(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.on && e.type === "pointerup") at(e);   // 톡 누른 자리로 옮긴다
+      drag = null; stage.classList.remove("is-drag");
+    }
+    doc.addEventListener("pointerup", end);
+    doc.addEventListener("pointercancel", end);
+    knob.addEventListener("keydown", function (e) {
+      var step = { ArrowLeft: -0.05, ArrowDown: -0.05, ArrowRight: 0.05, ArrowUp: 0.05, PageDown: -0.25, PageUp: 0.25 }[e.key];
+      if (e.key === "Home") set(0); else if (e.key === "End") set(1); else if (step) set(split + step); else return;
+      e.preventDefault(); claim();
+    });
+    var sweep = !reduce && hasIO;
+    set(sweep ? 0 : REST);
+    if (sweep) {
+      var io = new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting) return;
+        io.disconnect();
+        if (touched) return;
+        var t0 = performance.now(), dur = 1700;
+        intro = requestAnimationFrame(function step(ts) {
+          var k = Math.min(1, Math.max(0, (ts - t0) / dur));
+          var ease = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          set(REST * ease);
+          intro = k < 1 ? requestAnimationFrame(step) : 0;
+        });
+      }, { threshold: 0.6 });
+      io.observe(stage);
+    }
+  })();
 
   /* ---------- 바로 점검 (tonecheck.js, 검사기와 같은 규칙) ---------- */
   (function () {
